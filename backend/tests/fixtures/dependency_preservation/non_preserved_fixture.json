@@ -1,0 +1,16 @@
+{
+  "name": "Non-Preserved Dependency Fixture (AB -> C, C -> B into AC and BC)",
+  "attributes": ["A", "B", "C"],
+  "relations": [
+    ["A", "C"],
+    ["B", "C"]
+  ],
+  "functional_dependencies": [
+    {"left": ["A", "B"], "right": ["C"]},
+    {"left": ["C"], "right": ["B"]}
+  ],
+  "expected_preserved": false,
+  "non_preserved_fds": [
+    {"left": ["A", "B"], "right": ["C"]}
+  ]
+}

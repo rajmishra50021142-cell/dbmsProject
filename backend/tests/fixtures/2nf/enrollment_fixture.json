@@ -1,0 +1,18 @@
+{
+  "name": "2NF Partial Dependency Decomposition",
+  "relation_name": "ENROLLMENT",
+  "attributes": ["StudentID", "CourseID", "StudentName", "CourseName", "Grade"],
+  "candidate_keys": [["StudentID", "CourseID"]],
+  "functional_dependencies": [
+    {"left": ["StudentID"], "right": ["StudentName"]},
+    {"left": ["CourseID"], "right": ["CourseName"]},
+    {"left": ["StudentID", "CourseID"], "right": ["Grade"]}
+  ],
+  "expected_relations": [
+    ["StudentID", "StudentName"],
+    ["CourseID", "CourseName"],
+    ["StudentID", "CourseID", "Grade"]
+  ],
+  "expected_lossless": true,
+  "expected_dependency_preservation": true
+}

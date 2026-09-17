@@ -1,0 +1,13 @@
+{
+  "name": "Transitive FD Dependency Preservation",
+  "attributes": ["A", "B", "C"],
+  "relations": [
+    ["A", "B"],
+    ["B", "C"]
+  ],
+  "functional_dependencies": [
+    {"left": ["A"], "right": ["B"]},
+    {"left": ["B"], "right": ["C"]}
+  ],
+  "expected_preserved": true
+}

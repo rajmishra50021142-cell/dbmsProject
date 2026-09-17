@@ -1,0 +1,15 @@
+{
+  "name": "Tableau Chase Multi-Relation Lossless Join",
+  "attributes": ["A", "B", "C", "D"],
+  "relations": [
+    ["A", "B"],
+    ["B", "C"],
+    ["C", "D"]
+  ],
+  "functional_dependencies": [
+    {"left": ["A"], "right": ["B"]},
+    {"left": ["B"], "right": ["C"]},
+    {"left": ["C"], "right": ["D"]}
+  ],
+  "expected_lossless": true
+}

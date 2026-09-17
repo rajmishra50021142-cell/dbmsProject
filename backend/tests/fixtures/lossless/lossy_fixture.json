@@ -1,0 +1,12 @@
+{
+  "name": "Tableau Chase Lossy Join",
+  "attributes": ["A", "B", "C"],
+  "relations": [
+    ["A", "B"],
+    ["A", "C"]
+  ],
+  "functional_dependencies": [
+    {"left": ["B"], "right": ["C"]}
+  ],
+  "expected_lossless": false
+}

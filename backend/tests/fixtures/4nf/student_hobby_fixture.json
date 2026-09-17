@@ -1,0 +1,14 @@
+{
+  "name": "4NF Non-Trivial Multivalued Dependency Decomposition",
+  "relation_name": "STUDENT_ACTIVITIES",
+  "attributes": ["Student", "Hobby", "Language"],
+  "candidate_keys": [["Student", "Hobby", "Language"]],
+  "multivalued_dependencies": [
+    {"left": ["Student"], "right": ["Hobby"]}
+  ],
+  "expected_relations": [
+    ["Student", "Hobby"],
+    ["Student", "Language"]
+  ],
+  "expected_lossless": true
+}
