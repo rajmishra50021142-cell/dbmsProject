@@ -3,7 +3,23 @@
  * All HTTP communication with the FastAPI backend flows through this abstraction.
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
+function getBaseUrl(): string {
+  const envUrl = (import.meta.env.VITE_API_BASE_URL || '').trim();
+  if (!envUrl) {
+    return 'http://localhost:8000/api/v1';
+  }
+  let clean = envUrl.replace(/\/+$/, '');
+  if (!clean.endsWith('/api/v1')) {
+    if (clean.endsWith('/api')) {
+      clean = `${clean}/v1`;
+    } else {
+      clean = `${clean}/api/v1`;
+    }
+  }
+  return clean;
+}
+
+export const API_BASE_URL = getBaseUrl();
 
 export class ApiError extends Error {
   status: number;
@@ -22,7 +38,7 @@ interface RequestOptions extends RequestInit {
 }
 
 export async function request<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
-  const { timeoutMs = 8000, ...fetchOptions } = options;
+  const { timeoutMs = 35000, ...fetchOptions } = options;
   
   // Normalize path
   const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;

@@ -51,8 +51,8 @@ app = FastAPI(
 # Configure CORS for local development and production
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.BACKEND_CORS_ORIGINS,
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
     expose_headers=["Content-Disposition"],
@@ -64,8 +64,18 @@ app.add_exception_handler(StarletteHTTPException, http_exception_handler)
 app.add_exception_handler(RequestValidationError, validation_exception_handler)
 app.add_exception_handler(Exception, generic_exception_handler)
 
-# Mount API routers
+# Mount API routers under /api/v1 and root / for client compatibility
 app.include_router(api_router, prefix=settings.API_V1_STR)
+app.include_router(api_router)
+
+
+@app.get("/health", tags=["Health"], include_in_schema=False)
+async def root_health():
+    return {
+        "status": "ok",
+        "service": settings.PROJECT_NAME,
+        "version": settings.VERSION,
+    }
 
 
 @app.get("/", include_in_schema=False)

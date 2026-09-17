@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { navigationItems, projectMeta } from '../../config/projectMeta';
 import { ThemeToggle } from './ThemeToggle';
-import { HealthIndicator } from './HealthIndicator';
 import { Database, Menu, X } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
@@ -77,9 +76,8 @@ export const Navbar: React.FC = () => {
           ))}
         </nav>
 
-        {/* Right Section: Health + ThemeToggle + Mobile Trigger */}
+        {/* Right Section: ThemeToggle + Mobile Trigger */}
         <div className="flex items-center gap-2.5">
-          <HealthIndicator className="hidden sm:inline-flex" />
           <ThemeToggle />
 
           {/* Mobile hamburger button */}
@@ -98,13 +96,6 @@ export const Navbar: React.FC = () => {
       {/* Mobile dropdown menu */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-3 pb-5 space-y-1 shadow-elevated">
-          <div className="py-2 mb-2 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
-            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-              API Service Status:
-            </span>
-            <HealthIndicator />
-          </div>
-
           {navigationItems.map((item) => (
             <NavLink
               key={item.path}

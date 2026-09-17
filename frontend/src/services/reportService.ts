@@ -1,13 +1,11 @@
 import { ReportRequestPayload } from '../types';
+import { API_BASE_URL } from './apiClient';
 
 const getApiEndpoints = () => {
-  const customBase = import.meta.env.VITE_API_BASE_URL;
-  if (customBase) {
-    return [`${customBase}/reports/generate`, '/api/v1/reports/generate'];
-  }
   return [
-    'http://localhost:8000/api/v1/reports/generate',
+    `${API_BASE_URL}/reports/generate`,
     '/api/v1/reports/generate',
+    '/reports/generate',
   ];
 };
 
