@@ -31,8 +31,22 @@ export const DevelopedByPage: React.FC = () => {
 
         <Card className="border-indigo-200 dark:border-indigo-900/60 bg-gradient-to-r from-indigo-50/50 via-slate-50/20 to-transparent dark:from-indigo-950/20 shadow-xs">
           <CardContent className="flex flex-col sm:flex-row items-center sm:items-start gap-6 p-6">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-indigo-700 to-indigo-500 text-white flex items-center justify-center shadow-lg shadow-indigo-500/20 shrink-0">
-              <GraduationCap className="w-10 h-10" />
+            {/* Guide Photo or Fallback Avatar */}
+            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-slate-100 dark:bg-slate-800 border-2 border-indigo-200 dark:border-indigo-900/50 flex items-center justify-center text-slate-400 shadow-md overflow-hidden shrink-0 relative">
+              {projectMeta.guide.photoUrl ? (
+                <img
+                  src={projectMeta.guide.photoUrl}
+                  alt={`Portrait of ${projectMeta.guide.name}`}
+                  className="w-full h-full object-cover object-top relative z-10"
+                  onError={(e) => {
+                    // Fallback on missing image
+                    (e.target as HTMLElement).style.display = 'none';
+                  }}
+                />
+              ) : null}
+              <div className="absolute inset-0 bg-gradient-to-tr from-indigo-700 to-indigo-500 text-white flex items-center justify-center">
+                <GraduationCap className="w-12 h-12" />
+              </div>
             </div>
 
             <div className="text-center sm:text-left space-y-1">

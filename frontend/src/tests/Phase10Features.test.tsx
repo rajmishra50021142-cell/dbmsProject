@@ -156,6 +156,7 @@ describe('Phase 10: Learn, Help, Developed By, and Report Features', () => {
     expect(screen.getByText(/25BCE1565/i)).toBeInTheDocument();
     expect(screen.getByText('Kunal Anil Deshmukh')).toBeInTheDocument();
     expect(screen.getByText(/25BCE1586/i)).toBeInTheDocument();
+    expect(screen.getByAltText(/Portrait of Dr\. Swaminathan A/i)).toBeInTheDocument();
   });
 
   it('ReportDownloadModal renders format options and executes report generation', async () => {

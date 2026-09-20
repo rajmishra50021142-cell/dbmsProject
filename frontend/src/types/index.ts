@@ -20,6 +20,7 @@ export interface Guide {
   designation: string;
   department?: string;
   institution?: string;
+  photoUrl?: string;
 }
 
 export interface ProjectInfo {

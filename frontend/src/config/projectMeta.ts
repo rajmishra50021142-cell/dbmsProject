@@ -12,6 +12,7 @@ export const projectMeta: ProjectInfo = {
     designation: 'Assistant Professor',
     department: 'Department of Computer Science and Engineering',
     institution: 'School of Computer Science and Engineering',
+    photoUrl: '/team/dr_swaminathan.png',
   },
   teamMembers: [
     {
