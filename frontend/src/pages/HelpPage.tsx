@@ -14,7 +14,6 @@ import {
   ArrowRight,
   Sparkles,
   Layers,
-  FlaskConical,
   Info,
 } from 'lucide-react';
 
@@ -32,8 +31,7 @@ export const HelpPage: React.FC = () => {
     { step: 9, title: 'Explore "Explain Why" Proofs', desc: 'Click "Explain Why" on any normal form card to view mathematical evidence, affected attributes, and remedies.', link: '/normalize' },
     { step: 10, title: 'Inspect Graph & Closure Playback', desc: 'Switch to the Visualizer Workspace to view interactive SVG dependency graphs and closure step playback.', link: '/closure' },
     { step: 11, title: 'Verify Decompositions & Lossless Join', desc: 'Inspect proposed sub-relations, Tableau Chase symbol equating matrices, and dependency preservation checks.', link: '/normalize' },
-    { step: 12, title: 'Simulate What-If Experiments', desc: 'Open Experiment Mode to add, modify, or remove dependencies without modifying your active draft.', link: '/normalize' },
-    { step: 13, title: 'Download Academic Report', desc: 'Click "Download Report" to export a complete, formatted PDF, DOCX, or TXT documentation of your analysis.', link: '/normalize' },
+    { step: 12, title: 'Download Academic Report', desc: 'Click "Download Report" to export a complete, formatted PDF, DOCX, or TXT documentation of your analysis.', link: '/normalize' },
   ];
 
   const controlsGlossary = [
@@ -41,7 +39,6 @@ export const HelpPage: React.FC = () => {
     { name: 'Sync Draft', icon: <Cpu className="w-4 h-4 text-slate-500" />, action: 'Pulls the latest edited schema from the Schema Builder draft into the live laboratory.' },
     { name: 'Assistant', icon: <Sparkles className="w-4 h-4 text-indigo-500" />, action: 'Opens the contextual deterministic assistant to ask analytical questions about the active relation.' },
     { name: 'Explain Why', icon: <HelpCircle className="w-4 h-4 text-indigo-500" />, action: 'Opens an evidence dialog displaying mathematical proof, violated attributes, and academic remedy.' },
-    { name: 'Experiment Mode', icon: <FlaskConical className="w-4 h-4 text-indigo-500" />, action: 'Enables What-If hypothetical analysis to test how adding or deleting FDs alters the normal form.' },
     { name: 'Closure Lab', icon: <Cpu className="w-4 h-4 text-indigo-500" />, action: 'Computes step-by-step expansion of attribute set X⁺ with animated derivation sweep steps.' },
     { name: 'Download Report', icon: <Download className="w-4 h-4 text-indigo-500" />, action: 'Generates a publication-quality PDF, Word document, or plain text report of the current analysis.' },
     { name: 'Theme Switcher', icon: <Info className="w-4 h-4 text-indigo-500" />, action: 'Toggles between Day (light) and Night (dark) themes across all pages and components.' },

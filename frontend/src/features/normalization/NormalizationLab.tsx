@@ -12,7 +12,6 @@ import {
   AlertTriangle,
   RefreshCw,
   Sliders,
-  FlaskConical,
   GraduationCap,
   Download,
   Bookmark,
@@ -25,7 +24,6 @@ import { NF3AnalysisCard } from './NF3AnalysisCard';
 import { NF4AnalysisCard } from './NF4AnalysisCard';
 import { DecompositionWorkspace } from '../decomposition/DecompositionWorkspace';
 import { VisualizationWorkspace } from '../visualization/VisualizationWorkspace';
-import { ExperimentMode } from '../experiments/ExperimentMode';
 import { PracticeMode } from '../practice/PracticeMode';
 import { NormalizationAssistant } from '../assistant/NormalizationAssistant';
 import { WhyModal } from '../explainability/WhyModal';
@@ -67,7 +65,7 @@ export const NormalizationLab: React.FC<NormalizationLabProps> = ({ initialSchem
 
   const [activeStage, setActiveStage] = useState<'1NF' | '2NF' | '3NF' | '4NF'>('2NF');
   const [labView, setLabView] = useState<
-    'visualizer' | 'cards' | 'decomposition' | 'experiments' | 'practice' | 'all'
+    'visualizer' | 'cards' | 'decomposition' | 'practice' | 'all'
   >('all');
   const [analysisResult, setAnalysisResult] = useState<FullNormalizationAnalysisResult | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -290,7 +288,7 @@ export const NormalizationLab: React.FC<NormalizationLabProps> = ({ initialSchem
             )}
           </div>
           <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
-            Deterministic 1NF to 4NF evaluation, What-If experiment mode, interactive assistant, and practice exercises.
+            Deterministic 1NF to 4NF evaluation, interactive assistant, and practice exercises.
           </p>
         </div>
 
@@ -525,18 +523,6 @@ export const NormalizationLab: React.FC<NormalizationLabProps> = ({ initialSchem
             Decomposition Workspace
           </button>
           <button
-            onClick={() => setLabView('experiments')}
-            id="tab-view-experiments"
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
-              labView === 'experiments'
-                ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-xs'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
-            }`}
-          >
-            <FlaskConical className="w-3.5 h-3.5" />
-            <span>What-If Experiments</span>
-          </button>
-          <button
             onClick={() => setLabView('practice')}
             id="tab-view-practice"
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
@@ -574,24 +560,8 @@ export const NormalizationLab: React.FC<NormalizationLabProps> = ({ initialSchem
             analysisResult={analysisResult}
             initialStage={activeStage}
             initialMode="journey"
-            onOpenExperiment={() => setLabView('experiments')}
             onExplainWhyStage={openExplainWhyStage}
             onExplainWhyDependency={openExplainWhyDependency}
-          />
-        </div>
-      )}
-
-      {/* What-If / Experiment Mode (Phase 9 Engine) */}
-      {analysisResult && (labView === 'experiments' || labView === 'all') && (
-        <div id="section-experiment-mode" className="pt-2">
-          <ExperimentMode
-            originalSchema={schema}
-            originalAnalysis={analysisResult}
-            onApplyModifiedSchema={(mod) => {
-              setSchema(mod);
-              runAnalysis(mod);
-              setLabView('visualizer');
-            }}
           />
         </div>
       )}
@@ -652,7 +622,6 @@ export const NormalizationLab: React.FC<NormalizationLabProps> = ({ initialSchem
         onClose={() => setIsAssistantOpen(false)}
         schema={schema}
         analysis={analysisResult}
-        onOpenExperiment={() => setLabView('experiments')}
         onOpenDecomposition={() => setLabView('decomposition')}
         onOpenJourney={() => setLabView('visualizer')}
       />
@@ -662,7 +631,6 @@ export const NormalizationLab: React.FC<NormalizationLabProps> = ({ initialSchem
         isOpen={isWhyModalOpen}
         onClose={() => setIsWhyModalOpen(false)}
         data={whyModalData}
-        onOpenExperiment={() => setLabView('experiments')}
       />
 
       {/* Phase 10 Academic Report Download Modal */}
@@ -694,7 +662,7 @@ export const NormalizationLab: React.FC<NormalizationLabProps> = ({ initialSchem
         </div>
 
         <div className="text-slate-500 dark:text-slate-400 text-right">
-          What-If Experiments & Contextual Assistant
+          Contextual Assistant & Educational Lab
         </div>
       </div>
     </div>
