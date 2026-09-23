@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Terminal, Play, AlertCircle, CheckCircle2, HelpCircle } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { schemaService } from '../../services/schemaService';
@@ -52,6 +52,17 @@ export const RawInputEditor: React.FC<RawInputEditorProps> = ({
   const [isParsing, setIsParsing] = useState(false);
   const [errors, setErrors] = useState<ValidationIssue[]>([]);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const lastParsedTextRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    // If the schema change originated from the user parsing in this editor, preserve their raw text
+    if (lastParsedTextRef.current === rawText) {
+      return;
+    }
+    setRawText(schemaToRawText(initialSchema));
+    setErrors([]);
+    setSuccessMessage(null);
+  }, [initialSchema]);
 
   const handleParse = async () => {
     setIsParsing(true);
@@ -61,6 +72,7 @@ export const RawInputEditor: React.FC<RawInputEditorProps> = ({
     try {
       const result = await schemaService.parseRawSchema(rawText);
       if (result.valid && result.canonical_input) {
+        lastParsedTextRef.current = rawText;
         setSuccessMessage('Notation successfully parsed and canonicalized!');
         onParsedSuccess(result.canonical_input);
       } else {
@@ -139,7 +151,7 @@ MVDs:
       {/* Parse Action Bar */}
       <div className="flex items-center justify-between">
         <span className="text-[11px] text-slate-500 dark:text-slate-400">
-          Raw Mode and Structured Mode sync to the exact same canonical input object.
+          Directly parses and canonicalizes authoritative DBMS textbook notation.
         </span>
         <Button
           type="button"

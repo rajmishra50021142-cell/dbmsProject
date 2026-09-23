@@ -7,7 +7,6 @@ import { Tabs } from '../components/ui/Tabs';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import {
   Database,
-  Sliders,
   Table,
   RotateCcw,
   CheckCircle2,
@@ -18,10 +17,6 @@ import {
   HelpCircle,
   Key,
 } from 'lucide-react';
-import { AttributeBuilder } from '../features/analyzer/AttributeBuilder';
-import { CandidateKeyBuilder } from '../features/analyzer/CandidateKeyBuilder';
-import { FDBuilder } from '../features/analyzer/FDBuilder';
-import { MVDBuilder } from '../features/analyzer/MVDBuilder';
 import { SampleDataEditor } from '../features/analyzer/SampleDataEditor';
 import { RawInputEditor } from '../features/analyzer/RawInputEditor';
 import { SchemaPreview } from '../features/analyzer/SchemaPreview';
@@ -38,7 +33,7 @@ const DRAFT_STORAGE_KEY = 'normalization_lab_draft_v1';
 const DEFAULT_INITIAL_SCHEMA: RelationSchema = EXAMPLE_SCHEMAS[1].schema; // ENROLLMENT (Classic 2NF)
 
 export const AnalyzerPage: React.FC = () => {
-  const [inputTab, setInputTab] = useState<'structured' | 'raw' | 'sample'>('structured');
+  const [inputTab, setInputTab] = useState<'raw' | 'sample'>('raw');
   const [selectedStage, setSelectedStage] = useState<'1NF' | '2NF' | '3NF' | '4NF'>('1NF');
 
   // Core canonical schema state
@@ -135,59 +130,6 @@ export const AnalyzerPage: React.FC = () => {
     };
   }, []);
 
-  // Attribute handlers with rename propagation
-  const handleAttributesChange = (
-    newAttrs: string[],
-    renameMap?: { from: string; to: string }
-  ) => {
-    if (!renameMap) {
-      updateSchema({
-        ...schema,
-        attributes: newAttrs,
-      });
-      return;
-    }
-
-    const { from, to } = renameMap;
-    // Propagate rename to Candidate Keys
-    const updatedKeys = (schema.candidate_keys || []).map((k) =>
-      k.map((attr) => (attr === from ? to : attr))
-    );
-
-    // Propagate rename to FDs
-    const updatedFds = schema.functional_dependencies.map((fd) => ({
-      ...fd,
-      left: fd.left.map((a) => (a === from ? to : a)),
-      right: fd.right.map((a) => (a === from ? to : a)),
-    }));
-
-    // Propagate rename to MVDs
-    const updatedMvds = schema.multivalued_dependencies.map((mvd) => ({
-      ...mvd,
-      left: mvd.left.map((a) => (a === from ? to : a)),
-      right: mvd.right.map((a) => (a === from ? to : a)),
-    }));
-
-    // Propagate rename to Sample Data columns
-    const updatedSample = (schema.sample_data || []).map((row) => {
-      const newRow = { ...row };
-      if (from in newRow) {
-        newRow[to] = newRow[from];
-        delete newRow[from];
-      }
-      return newRow;
-    });
-
-    updateSchema({
-      ...schema,
-      attributes: newAttrs,
-      candidate_keys: updatedKeys,
-      functional_dependencies: updatedFds,
-      multivalued_dependencies: updatedMvds,
-      sample_data: updatedSample,
-    });
-  };
-
   const handleResetConfirm = () => {
     const emptySchema: RelationSchema = {
       name: 'NEW_RELATION',
@@ -205,7 +147,6 @@ export const AnalyzerPage: React.FC = () => {
   };
 
   const inputTabs = [
-    { id: 'structured', label: 'Structured Builder', icon: <Sliders className="w-3.5 h-3.5" /> },
     { id: 'raw', label: 'Raw Notation', icon: <Database className="w-3.5 h-3.5" /> },
     { id: 'sample', label: 'Sample Data', icon: <Table className="w-3.5 h-3.5" /> },
   ];
@@ -219,7 +160,7 @@ export const AnalyzerPage: React.FC = () => {
         badge={
           <div className="flex items-center gap-2">
             <Badge variant="accent" size="sm">
-              Schema Builder & Validation
+              Raw Notation & Validation
             </Badge>
             <span className="text-[11px] text-slate-400 dark:text-slate-500 font-mono">
               {saveStatus === 'saving' ? '● Saving...' : '✓ Saved locally'}
@@ -292,77 +233,22 @@ export const AnalyzerPage: React.FC = () => {
                   <Database className="w-4 h-4 text-indigo-500" />
                   Schema & Dependency Input
                 </CardTitle>
-                <Badge variant={inputTab === 'structured' ? 'accent' : 'neutral'} size="sm">
-                  {inputTab === 'structured'
-                    ? 'Guided Mode'
-                    : inputTab === 'raw'
-                    ? 'Raw Mode'
-                    : 'Data Mode'}
+                <Badge variant={inputTab === 'raw' ? 'accent' : 'neutral'} size="sm">
+                  {inputTab === 'raw' ? 'Raw Mode' : 'Data Mode'}
                 </Badge>
               </div>
               <CardDescription>
-                Define relational attributes, candidate keys, and dependencies.
+                Define relational attributes, candidate keys, and dependencies using raw DBMS notation.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <Tabs
                 tabs={inputTabs}
                 activeTab={inputTab}
-                onChange={(tabId) => setInputTab(tabId as 'structured' | 'raw' | 'sample')}
+                onChange={(tabId) => setInputTab(tabId as 'raw' | 'sample')}
               />
 
-              {/* TAB 1: STRUCTURED / GUIDED BUILDER */}
-              {inputTab === 'structured' && (
-                <div className="space-y-5">
-                  {/* 1. Relation Name */}
-                  <div className="space-y-1.5">
-                    <label
-                      htmlFor="relation-name-input"
-                      className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center justify-between"
-                    >
-                      <span>Relation Name</span>
-                      <span className="text-[10px] text-slate-400 font-mono">Identifier</span>
-                    </label>
-                    <input
-                      id="relation-name-input"
-                      type="text"
-                      value={schema.name}
-                      onChange={(e) => updateSchema({ ...schema, name: e.target.value.toUpperCase() })}
-                      placeholder="e.g. ENROLLMENT"
-                      className="w-full px-3 py-1.5 font-mono text-xs uppercase font-bold rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500"
-                    />
-                  </div>
-
-                  {/* 2. Attributes Builder */}
-                  <AttributeBuilder
-                    attributes={schema.attributes}
-                    onChange={handleAttributesChange}
-                  />
-
-                  {/* 3. Candidate Key Builder */}
-                  <CandidateKeyBuilder
-                    attributes={schema.attributes}
-                    candidateKeys={schema.candidate_keys || []}
-                    onChange={(keys) => updateSchema({ ...schema, candidate_keys: keys })}
-                  />
-
-                  {/* 4. Functional Dependency Builder */}
-                  <FDBuilder
-                    attributes={schema.attributes}
-                    functionalDependencies={schema.functional_dependencies}
-                    onChange={(fds) => updateSchema({ ...schema, functional_dependencies: fds })}
-                  />
-
-                  {/* 5. Multivalued Dependency Builder */}
-                  <MVDBuilder
-                    attributes={schema.attributes}
-                    multivaluedDependencies={schema.multivalued_dependencies}
-                    onChange={(mvds) => updateSchema({ ...schema, multivalued_dependencies: mvds })}
-                  />
-                </div>
-              )}
-
-              {/* TAB 2: RAW DBMS NOTATION */}
+              {/* TAB 1: RAW DBMS NOTATION */}
               {inputTab === 'raw' && (
                 <RawInputEditor
                   initialSchema={schema}
@@ -370,7 +256,7 @@ export const AnalyzerPage: React.FC = () => {
                 />
               )}
 
-              {/* TAB 3: SAMPLE DATA TABLE */}
+              {/* TAB 2: SAMPLE DATA TABLE */}
               {inputTab === 'sample' && (
                 <SampleDataEditor
                   attributes={schema.attributes}

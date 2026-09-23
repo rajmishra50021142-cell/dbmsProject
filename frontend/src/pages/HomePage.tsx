@@ -149,14 +149,14 @@ export const HomePage: React.FC = () => {
             <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-2">
               <Database className="w-4 h-4" />
             </div>
-            <CardTitle>Structured Schema Builder</CardTitle>
+            <CardTitle>Raw Relational Input</CardTitle>
             <CardDescription>
-              Relational Specification
+              Authoritative DBMS Notation
             </CardDescription>
           </CardHeader>
           <CardContent className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed space-y-2">
             <p>
-              Provides structured builders for relation attributes, multiple composite candidate keys, functional dependencies (FDs), and multivalued dependencies (MVDs).
+              Supports direct raw textbook specification for relation schemas, composite candidate keys, functional dependencies (FDs), and multivalued dependencies (MVDs) with instantaneous parsing.
             </p>
             <p className="font-mono text-[11px] bg-slate-100 dark:bg-slate-800 p-2 rounded text-slate-700 dark:text-slate-300">
               R(StudentID, CourseID, Grade, Dept)

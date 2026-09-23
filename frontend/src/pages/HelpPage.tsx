@@ -149,10 +149,10 @@ export const HelpPage: React.FC = () => {
           <div>
             <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
               <Cpu className="w-4 h-4 text-indigo-500" />
-              2. Input Syntax Standards (Guided vs Raw Mode)
+              2. Input Syntax Standards (Raw Notation)
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              The engine supports both structured visual inputs and high-speed raw text entry. Use the exact grammar below:
+              The engine supports authoritative high-speed raw text entry. Use the exact grammar below:
             </p>
           </div>
 

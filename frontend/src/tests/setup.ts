@@ -1,9 +1,15 @@
 import '@testing-library/jest-dom';
 import { cleanup } from '@testing-library/react';
-import { afterEach } from 'vitest';
+import { beforeEach, afterEach, vi } from 'vitest';
+
+beforeEach(() => {
+  vi.spyOn(console, 'error').mockImplementation(() => {});
+  vi.spyOn(console, 'warn').mockImplementation(() => {});
+});
 
 afterEach(() => {
   cleanup();
+  vi.restoreAllMocks();
 });
 
 // Polyfill window.matchMedia for JSDOM
