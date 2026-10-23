@@ -1,0 +1,2872 @@
+{
+  "summary": {
+    "ai_practice": {
+      "total_questions": 30,
+      "topics": [
+        "1NF & Cell Atomicity",
+        "1NF Repeating Groups",
+        "2NF Decomposition",
+        "2NF Partial Dependencies",
+        "2NF Single-Attribute Key Guarantee",
+        "3NF Formal Condition",
+        "3NF Synthesis Algorithm",
+        "3NF Transitive Dependency",
+        "3NF vs BCNF Formal Distinction",
+        "3NF vs BCNF Trade-offs",
+        "4NF Decomposition & Fagin's Theorem",
+        "4NF Formal Condition",
+        "Armstrong's Axioms",
+        "Attribute Closure",
+        "Candidate Keys & Superkeys",
+        "Composite Candidate Keys",
+        "Dependency Preservation",
+        "Full & Partial Functional Dependencies",
+        "Functional Dependencies",
+        "Lossless Join Decomposition",
+        "Minimal Cover / Canonical Cover",
+        "Multiple Candidate Keys",
+        "Multivalued Dependencies (MVDs)",
+        "Normal Form Classification",
+        "Prime & Non-Prime Attributes",
+        "Relational Anomalies",
+        "Relational Schema Basics",
+        "Tableau Chase Algorithm",
+        "Trivial vs Non-Trivial MVDs"
+      ],
+      "difficulties": [
+        "Easy",
+        "Medium",
+        "Hard"
+      ]
+    },
+    "pyq_practice": {
+      "total_questions": 80,
+      "playable_questions": 60,
+      "incomplete_questions": 20,
+      "topics": [
+        "1NF & Atomicity",
+        "3NF & Transitive Dependencies",
+        "4NF & Multivalued Dependencies",
+        "Armstrong Axioms",
+        "Attribute Closure",
+        "BCNF Analysis",
+        "Candidate Keys & Superkeys",
+        "Dependency Preservation",
+        "Lossless Join",
+        "Normalization Theory"
+      ],
+      "exams": [
+        "BARC OCES",
+        "DRDO CSE",
+        "GATE CSE",
+        "GATE IT",
+        "ISRO CSE",
+        "UPSC ESE Electronics"
+      ]
+    }
+  },
+  "pyqs": [
+    {
+      "id": "pyq-01",
+      "bank_type": "pyq",
+      "statement": "Let an inference system include the rule XY -> YZ. Which Armstrong-style rule is sufficient to derive it from a related pair of dependencies? State the corresponding union/augmentation reasoning.",
+      "options": [
+        "A) Decomposition only",
+        "B) Union / add-right-hand-side reasoning",
+        "C) Transitivity only",
+        "D) Pseudotransitivity only"
+      ],
+      "correct_answer": "B",
+      "explanation": "Union / add-right-hand-side reasoning allows deriving XY -> YZ from XY -> Y and XY -> Z.",
+      "topic": "Armstrong Axioms",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2026",
+      "note": "Paraphrased from the archived normalization question; exact wording/options may differ.",
+      "source_number": 1,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-02",
+      "bank_type": "pyq",
+      "statement": "Consider statements about normal forms and decomposition: (i) a 3NF decomposition can be lossless and dependency-preserving, (ii) a 1NF relation need not be in 2NF, (iii) every BCNF relation is in 3NF, and (iv) every 2NF relation is in BCNF. Select the statement set that is correct.",
+      "options": [
+        "A) (i), (ii), (iii)",
+        "B) (i), (iii), (iv)",
+        "C) (ii), (iii)",
+        "D) (i), (ii), (iv)"
+      ],
+      "correct_answer": "A",
+      "explanation": "Statements (i), (ii), and (iii) are correct; (iv) is false because 2NF relations can violate 3NF and BCNF.",
+      "topic": "Lossless Join",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2026",
+      "note": "Statement-set question; paraphrased for study use.",
+      "source_number": 2,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-03",
+      "bank_type": "pyq",
+      "statement": "For a relation Team(name, city, owner), the dependencies include name -> city and name -> owner. Consider decomposing it into relations that separate the city and owner information. Which statements about losslessness, BCNF, and dependency preservation are valid?",
+      "options": [
+        "A) The decomposition is necessarily lossy",
+        "B) Both component relations can satisfy BCNF",
+        "C) The original dependency can be preserved by the decomposition",
+        "D) BCNF is impossible here"
+      ],
+      "correct_answer": "B",
+      "explanation": "In Team(name, city, owner) with name -> city, name -> owner, both component relations (name, city) and (name, owner) satisfy BCNF since name is a superkey in each.",
+      "topic": "Lossless Join",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2025",
+      "note": "Paraphrased from the GATE 2025 Set 1 normalization/decomposition question.",
+      "source_number": 3,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-04",
+      "bank_type": "pyq",
+      "statement": "A relation is said to be in 1NF. Which statement is necessarily true about its attributes and tuple values?",
+      "options": [
+        "A) Every determinant is a candidate key",
+        "B) Attribute values are atomic / indivisible in the relation model used",
+        "C) No transitive dependency can exist",
+        "D) Every non-key attribute fully depends on every key"
+      ],
+      "correct_answer": "B",
+      "explanation": "By 1NF definition, attribute values must be atomic / indivisible in the relational model.",
+      "topic": "1NF & Atomicity",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2024",
+      "note": "1NF-focused PYQ; paraphrased.",
+      "source_number": 4,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-05",
+      "bank_type": "pyq",
+      "statement": "A relation contains exactly two attributes. For arbitrary non-trivial functional dependencies on those attributes, which normal-form statement is guaranteed?",
+      "options": [
+        "A) It can be outside 2NF",
+        "B) It can be outside 3NF but inside 2NF",
+        "C) It is always in BCNF",
+        "D) It is always in 4NF only"
+      ],
+      "correct_answer": "C",
+      "explanation": "Any binary relation (having exactly two attributes) is guaranteed to be in BCNF for any non-trivial FDs.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2022",
+      "note": "Two-attribute BCNF question; paraphrased.",
+      "source_number": 5,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-06",
+      "bank_type": "pyq",
+      "statement": "For a relation with functional dependencies P -> QR and RS -> T, which of the following dependencies can be inferred using closure and transitivity?",
+      "options": [
+        "A) PR -> Q",
+        "B) PS -> T",
+        "C) P -> T",
+        "D) QR -> S"
+      ],
+      "correct_answer": "B",
+      "explanation": "P -> QR implies PS -> QRS by augmentation. Since RS -> T, QRS -> T. By transitivity, PS -> T.",
+      "topic": "Attribute Closure",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2021",
+      "note": "FD-closure question used as a normalization prerequisite; paraphrased.",
+      "source_number": 6,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-07",
+      "bank_type": "pyq",
+      "statement": "If every non-key attribute is functionally dependent on the primary key, then, based only on the statement given, what is the highest normal form that can be guaranteed?",
+      "options": [
+        "A) 1NF",
+        "B) 2NF",
+        "C) 3NF",
+        "D) 4NF"
+      ],
+      "correct_answer": "A",
+      "explanation": "If the primary key is composite, non-key attributes may depend on a proper subset of the key, so only 1NF is guaranteed without further constraints.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2020",
+      "note": "Official ISRO Scientist CS 2020 question, paraphrased.",
+      "source_number": 7,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-08",
+      "bank_type": "pyq",
+      "statement": "For a relation schema with a stated key and functional dependencies, identify the case in which the relation is in 3NF but not BCNF.",
+      "options": [
+        "A) Every determinant is a superkey",
+        "B) A non-prime attribute determines another non-prime attribute",
+        "C) A prime attribute determines a non-prime attribute and the determinant is not a superkey",
+        "D) There are no functional dependencies"
+      ],
+      "correct_answer": "C",
+      "explanation": "In 3NF, a dependency X -> A is permissible if X is a superkey OR A is prime. A relation is in 3NF but not BCNF when X is not a superkey and A is prime.",
+      "topic": "3NF & Transitive Dependencies",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2020",
+      "note": "3NF-vs-BCNF concept question; paraphrased.",
+      "source_number": 8,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-09",
+      "bank_type": "pyq",
+      "statement": "Suppose a relation is decomposed into Y(PR) and Z(QRS), with a dependency such as QR -> S. Determine which combination of lossless-join, dependency-preservation, and normal-form properties is satisfied by the decomposition.",
+      "options": [
+        "A) Lossless and dependency-preserving only",
+        "B) Lossless but not dependency-preserving",
+        "C) Dependency-preserving but lossy",
+        "D) Neither"
+      ],
+      "correct_answer": "D",
+      "explanation": "Common attribute is R, which is not a superkey of Y(PR) or Z(QRS). Thus the decomposition is lossy and neither property is guaranteed.",
+      "topic": "Lossless Join",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2019",
+      "note": "Decomposition question; original options are paraphrased.",
+      "source_number": 9,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-10",
+      "bank_type": "pyq",
+      "statement": "What does it mean for an attribute set X to be fully functionally dependent on a set Y?",
+      "options": [
+        "A) X depends on every proper subset of Y",
+        "B) X depends on Y and on no proper subset of Y",
+        "C) Y depends on X only",
+        "D) X and Y must be candidate keys"
+      ],
+      "correct_answer": "B",
+      "explanation": "Full functional dependency means X depends on Y and on no proper subset of Y.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2018",
+      "note": "Definition of full functional dependency, paraphrased.",
+      "source_number": 10,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-11",
+      "bank_type": "pyq",
+      "statement": "Consider R(a,b,c,d), where all attribute values are atomic and the only listed non-trivial dependencies are a -> c and b -> d. What is the strongest normal-form conclusion justified by these dependencies?",
+      "options": [
+        "A) 1NF only",
+        "B) 2NF",
+        "C) 3NF",
+        "D) BCNF"
+      ],
+      "correct_answer": "A",
+      "explanation": "In R(a,b,c,d) with a -> c and b -> d, candidate key is {a,b}. Both dependencies are partial dependencies on non-prime attributes, so it is in 1NF only.",
+      "topic": "1NF & Atomicity",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2018",
+      "note": "Archived sources disagree on the keyed interpretation of this item; the question itself is reproduced here only as a study prompt, without an answer key.",
+      "source_number": 11,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-12",
+      "bank_type": "pyq",
+      "statement": "The original paper presents four relational schemas with their non-trivial functional dependencies and underlined primary keys. Which schema is in 3NF but not BCNF?",
+      "options": [
+        "A) Schema I",
+        "B) Schema II",
+        "C) Schema III",
+        "D) Schema IV"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "3NF & Transitive Dependencies",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "Figure-based",
+      "exam": "GATE CSE",
+      "year": "2018",
+      "note": "Figure-based original item. The source figure is not reproduced in this text compilation, so the four schemas/options require the original paper figure.",
+      "source_number": 12,
+      "status": "incomplete",
+      "incomplete_reason": "Figure-based original item. The source figure is not reproduced in this text compilation; schemas are designated Schema I through IV."
+    },
+    {
+      "id": "pyq-13",
+      "bank_type": "pyq",
+      "statement": "Given functional dependencies V -> W, VW -> X, Y -> VX, and Y -> Z, reduce them to an irreducible / minimal equivalent set. Which dependency set is the appropriate result?",
+      "options": [
+        "A) Keep only V -> W and Y -> V",
+        "B) Remove redundant attributes and dependencies while preserving the closure",
+        "C) Replace all FDs by one superkey dependency",
+        "D) Remove Y -> Z because Z is not a key"
+      ],
+      "correct_answer": "B",
+      "explanation": "A minimal / canonical cover is obtained by decomposing RHS, removing extraneous LHS attributes, and removing redundant dependencies while preserving equivalence.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2017",
+      "note": "Minimal-cover / FD-reduction question, paraphrased.",
+      "source_number": 13,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-14",
+      "bank_type": "pyq",
+      "statement": "The original paper shows a journal/research-article schema and asks for the weakest normal form satisfied by a newer design that was not satisfied by the older design. Identify the normal form.",
+      "options": [
+        "A) 1NF",
+        "B) 2NF",
+        "C) 3NF",
+        "D) BCNF"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "Figure-based",
+      "exam": "GATE CSE",
+      "year": "2016",
+      "note": "Figure-based original item; the journal schema diagram is not reproduced here.",
+      "source_number": 14,
+      "status": "incomplete",
+      "incomplete_reason": "Figure-based original item. The journal schema diagram is not reproduced in this text compilation."
+    },
+    {
+      "id": "pyq-15",
+      "bank_type": "pyq",
+      "statement": "Given FDs PR -> ST and PSU -> QR, determine which dependency is implied / trivial under the stated dependency set.",
+      "options": [
+        "A) PR -> S",
+        "B) PU -> T",
+        "C) QS -> P",
+        "D) RS -> U"
+      ],
+      "correct_answer": "A",
+      "explanation": "PR -> ST implies PR -> S and PR -> T by the decomposition rule of Armstrong axioms.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2015",
+      "note": "Paraphrased FD-closure/trivial-dependency item; solve from the stated FDs.",
+      "source_number": 15,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-16",
+      "bank_type": "pyq",
+      "statement": "The original paper supplies a relation instance/table and asks for the highest normal form of that relation. Identify the normal form after checking keys and functional dependencies.",
+      "options": [
+        "A) 1NF",
+        "B) 2NF",
+        "C) 3NF",
+        "D) BCNF"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "Figure-based",
+      "exam": "ISRO CSE",
+      "year": "2014",
+      "note": "Figure-based original item; the source table is not reproduced in this text compilation.",
+      "source_number": 16,
+      "status": "incomplete",
+      "incomplete_reason": "Figure-based original item. The source table instance is not reproduced in this text compilation."
+    },
+    {
+      "id": "pyq-17",
+      "bank_type": "pyq",
+      "statement": "If every value of attribute A always occurs with exactly one B value, while the same A can occur with multiple C values, what dependencies are represented?",
+      "options": [
+        "A) A -> B and A -> C",
+        "B) A -> B and A ->> C",
+        "C) A ->> B and A -> C",
+        "D) B -> A and C -> A"
+      ],
+      "correct_answer": "B",
+      "explanation": "Every A mapping to exactly one B represents functional dependency A -> B; A mapping to multiple C values independently represents multivalued dependency A ->> C.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2014",
+      "note": "Multivalued-dependency question; paraphrased.",
+      "source_number": 17,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-18",
+      "bank_type": "pyq",
+      "statement": "A relation R is decomposed into R1(A,B) and R2(C,D), with dependencies A -> B and C -> D. Which statement about dependency preservation and lossless join follows from this decomposition?",
+      "options": [
+        "A) The decomposition preserves the stated dependencies",
+        "B) It necessarily destroys all dependencies",
+        "C) It is necessarily lossy",
+        "D) It violates 1NF"
+      ],
+      "correct_answer": "A",
+      "explanation": "The projections R1(A,B) and R2(C,D) directly preserve the stated functional dependencies A -> B and C -> D.",
+      "topic": "Lossless Join",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2014",
+      "note": "Decomposition question; paraphrased.",
+      "source_number": 18,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-19",
+      "bank_type": "pyq",
+      "statement": "What is a prime attribute in a relation schema?",
+      "options": [
+        "A) An attribute present in every candidate key",
+        "B) An attribute that belongs to at least one candidate key",
+        "C) An attribute with a unique value in every tuple",
+        "D) A foreign-key attribute"
+      ],
+      "correct_answer": "B",
+      "explanation": "A prime attribute is defined as an attribute that belongs to at least one candidate key of the relation.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2014",
+      "note": "Definition question, important for 3NF testing.",
+      "source_number": 19,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-20",
+      "bank_type": "pyq",
+      "statement": "Consider two statements: S1 claims that a relation containing two attributes is in all standard normal forms; S2 concerns whether a set of functional dependencies is a minimal cover. Select the correct truth-value combination.",
+      "options": [
+        "A) S1 true, S2 true",
+        "B) S1 true, S2 false",
+        "C) S1 false, S2 true",
+        "D) S1 false, S2 false"
+      ],
+      "correct_answer": "A",
+      "explanation": "S1 is true (a two-attribute relation is in all standard normal forms); S2 is true (minimal cover can be tested for equivalence).",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2014",
+      "note": "Two-statement normalization question; paraphrased.",
+      "source_number": 20,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-21",
+      "bank_type": "pyq",
+      "statement": "For BOOK(ISBN, Title, Publisher, Address), suppose ISBN -> Title, Publisher and Publisher -> Address. What is the highest normal form guaranteed by these dependencies?",
+      "options": [
+        "A) 1NF",
+        "B) 2NF",
+        "C) 3NF",
+        "D) BCNF"
+      ],
+      "correct_answer": "B",
+      "explanation": "Candidate key is {ISBN}. Publisher -> Address is a transitive dependency between non-key attributes, violating 3NF but satisfying 2NF.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2013",
+      "note": "Normal-form question, paraphrased.",
+      "source_number": 21,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-22",
+      "bank_type": "pyq",
+      "statement": "For a relation R(A,B,C,D,E,F,G,H), with atomic attributes and a given set of functional dependencies, determine the highest normal form reached after finding the candidate keys and checking prime/non-prime dependencies.",
+      "options": [
+        "A) 1NF",
+        "B) 2NF",
+        "C) 3NF",
+        "D) BCNF"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "Candidate Keys & Superkeys",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2013",
+      "note": "The archived question includes a dependency set; this text version states the task without reproducing the full original table/format.",
+      "source_number": 22,
+      "status": "incomplete",
+      "incomplete_reason": "Schema-based question. The dependency set for R(A,B,C,D,E,F,G,H) is omitted in this text compilation."
+    },
+    {
+      "id": "pyq-23",
+      "bank_type": "pyq",
+      "statement": "For the same relation schema and dependency set, determine the number of candidate keys.",
+      "options": [
+        "A) 1",
+        "B) 2",
+        "C) 3",
+        "D) 4"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "Candidate Keys & Superkeys",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2013",
+      "note": "Candidate-key prerequisite from the same normalization problem.",
+      "source_number": 23,
+      "status": "incomplete",
+      "incomplete_reason": "Prerequisite item for Q22. The dependency set is omitted in this text compilation."
+    },
+    {
+      "id": "pyq-24",
+      "bank_type": "pyq",
+      "statement": "Which statement correctly compares 3NF and BCNF?",
+      "options": [
+        "A) Every 3NF relation is BCNF",
+        "B) Every BCNF relation is 3NF",
+        "C) 3NF is strictly stronger than BCNF",
+        "D) 3NF and BCNF are identical"
+      ],
+      "correct_answer": "B",
+      "explanation": "Every BCNF relation is also in 3NF, because BCNF is strictly stronger than 3NF.",
+      "topic": "3NF & Transitive Dependencies",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2012",
+      "note": "Classic 3NF/BCNF comparison question, paraphrased.",
+      "source_number": 24,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-25",
+      "bank_type": "pyq",
+      "statement": "Among Armstrong-style inference rules, which dependency relationship is not a primitive inference rule?",
+      "options": [
+        "A) Reflexivity",
+        "B) Augmentation",
+        "C) Transitivity",
+        "D) Mutual dependency"
+      ],
+      "correct_answer": "D",
+      "explanation": "Reflexivity, Augmentation, and Transitivity form the primitive Armstrong axioms. Mutual dependency is not one of them.",
+      "topic": "Armstrong Axioms",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2011",
+      "note": "Inference-rule question, paraphrased.",
+      "source_number": 25,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-26",
+      "bank_type": "pyq",
+      "statement": "If every non-key attribute depends fully on a key and the relation otherwise satisfies 1NF, which normal form is obtained from the stated condition?",
+      "options": [
+        "A) 1NF",
+        "B) 2NF",
+        "C) 3NF",
+        "D) BCNF"
+      ],
+      "correct_answer": "B",
+      "explanation": "If every non-key attribute is fully dependent on a candidate key and 1NF holds, the relation satisfies 2NF.",
+      "topic": "1NF & Atomicity",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2011",
+      "note": "Full functional dependency / 2NF question, paraphrased.",
+      "source_number": 26,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-27",
+      "bank_type": "pyq",
+      "statement": "Given a Suppliers relation and its functional dependencies, first determine the candidate key(s), then identify the highest normal form satisfied by the relation.",
+      "options": [
+        "A) 1NF",
+        "B) 2NF",
+        "C) 3NF",
+        "D) BCNF"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "Candidate Keys & Superkeys",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2009",
+      "note": "The original problem is dependency-set based; paraphrased.",
+      "source_number": 27,
+      "status": "incomplete",
+      "incomplete_reason": "Dependency-set based question. The functional dependencies for the Suppliers relation are omitted in this compilation."
+    },
+    {
+      "id": "pyq-28",
+      "bank_type": "pyq",
+      "statement": "For R(A,B,C,D,E,P,G) with the functional dependencies supplied in the paper, determine the highest normal form by identifying the candidate key(s) and checking determinants.",
+      "options": [
+        "A) 1NF",
+        "B) 2NF",
+        "C) 3NF",
+        "D) BCNF"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "Candidate Keys & Superkeys",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "MCQ",
+      "exam": "GATE IT",
+      "year": "2008",
+      "note": "Paraphrased from the archived GATE IT 2008 normalization question.",
+      "source_number": 28,
+      "status": "incomplete",
+      "incomplete_reason": "Dependency-set based question. Functional dependencies for R(A,B,C,D,E,P,G) are omitted in this compilation."
+    },
+    {
+      "id": "pyq-29",
+      "bank_type": "pyq",
+      "statement": "For R(A,B,C,D) with A -> B, B -> C, C -> D, and D -> B, analyze the decompositions involving AB, BC, and BD. Determine which statement about lossless join and dependency preservation is correct.",
+      "options": [
+        "A) All listed decompositions are lossless and dependency-preserving",
+        "B) The decomposition is lossless but loses dependency preservation",
+        "C) It is dependency-preserving but lossy",
+        "D) It is both lossy and not dependency-preserving"
+      ],
+      "correct_answer": "A",
+      "explanation": "For R(A,B,C,D) with cyclical dependencies among B, C, D, the projections are lossless and preserve all dependencies.",
+      "topic": "Lossless Join",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE IT",
+      "year": "2008",
+      "note": "Decomposition question, paraphrased.",
+      "source_number": 29,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-30",
+      "bank_type": "pyq",
+      "statement": "For the BOOK/COLLECTION schema from the paper, use the stated dependencies between book, collection, and related attributes to identify the highest normal form.",
+      "options": [
+        "A) 1NF",
+        "B) 2NF",
+        "C) 3NF",
+        "D) BCNF"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2008",
+      "note": "Text-archive version; original problem contains the schema/dependency details.",
+      "source_number": 30,
+      "status": "incomplete",
+      "incomplete_reason": "Text-archive version. The original problem schema and dependencies are omitted in this text compilation."
+    },
+    {
+      "id": "pyq-31",
+      "bank_type": "pyq",
+      "statement": "BCNF is not generally chosen in which type of situation?",
+      "options": [
+        "A) When preserving all dependencies is more important than reaching BCNF",
+        "B) When the relation has no keys",
+        "C) When there are no functional dependencies",
+        "D) When all attributes are atomic"
+      ],
+      "correct_answer": "A",
+      "explanation": "BCNF is not chosen when preserving all functional dependencies is required, since BCNF decomposition cannot always preserve all FDs.",
+      "topic": "BCNF Analysis",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2007",
+      "note": "Archived question wording is reported as ambiguous; included as a historical PYQ prompt only.",
+      "source_number": 31,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-32",
+      "bank_type": "pyq",
+      "statement": "Which dependency relationship is not one of the basic Armstrong inference rules?",
+      "options": [
+        "A) Reflexivity",
+        "B) Augmentation",
+        "C) Transitivity",
+        "D) Mutual dependency"
+      ],
+      "correct_answer": "D",
+      "explanation": "Mutual dependency is not one of the basic Armstrong inference rules.",
+      "topic": "Armstrong Axioms",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2007",
+      "note": "Armstrong-rule question; paraphrased.",
+      "source_number": 32,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-33",
+      "bank_type": "pyq",
+      "statement": "For a set of multivalued-dependency statements, determine how many are implied by the given dependencies using the complementation, replication, coalescence, or transitivity properties of MVDs.",
+      "options": [
+        "A) 1",
+        "B) 2",
+        "C) 3",
+        "D) 4"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "4NF & Multivalued Dependencies",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "MCQ",
+      "exam": "GATE IT",
+      "year": "2007",
+      "note": "4NF-oriented MVD question; paraphrased.",
+      "source_number": 33,
+      "status": "incomplete",
+      "incomplete_reason": "4NF-oriented MVD question. The original multivalued dependency statements are omitted in this text compilation."
+    },
+    {
+      "id": "pyq-34",
+      "bank_type": "pyq",
+      "statement": "Which statement about database normal forms is false?",
+      "options": [
+        "A) BCNF is stronger than 3NF",
+        "B) A relation in BCNF is also in 3NF",
+        "C) A relation in 3NF is always in BCNF",
+        "D) 2NF removes partial dependencies on candidate keys"
+      ],
+      "correct_answer": "C",
+      "explanation": "The statement 'A relation in 3NF is always in BCNF' is false; BCNF is strictly stronger than 3NF.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2007",
+      "note": "Normal-form true/false style question; paraphrased.",
+      "source_number": 34,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-35",
+      "bank_type": "pyq",
+      "statement": "For a relation with dependencies VY -> W, WX -> Z, and ZY -> V, determine a candidate key.",
+      "options": [
+        "A) VY",
+        "B) WY",
+        "C) XY",
+        "D) ZY"
+      ],
+      "correct_answer": "C",
+      "explanation": "X and Y never appear on the RHS of any dependency and must be present in every key. The minimal determinant is XY.",
+      "topic": "Candidate Keys & Superkeys",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE IT",
+      "year": "2006",
+      "note": "Candidate-key prerequisite from a GATE IT normalization problem.",
+      "source_number": 35,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-36",
+      "bank_type": "pyq",
+      "statement": "Given A -> B, A -> C, CD -> E, B -> D, and E -> A, identify the dependency that is not implied by the others.",
+      "options": [
+        "A) A -> B",
+        "B) CD -> E",
+        "C) B -> D",
+        "D) E -> A"
+      ],
+      "correct_answer": "B",
+      "explanation": "Dependencies A -> B, A -> C, B -> D, and E -> A form a chain, but CD -> E cannot be derived from the others.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE IT",
+      "year": "2005",
+      "note": "FD implication question; paraphrased.",
+      "source_number": 36,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-37",
+      "bank_type": "pyq",
+      "statement": "For R(F1,F2,F3,F4,F5) with F1 -> F3, F2 -> F4, and F1F2 -> F5, identify the highest normal form.",
+      "options": [
+        "A) 1NF",
+        "B) 2NF",
+        "C) 3NF",
+        "D) BCNF"
+      ],
+      "correct_answer": "A",
+      "explanation": "Candidate key is {F1, F2}. F1 -> F3 and F2 -> F4 are partial dependencies, so R is in 1NF only.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE IT",
+      "year": "2005",
+      "note": "Classic normal-form classification question, paraphrased.",
+      "source_number": 37,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-38",
+      "bank_type": "pyq",
+      "statement": "Which statement about normal forms and functional dependencies is false?",
+      "options": [
+        "A) 3NF is weaker than BCNF",
+        "B) A relation may be in 3NF but not BCNF",
+        "C) Every relation in BCNF is in 3NF",
+        "D) Every relation in 2NF is in BCNF"
+      ],
+      "correct_answer": "D",
+      "explanation": "The statement 'Every relation in 2NF is in BCNF' is false because 2NF relations often contain transitive dependencies violating 3NF and BCNF.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2005",
+      "note": "Paraphrased true/false normal-form item.",
+      "source_number": 38,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-39",
+      "bank_type": "pyq",
+      "statement": "For the Empdtl relation given in the paper, determine the highest normal form after examining its key and the dependencies among employee, department, and related attributes.",
+      "options": [
+        "A) 1NF",
+        "B) 2NF",
+        "C) 3NF",
+        "D) BCNF"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "MCQ",
+      "exam": "GATE IT",
+      "year": "2004",
+      "note": "Schema-based question; paraphrased.",
+      "source_number": 39,
+      "status": "incomplete",
+      "incomplete_reason": "Schema-based question. The Empdtl relation key and dependencies are omitted in this compilation."
+    },
+    {
+      "id": "pyq-40",
+      "bank_type": "pyq",
+      "statement": "An ER diagram is given and the task is to determine the minimum number of relational tables needed so that the resulting design satisfies 3NF. What is the required minimum?",
+      "options": [
+        "A) 2",
+        "B) 3",
+        "C) 4",
+        "D) 5"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "3NF & Transitive Dependencies",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "Figure-based",
+      "exam": "GATE IT",
+      "year": "2004",
+      "note": "Figure/ER-based original item; source diagram not reproduced here.",
+      "source_number": 40,
+      "status": "incomplete",
+      "incomplete_reason": "Figure/ER-based original item. The source ER diagram is not reproduced in this compilation."
+    },
+    {
+      "id": "pyq-41",
+      "bank_type": "pyq",
+      "statement": "For the Student Performance schema in the paper, determine its highest normal form from the stated key and dependencies.",
+      "options": [
+        "A) 1NF",
+        "B) 2NF",
+        "C) 3NF",
+        "D) BCNF"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2004",
+      "note": "Paraphrased normalization question.",
+      "source_number": 41,
+      "status": "incomplete",
+      "incomplete_reason": "Schema-based question. The Student Performance schema key and dependencies are omitted in this compilation."
+    },
+    {
+      "id": "pyq-42",
+      "bank_type": "pyq",
+      "statement": "Consider a relation with attributes Roll, Name, DOB, and Age, together with dependencies involving Roll, Name, DOB, and Age. Determine the highest normal form.",
+      "options": [
+        "A) 1NF",
+        "B) 2NF",
+        "C) 3NF",
+        "D) BCNF"
+      ],
+      "correct_answer": "B",
+      "explanation": "In Roll, Name, DOB, Age: Roll -> Name, DOB; DOB -> Age. Age transitively depends on Roll via DOB, violating 3NF and reaching 2NF.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2003",
+      "note": "Paraphrased schema-classification question.",
+      "source_number": 42,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-43",
+      "bank_type": "pyq",
+      "statement": "Several decompositions are proposed for a relation with a given FD set. Identify the decomposition that satisfies BCNF rather than merely 3NF.",
+      "options": [
+        "A) Decomposition I",
+        "B) Decomposition II",
+        "C) Decomposition III",
+        "D) Decomposition IV"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "3NF & Transitive Dependencies",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2002",
+      "note": "BCNF-decomposition identification question; original choices are paraphrased.",
+      "source_number": 43,
+      "status": "incomplete",
+      "incomplete_reason": "BCNF-decomposition question. The original decomposition options and FD set are omitted in this compilation."
+    },
+    {
+      "id": "pyq-44",
+      "bank_type": "pyq",
+      "statement": "What is the key effect of converting a relation to BCNF with respect to redundancy caused by functional dependencies?",
+      "options": [
+        "A) Redundancy can be reduced/eliminated",
+        "B) Redundancy must increase",
+        "C) Redundancy is unrelated to normalization",
+        "D) BCNF removes all storage overhead"
+      ],
+      "correct_answer": "A",
+      "explanation": "Converting a relation to BCNF eliminates all functional dependency-based data redundancy.",
+      "topic": "BCNF Analysis",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2002",
+      "note": "Conceptual BCNF question; paraphrased.",
+      "source_number": 44,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-45",
+      "bank_type": "pyq",
+      "statement": "Given a concrete relation instance and a proposed dependency X -> Y, determine whether the instance satisfies the functional dependency.",
+      "options": [
+        "A) Yes, for every tuple pair agreeing on X",
+        "B) No, because one tuple violates it",
+        "C) Only if X is a key",
+        "D) Only if the relation is in BCNF"
+      ],
+      "correct_answer": "A",
+      "explanation": "A relation instance satisfies X -> Y if and only if for every pair of tuples agreeing on X, they also agree on Y.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2000",
+      "note": "Instance-based FD checking question; paraphrased.",
+      "source_number": 45,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-46",
+      "bank_type": "pyq",
+      "statement": "A relation is decomposed into two relations whose common attributes form a determinant in the original schema. Determine whether the decomposition achieves 2NF/3NF and whether the join is lossless.",
+      "options": [
+        "A) Lossless and in 3NF",
+        "B) Lossless and only in 2NF",
+        "C) Lossy but dependency-preserving",
+        "D) Lossy and not dependency-preserving"
+      ],
+      "correct_answer": "A",
+      "explanation": "When the common attributes form a superkey of one of the relations, the decomposition is lossless and satisfies 3NF.",
+      "topic": "Lossless Join",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "1999",
+      "note": "Decomposition/normal-form question; paraphrased.",
+      "source_number": 46,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-47",
+      "bank_type": "pyq",
+      "statement": "What normal form is usually considered an adequate target for a sound relational database design in this older GATE question?",
+      "options": [
+        "A) 1NF",
+        "B) 2NF",
+        "C) 3NF",
+        "D) BCNF"
+      ],
+      "correct_answer": "C",
+      "explanation": "In classical DBMS theory, 3NF is considered an adequate target because it guarantees both a lossless join and dependency preservation.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "1998",
+      "note": "Historical normalization-design question; paraphrased.",
+      "source_number": 47,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-48",
+      "bank_type": "pyq",
+      "statement": "For R(a,b,c,d), with atomic values and dependencies a -> c and b -> d, determine the strongest normal form that can be guaranteed.",
+      "options": [
+        "A) 1NF",
+        "B) 2NF",
+        "C) 3NF",
+        "D) BCNF"
+      ],
+      "correct_answer": "A",
+      "explanation": "Candidate key is {a,b}. The dependencies a -> c and b -> d are partial, so only 1NF can be guaranteed.",
+      "topic": "1NF & Atomicity",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "1997",
+      "note": "Historical normal-form classification question, paraphrased.",
+      "source_number": 48,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-49",
+      "bank_type": "pyq",
+      "statement": "For a relation where BCNF decomposition is being considered, which statement captures the general guarantee concerning lossless join and dependency preservation?",
+      "options": [
+        "A) Both are always guaranteed simultaneously",
+        "B) Lossless join is guaranteed, but dependency preservation may be lost",
+        "C) Dependency preservation is guaranteed, but lossless join may be lost",
+        "D) Neither can be guaranteed"
+      ],
+      "correct_answer": "B",
+      "explanation": "For BCNF decompositions, a lossless join is always guaranteed, but dependency preservation cannot always be guaranteed.",
+      "topic": "Lossless Join",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2001",
+      "note": "BCNF decomposition property question; paraphrased.",
+      "source_number": 49,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-50",
+      "bank_type": "pyq",
+      "statement": "Why can redundancy remain in a relation that is already in 3NF?",
+      "options": [
+        "A) Because prime attributes can participate in dependencies that do not violate 3NF",
+        "B) Because atomicity is not enforced",
+        "C) Because every 3NF relation contains multivalued attributes",
+        "D) Because BCNF and 3NF are identical"
+      ],
+      "correct_answer": "A",
+      "explanation": "Redundancy can remain in 3NF because the 3NF condition permits dependencies X -> A where X is not a superkey, provided A is a prime attribute.",
+      "topic": "3NF & Transitive Dependencies",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "1990",
+      "note": "Historical 3NF redundancy question; paraphrased.",
+      "source_number": 50,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-51",
+      "bank_type": "pyq",
+      "statement": "For the relation and dependency set in the paper, determine which attribute set is a candidate key.",
+      "options": [
+        "A) Set I",
+        "B) Set II",
+        "C) Set III",
+        "D) Set IV"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "Candidate Keys & Superkeys",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "1994",
+      "note": "Paraphrased from GATE CSE 1994 question 3.7; the source uses a dependency-based key calculation.",
+      "source_number": 51,
+      "status": "incomplete",
+      "incomplete_reason": "Key derivation question. The relation and dependency set are omitted in this compilation; options are generic Set I-IV."
+    },
+    {
+      "id": "pyq-52",
+      "bank_type": "pyq",
+      "statement": "Given a proposed decomposition of a relation with its functional dependencies, determine whether the decomposition satisfies BCNF and whether the join is lossless/dependency-preserving.",
+      "options": [
+        "A) BCNF and lossless",
+        "B) BCNF but lossy",
+        "C) Not BCNF but lossless",
+        "D) Neither"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "Lossless Join",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "1994",
+      "note": "Paraphrased from GATE CSE 1994 question 3.6.",
+      "source_number": 52,
+      "status": "incomplete",
+      "incomplete_reason": "Decomposition evaluation. The relation, functional dependencies, and decomposition options are omitted in this compilation."
+    },
+    {
+      "id": "pyq-53",
+      "bank_type": "pyq",
+      "statement": "Given a relation schema and its dependency set, identify the design that is in 3NF but not BCNF.",
+      "options": [
+        "A) Design I",
+        "B) Design II",
+        "C) Design III",
+        "D) Design IV"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "3NF & Transitive Dependencies",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "1995",
+      "note": "Paraphrased from the archived GATE CSE 1995 normalization question.",
+      "source_number": 53,
+      "status": "incomplete",
+      "incomplete_reason": "3NF/BCNF design question. The relation schema, dependencies, and design options are omitted in this compilation."
+    },
+    {
+      "id": "pyq-54",
+      "bank_type": "pyq",
+      "statement": "A \"useful\" functional dependency X -> Y is one where X and Y are non-empty and disjoint. For a relation with four attributes, how many useful FDs are possible if X and Y are treated as attribute sets?",
+      "options": [
+        "A) 16",
+        "B) 25",
+        "C) 50",
+        "D) 64"
+      ],
+      "correct_answer": "C",
+      "explanation": "For a relation with 4 attributes, the number of non-empty disjoint pairs (X, Y) is 3^4 - 2^(4+1) + 1 = 81 - 32 + 1 = 50.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2024",
+      "note": "GATE CSE 2024 Set 2 FD-count question; paraphrased.",
+      "source_number": 54,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-55",
+      "bank_type": "pyq",
+      "statement": "Which implication is valid in general for functional dependencies?",
+      "options": [
+        "A) If X,Y -> Z,W then X -> Z,W",
+        "B) If X -> Z and Y -> W, then X,Y -> Z,W",
+        "C) If X -> Z then Z -> X",
+        "D) If X -> Y then every subset of Y determines X"
+      ],
+      "correct_answer": "B",
+      "explanation": "If X -> Z and Y -> W, then augmenting X -> Z with Y gives XY -> YZ, and augmenting Y -> W with Z gives YZ -> ZW, yielding XY -> ZW by transitivity.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2024",
+      "note": "GATE CSE 2024 Set 1 FD-implication question; options paraphrased.",
+      "source_number": 55,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-56",
+      "bank_type": "pyq",
+      "statement": "Consider statements about a dependency-preserving 3NF decomposition and a BCNF decomposition. Which statement about the guaranteed existence of such decompositions is correct?",
+      "options": [
+        "A) Both dependency-preserving BCNF and dependency-preserving 3NF are always guaranteed",
+        "B) A dependency-preserving 3NF decomposition is always obtainable, but dependency preservation is not",
+        "C) BCNF always preserves every FD by definition",
+        "D) 3NF never preserves dependencies"
+      ],
+      "correct_answer": "B",
+      "explanation": "A dependency-preserving 3NF decomposition is always achievable, whereas for BCNF dependency preservation cannot always be guaranteed.",
+      "topic": "Dependency Preservation",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2026",
+      "note": "GATE CSE 2026 Set 1 normal-form/decomposition statement question; paraphrased.",
+      "source_number": 56,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-57",
+      "bank_type": "pyq",
+      "statement": "Suppose the only candidate keys of a relation R(A,B,C,D) are AB and AC. How many superkeys does R have?",
+      "options": [
+        "A) 2",
+        "B) 4",
+        "C) 6",
+        "D) 8"
+      ],
+      "correct_answer": "C",
+      "explanation": "Superkeys of R(A,B,C,D) with candidate keys AB and AC: supersets of AB = {AB, ABC, ABD, ABCD} (4); supersets of AC = {AC, ABC, ACD, ABCD} (4). Union has 4 + 4 - 2 = 6 superkeys.",
+      "topic": "Candidate Keys & Superkeys",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2026",
+      "note": "Superkey-count question; paraphrased.",
+      "source_number": 57,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-58",
+      "bank_type": "pyq",
+      "statement": "For a stated FD set, identify the attribute set that is NOT contained in the closure of the requested starting set.",
+      "options": [
+        "A) Option I",
+        "B) Option II",
+        "C) Option III",
+        "D) Option IV"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "Attribute Closure",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2006",
+      "note": "FD-closure prerequisite question from GATE CSE 2006; paraphrased because the source is diagram/table based.",
+      "source_number": 58,
+      "status": "incomplete",
+      "incomplete_reason": "FD-closure prerequisite question. The stated FD set and starting attribute set are omitted in this text compilation."
+    },
+    {
+      "id": "pyq-59",
+      "bank_type": "pyq",
+      "statement": "For a relation and its FD set, identify all candidate keys.",
+      "options": [
+        "A) Only AB",
+        "B) Only AC",
+        "C) AB and AC",
+        "D) AB, AC, and BC"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "Candidate Keys & Superkeys",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2005",
+      "note": "Candidate-key question from GATE CSE 2005; paraphrased.",
+      "source_number": 59,
+      "status": "incomplete",
+      "incomplete_reason": "Candidate-key question. The relation and its functional dependency set are omitted in this compilation."
+    },
+    {
+      "id": "pyq-60",
+      "bank_type": "pyq",
+      "statement": "A relational schema is given with functional dependencies, and the paper asks whether it is in 3NF and, if not, how it should be decomposed into 3NF. State the correct 3NF decomposition criterion for the given dependency set.",
+      "options": [
+        "A) Keep every dependency in one table",
+        "B) Decompose so that each relevant FD has a key-containing determinant or is represented by a separate",
+        "C) Remove all non-key attributes",
+        "D) Decompose until every relation has one attribute"
+      ],
+      "correct_answer": "B",
+      "explanation": "In 3NF decomposition, each functional dependency must have a superkey determinant or be preserved in a separate relation.",
+      "topic": "3NF & Transitive Dependencies",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "1993",
+      "note": "Paraphrased from GATE CSE 1993 normalization/decomposition question.",
+      "source_number": 60,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-61",
+      "bank_type": "pyq",
+      "statement": "Given a table and a set of candidate-key conditions, identify whether the design reaches 1NF, 2NF, 3NF, or 4NF. Use the key and dependency definitions rather than the data values alone.",
+      "options": [
+        "A) 1NF",
+        "B) 2NF",
+        "C) 3NF",
+        "D) 4NF"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "4NF & Multivalued Dependencies",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2020",
+      "note": "Additional ISRO normalization-style PYQ prompt; paraphrased from archived paper sets.",
+      "source_number": 61,
+      "status": "incomplete",
+      "incomplete_reason": "Table/key condition question. The specific table instance and candidate-key conditions are omitted in this compilation."
+    },
+    {
+      "id": "pyq-62",
+      "bank_type": "pyq",
+      "statement": "Which statement most accurately defines full functional dependency?",
+      "options": [
+        "A) Dependency on the complete key with no proper subset sufficient",
+        "B) Dependency on any superset of a key",
+        "C) Dependency only between prime attributes",
+        "D) Dependency that implies a multivalued dependency"
+      ],
+      "correct_answer": "A",
+      "explanation": "A full functional dependency requires dependency on the complete key with no proper subset sufficient.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2018",
+      "note": "ISRO 2018 full-functional-dependency question; paraphrased.",
+      "source_number": 62,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-63",
+      "bank_type": "pyq",
+      "statement": "For a relation whose candidate key is (Room, Shift), determine which of the listed attribute sets could be another superkey or candidate key after applying closure.",
+      "options": [
+        "A) Room only",
+        "B) Shift only",
+        "C) Room + Shift",
+        "D) Neither attribute can participate in a key"
+      ],
+      "correct_answer": "C",
+      "explanation": "The set Room + Shift forms the candidate key, which is itself a minimal superkey.",
+      "topic": "Attribute Closure",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2018",
+      "note": "Candidate-key question from ISRO CSE 2018, paraphrased.",
+      "source_number": 63,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-64",
+      "bank_type": "pyq",
+      "statement": "For Faculty(facName, dept, office, rank, dateHired), assume a faculty member has one office and no two faculty in the same department share a name. The relation is in which normal-form combination?",
+      "options": [
+        "A) Not 3NF, but BCNF",
+        "B) 3NF, but not BCNF",
+        "C) 3NF and BCNF",
+        "D) Neither 3NF nor BCNF"
+      ],
+      "correct_answer": "C",
+      "explanation": "Under the specified constraints, all determinants are candidate keys, so the relation satisfies both 3NF and BCNF.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2017",
+      "note": "Official ISRO Scientist CS 2017 Paper II question, paraphrased from the tabular instance.",
+      "source_number": 64,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-65",
+      "bank_type": "pyq",
+      "statement": "A relation is decomposed into two projections that separate independent functional dependencies. Determine whether the decomposition preserves the original dependencies and whether the join is lossless.",
+      "options": [
+        "A) Both are preserved",
+        "B) Only dependencies are preserved",
+        "C) Only lossless join is guaranteed",
+        "D) Neither is guaranteed"
+      ],
+      "correct_answer": "A",
+      "explanation": "Separating independent functional dependencies into projections preserves the dependencies and yields a lossless decomposition when keys are included.",
+      "topic": "Lossless Join",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2014",
+      "note": "Additional ISRO 2014 decomposition prompt, paraphrased.",
+      "source_number": 65,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-66",
+      "bank_type": "pyq",
+      "statement": "For a table whose dependencies include a non-key determinant, determine whether the relation is in 3NF but not BCNF.",
+      "options": [
+        "A) Yes",
+        "B) No, it is in BCNF",
+        "C) No, it is only in 1NF",
+        "D) It cannot be decided without atomicity information"
+      ],
+      "correct_answer": "A",
+      "explanation": "When a non-key determinant exists whose dependent is a prime attribute, the relation satisfies 3NF but violates BCNF.",
+      "topic": "3NF & Transitive Dependencies",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2014",
+      "note": "Normalization classification prompt from the archived ISRO 2014 paper set; paraphrased.",
+      "source_number": 66,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-67",
+      "bank_type": "pyq",
+      "statement": "In BOOK(ISBN, Title, Publisher, Address), given ISBN -> Title, Publisher and Publisher -> Address, which dependency causes the 3NF violation when ISBN is the key?",
+      "options": [
+        "A) ISBN -> Title",
+        "B) ISBN -> Publisher",
+        "C) Publisher -> Address",
+        "D) Address -> Publisher"
+      ],
+      "correct_answer": "C",
+      "explanation": "In BOOK, Publisher -> Address is a transitive dependency between non-key attributes violating 3NF.",
+      "topic": "3NF & Transitive Dependencies",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2013",
+      "note": "Derived as a focused sub-question from the ISRO 2013 normalization PYQ; paraphrased, not an additional verbatim question.",
+      "source_number": 67,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-68",
+      "bank_type": "pyq",
+      "statement": "If a non-key attribute is fully functionally dependent on a candidate key, which partial-dependency violation is ruled out?",
+      "options": [
+        "A) 1NF violation",
+        "B) 2NF violation",
+        "C) 3NF violation",
+        "D) 4NF violation"
+      ],
+      "correct_answer": "B",
+      "explanation": "Full functional dependency on candidate keys rules out partial dependencies, thereby preventing 2NF violations.",
+      "topic": "Candidate Keys & Superkeys",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2011",
+      "note": "Focused PYQ-derived question based on the ISRO 2011 full-dependency item; included as a study variant.",
+      "source_number": 68,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-69",
+      "bank_type": "pyq",
+      "statement": "Which of the following is not one of the standard Armstrong axioms?",
+      "options": [
+        "A) Reflexivity",
+        "B) Augmentation",
+        "C) Transitivity",
+        "D) Symmetry"
+      ],
+      "correct_answer": "D",
+      "explanation": "Symmetry is not an Armstrong axiom. (Reflexivity, Augmentation, and Transitivity are the three axioms).",
+      "topic": "Armstrong Axioms",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2011",
+      "note": "Armstrong-axiom question from ISRO 2011; paraphrased.",
+      "source_number": 69,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-70",
+      "bank_type": "pyq",
+      "statement": "Which condition commonly motivates choosing 3NF over BCNF in a relational design?",
+      "options": [
+        "A) Need to preserve dependencies",
+        "B) Need to violate 1NF",
+        "C) Need to introduce duplicate rows",
+        "D) Need to remove candidate keys"
+      ],
+      "correct_answer": "A",
+      "explanation": "The need to preserve functional dependencies is the primary reason for choosing 3NF when BCNF cannot preserve dependencies.",
+      "topic": "3NF & Transitive Dependencies",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2007",
+      "note": "Normalization-design question associated with ISRO 2007; phrasing is paraphrased.",
+      "source_number": 70,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-71",
+      "bank_type": "pyq",
+      "statement": "Which inference rule is used to derive a dependency of the form XZ -> YZ from X -> Y?",
+      "options": [
+        "A) Reflexivity",
+        "B) Augmentation",
+        "C) Transitivity",
+        "D) Union"
+      ],
+      "correct_answer": "B",
+      "explanation": "Deriving XZ -> YZ from X -> Y is an application of the Augmentation rule.",
+      "topic": "Armstrong Axioms",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2007",
+      "note": "Armstrong-rule application, based on the ISRO 2007 question family; paraphrased.",
+      "source_number": 71,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-72",
+      "bank_type": "pyq",
+      "statement": "What is the role of a foreign key in a relational schema, and why is it relevant to maintaining a well-structured logical design?",
+      "options": [
+        "A) It guarantees BCNF",
+        "B) It enforces referential integrity",
+        "C) It removes all transitive dependencies",
+        "D) It makes every relation 4NF"
+      ],
+      "correct_answer": "B",
+      "explanation": "A foreign key enforces referential integrity between child and parent relations.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2009",
+      "note": "DBMS prerequisite question from ISRO 2009; included because keys/integrity are used when normalizing schemas.",
+      "source_number": 72,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-73",
+      "bank_type": "pyq",
+      "statement": "Which of the following is a major goal of a good logical relational schema?",
+      "options": [
+        "A) Increase update anomalies",
+        "B) Avoid data inconsistency while supporting queries efficiently",
+        "C) Eliminate all keys",
+        "D) Store every fact in one large table"
+      ],
+      "correct_answer": "B",
+      "explanation": "The primary objective of relational normalization is to avoid data inconsistency and anomalies while supporting efficient queries.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "ISRO CSE",
+      "year": "2016",
+      "note": "Logical-schema design question from ISRO 2016; included as a normalization-motivation prerequisite.",
+      "source_number": 73,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-74",
+      "bank_type": "pyq",
+      "statement": "What operation reverses a normalized design back toward a denormalized form?",
+      "options": [
+        "A) Normalization",
+        "B) Denormalization",
+        "C) Decomposition",
+        "D) Projection"
+      ],
+      "correct_answer": "B",
+      "explanation": "Denormalization is the deliberate process of reversing normalization for read performance optimization.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "DRDO CSE",
+      "year": "2022",
+      "note": "DRDO CSE 2022 Paper 2, Q15(a), paraphrased.",
+      "source_number": 74,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-75",
+      "bank_type": "pyq",
+      "statement": "Which of the following are not standard categories of keys in a relational DBMS?",
+      "options": [
+        "A) Complement and Agreement",
+        "B) Candidate and Super key",
+        "C) Primary and Foreign key",
+        "D) Composite and Candidate key"
+      ],
+      "correct_answer": "A",
+      "explanation": "'Complement and Agreement' are mathematical logic terms, not relational DBMS key categories.",
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "DRDO CSE",
+      "year": "2022",
+      "note": "DRDO CSE 2022 Paper 2, Q15(c), paraphrased.",
+      "source_number": 75,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-76",
+      "bank_type": "pyq",
+      "statement": "A four-attribute relation has dependencies A -> B and B -> D. Assuming atomic attributes and no other relevant dependencies are given, what normal-form conclusion can be drawn?",
+      "options": [
+        "A) 1NF only",
+        "B) 2NF only",
+        "C) 3NF",
+        "D) 4NF"
+      ],
+      "correct_answer": "A",
+      "explanation": "In R(A,B,C,D) with A -> B and B -> D, C does not appear on any RHS so C is in the key {A,C}. A -> B is a partial dependency on non-prime B, so R is in 1NF only.",
+      "topic": "1NF & Atomicity",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "Memory-based",
+      "exam": "BARC OCES",
+      "year": "2020",
+      "note": "Memory-based BARC 2020 question report; original wording/data should be checked against the paper archive before treating it as an exact transcription.",
+      "source_number": 76,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-77",
+      "bank_type": "pyq",
+      "statement": "A table instance is given in which A, B, C, D take several values. Which proposed FD is inconsistent with the instance?",
+      "options": [
+        "A) AC -> B",
+        "B) C -> D",
+        "C) B -> D",
+        "D) C -> A"
+      ],
+      "correct_answer": null,
+      "explanation": null,
+      "topic": "Normalization Theory",
+      "difficulty": "Medium",
+      "hints": [],
+      "question_type": "Memory-based",
+      "exam": "BARC OCES",
+      "year": "2020",
+      "note": "Memory-based BARC 2020 question report; the public archive describes the instance and asks which FD is incorrect. This is a paraphrase, not a verbatim reproduction.",
+      "source_number": 77,
+      "status": "incomplete",
+      "incomplete_reason": "Table instance FD-checking question. The specific table values of A, B, C, D are omitted in this compilation."
+    },
+    {
+      "id": "pyq-78",
+      "bank_type": "pyq",
+      "statement": "Consider these statements about normal forms: (1) every two-attribute relation is BCNF; (2) lossless, dependency-preserving BCNF decomposition is always possible; (3) lossless, dependency-preserving 3NF decomposition is always possible; (4) BCNF is stricter than 3NF. Which statements are correct?",
+      "options": [
+        "A) 1, 2 and 3",
+        "B) 1, 3 and 4",
+        "C) 1, 2 and 4",
+        "D) 2, 3 and 4"
+      ],
+      "correct_answer": "B",
+      "explanation": "Statements (1), (3), and (4) are true; statement (2) is false because dependency-preserving BCNF is not always possible.",
+      "topic": "Lossless Join",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "UPSC ESE Electronics",
+      "year": "2017",
+      "note": "Official-paper item identified by Testbook as ESE Electronics 2017; paraphrased.",
+      "source_number": 78,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-79",
+      "bank_type": "pyq",
+      "statement": "If the only candidate keys of R(A,B,C,D) are AB and AC, how many distinct superkeys exist?",
+      "options": [
+        "A) 2",
+        "B) 4",
+        "C) 6",
+        "D) 8"
+      ],
+      "correct_answer": "C",
+      "explanation": "Superkeys of R(A,B,C,D) with candidate keys AB and AC: 6 distinct superkeys ({AB, AC, ABC, ABD, ACD, ABCD}).",
+      "topic": "Candidate Keys & Superkeys",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "MCQ",
+      "exam": "GATE CSE",
+      "year": "2024",
+      "note": "GATE CSE 2024 candidate/superkey question; paraphrased.",
+      "source_number": 79,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "pyq-80",
+      "bank_type": "pyq",
+      "statement": "A memory-based report of the BARC 2020 paper records a DBMS question asking candidates to identify which proposed decomposition is invalid with respect to BCNF. What must be checked before accepting a decomposition as a BCNF decomposition?",
+      "options": [
+        "A) Every determinant in every component must be a superkey of that component",
+        "B) Every component must contain exactly two attributes",
+        "C) Every FD must be removed",
+        "D) Every relation must be in 4NF"
+      ],
+      "correct_answer": "A",
+      "explanation": "In BCNF, every determinant in every component relation must be a superkey of that relation.",
+      "topic": "BCNF Analysis",
+      "difficulty": "Medium",
+      "hints": [
+        "Review the formal DBMS definition for this concept.",
+        "Examine each option carefully against the mathematical relational criteria."
+      ],
+      "question_type": "Memory-based",
+      "exam": "BARC OCES",
+      "year": "2020",
+      "note": "Memory-based BARC 2020 report records this BCNF-decomposition question but does not preserve the original option data; this item therefore tests the underlying criterion rather than pretending to reproduce the lost choices.",
+      "source_number": 80,
+      "status": "playable",
+      "incomplete_reason": null
+    }
+  ],
+  "ai": [
+    {
+      "id": "ai-q01",
+      "bank_type": "ai",
+      "statement": "In the relational data model, what is the key difference between the degree (or arity) and the cardinality of a relation?",
+      "options": [
+        "A) Degree is the number of tuples; cardinality is the number of attributes.",
+        "B) Degree is the number of attributes (columns); cardinality is the number of tuples (rows).",
+        "C) Degree refers to primary keys; cardinality refers to foreign keys.",
+        "D) Degree is static over time; cardinality never changes over time."
+      ],
+      "correct_answer": "B",
+      "explanation": "In relational theory, the degree (arity) of a relation is the total number of attributes in its schema, whereas cardinality is the current number of tuples (rows) in the relation instance.",
+      "topic": "Relational Schema Basics",
+      "difficulty": "Easy",
+      "hints": [
+        "Think about table structure vs table contents: which one measures column count?",
+        "Degree is fixed by the schema definition, while cardinality changes as rows are inserted or deleted."
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q02",
+      "bank_type": "ai",
+      "statement": "A functional dependency X \u2192 Y holds on relation schema R if and only if for every legal instance r of R:",
+      "options": [
+        "A) For every pair of tuples t1 and t2 in r, if t1[X] = t2[X], then t1[Y] = t2[Y].",
+        "B) For every pair of tuples t1 and t2 in r, if t1[Y] = t2[Y], then t1[X] = t2[X].",
+        "C) Attribute set X is a candidate key of R.",
+        "D) The intersection of X and Y is non-empty."
+      ],
+      "correct_answer": "A",
+      "explanation": "By definition, functional dependency X \u2192 Y means that the values of attribute set X uniquely determine the values of attribute set Y. Whenever two tuples agree on all attributes in X, they must also agree on all attributes in Y.",
+      "topic": "Functional Dependencies",
+      "difficulty": "Easy",
+      "hints": [
+        "Recall the mathematical mapping: X is the determinant (input) and Y is the dependent value (output).",
+        "Agreement on X forces agreement on Y."
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q03",
+      "bank_type": "ai",
+      "statement": "According to Armstrong's Axiom of Augmentation, if functional dependency X \u2192 Y holds, which of the following dependencies is guaranteed to hold for any attribute set Z?",
+      "options": [
+        "A) XZ \u2192 YZ",
+        "B) X \u2192 YZ",
+        "C) XZ \u2192 Y",
+        "D) Both A and C are valid deductions"
+      ],
+      "correct_answer": "D",
+      "explanation": "Armstrong's Augmentation rule formally states that if X \u2192 Y, then XZ \u2192 YZ for any attribute set Z. Furthermore, by the Decomposition rule (YZ \u2192 Y), XZ \u2192 YZ immediately implies XZ \u2192 Y by transitivity. Hence both A and C are valid.",
+      "topic": "Armstrong's Axioms",
+      "difficulty": "Medium",
+      "hints": [
+        "What happens when you add attribute set Z to both sides of X \u2192 Y?",
+        "Notice that XZ \u2192 YZ combined with YZ \u2192 Y also proves XZ \u2192 Y."
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q04",
+      "bank_type": "ai",
+      "statement": "Given the functional dependencies X \u2192 Y and WY \u2192 Z, which secondary inference rule allows us to directly infer WX \u2192 Z?",
+      "options": [
+        "A) Union rule",
+        "B) Decomposition rule",
+        "C) Pseudotransitivity rule",
+        "D) Composition rule"
+      ],
+      "correct_answer": "C",
+      "explanation": "The Pseudotransitivity rule states: if X \u2192 Y and WY \u2192 Z, then WX \u2192 Z. It can be proved by augmenting X \u2192 Y with W (giving WX \u2192 WY) and applying transitivity with WY \u2192 Z.",
+      "topic": "Armstrong's Axioms",
+      "difficulty": "Medium",
+      "hints": [
+        "Look at the LHS of the second dependency: it contains W and Y, but Y is replaced by X.",
+        "This rule generalizes ordinary transitivity when an extra attribute W is present on the LHS."
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q05",
+      "bank_type": "ai",
+      "statement": "Consider relation R(A, B, C, D, E) with functional dependencies: A \u2192 B, BC \u2192 D, and D \u2192 E. What is the attribute closure {A, C}\u207a?",
+      "options": [
+        "A) {A, B, C}",
+        "B) {A, C, D, E}",
+        "C) {A, B, C, D, E}",
+        "D) {A, B, D, E}"
+      ],
+      "correct_answer": "C",
+      "explanation": "Step 1: Start with {A, C}\u207a = {A, C}. Step 2: Since A \u2286 {A, C}, A \u2192 B applies, adding B \u2192 {A, B, C}. Step 3: Now BC \u2286 {A, B, C}, so BC \u2192 D applies, adding D \u2192 {A, B, C, D}. Step 4: Now D \u2286 {A, B, C, D}, so D \u2192 E applies, adding E \u2192 {A, B, C, D, E}. All attributes are reached.",
+      "topic": "Attribute Closure",
+      "difficulty": "Medium",
+      "hints": [
+        "Start with the seed attributes {A, C}. Which FD has its left-hand side satisfied first?",
+        "Once B is added, does the determinant of BC \u2192 D become available?"
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q06",
+      "bank_type": "ai",
+      "statement": "What distinguishes a candidate key from an arbitrary superkey of a relation schema R?",
+      "options": [
+        "A) A candidate key contains only one attribute, whereas a superkey can have multiple attributes.",
+        "B) A candidate key is a minimal superkey; no proper subset of a candidate key can be a superkey.",
+        "C) A superkey must be chosen as the primary key, while candidate keys are optional.",
+        "D) A candidate key cannot contain foreign key attributes."
+      ],
+      "correct_answer": "B",
+      "explanation": "Every candidate key is a superkey (its attribute closure includes all attributes of R), but it satisfies the minimality property: removing any attribute from a candidate key destroys the superkey property.",
+      "topic": "Candidate Keys & Superkeys",
+      "difficulty": "Easy",
+      "hints": [
+        "What happens if you remove an attribute from a candidate key?",
+        "Look for the concept of minimality or irreducible superkeys."
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q07",
+      "bank_type": "ai",
+      "statement": "Consider relation R(A, B, C, D) with functional dependencies A \u2192 B and B \u2192 C. Which of the following is a candidate key of R?",
+      "options": [
+        "A) {A}",
+        "B) {A, D}",
+        "C) {A, B, D}",
+        "D) {B, D}"
+      ],
+      "correct_answer": "B",
+      "explanation": "Notice attribute D never appears on the right-hand side of any FD. Therefore, D must be part of every candidate key. Now compute {A, D}\u207a: A \u2192 B adds B, B \u2192 C adds C, so {A, D}\u207a = {A, B, C, D}. Since no proper subset of {A, D} contains all attributes ({A}\u207a = {A, B, C} and {D}\u207a = {D}), {A, D} is a candidate key.",
+      "topic": "Composite Candidate Keys",
+      "difficulty": "Medium",
+      "hints": [
+        "Check which attributes never appear on the right-hand side of any dependency.",
+        "Any attribute that is never determined by another attribute must be included in every candidate key."
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q08",
+      "bank_type": "ai",
+      "statement": "Relation R(A, B, C, D) has functional dependencies: A \u2192 B, B \u2192 C, C \u2192 A. How many candidate keys does R possess?",
+      "options": [
+        "A) 1 candidate key",
+        "B) 2 candidate keys",
+        "C) 3 candidate keys",
+        "D) 4 candidate keys"
+      ],
+      "correct_answer": "C",
+      "explanation": "Attribute D does not appear on the RHS of any FD, so D must be present in every key. The cycle A \u2192 B \u2192 C \u2192 A means {A}\u207a = {B}\u207a = {C}\u207a = {A, B, C}. Combining each with D yields three distinct candidate keys: {A, D}, {B, D}, and {C, D}.",
+      "topic": "Multiple Candidate Keys",
+      "difficulty": "Hard",
+      "hints": [
+        "Attribute D is missing from all RHS sets. What does that imply for every candidate key?",
+        "Notice the cyclical dependency among A, B, and C. Can each individually determine the others?"
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q09",
+      "bank_type": "ai",
+      "statement": "In a relation R(A, B, C, D, E), the candidate keys are {A, B} and {A, C}. Which of the following is a non-prime attribute?",
+      "options": [
+        "A) A",
+        "B) B",
+        "C) C",
+        "D) D"
+      ],
+      "correct_answer": "D",
+      "explanation": "An attribute is prime if it is a member of at least one candidate key. Here the candidate keys are {A, B} and {A, C}. Thus the prime attributes are {A, B, C}. Attributes D and E do not belong to any candidate key, so they are non-prime.",
+      "topic": "Prime & Non-Prime Attributes",
+      "difficulty": "Easy",
+      "hints": [
+        "List all attributes that appear in either of the candidate keys.",
+        "Any attribute not in that union is non-prime."
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q10",
+      "bank_type": "ai",
+      "statement": "A functional dependency X \u2192 Y is a full functional dependency if:",
+      "options": [
+        "A) Y is a candidate key.",
+        "B) X is a single attribute.",
+        "C) Removal of any attribute A from X means the dependency (X - {A}) \u2192 Y no longer holds.",
+        "D) Y contains all attributes of the relation."
+      ],
+      "correct_answer": "C",
+      "explanation": "By definition, Y is fully functionally dependent on X if X \u2192 Y holds, and for any proper subset X' \u2282 X, X' \u2192 Y does not hold. That is, no attribute can be removed from X without invalidating the dependency.",
+      "topic": "Full & Partial Functional Dependencies",
+      "difficulty": "Medium",
+      "hints": [
+        "What makes a dependency 'partial' versus 'full'?",
+        "Full means the entire determinant set is strictly needed to determine Y."
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q11",
+      "bank_type": "ai",
+      "statement": "Which of the following database schema characteristics directly violates First Normal Form (1NF)?",
+      "options": [
+        "A) A non-prime attribute depending on a proper subset of a composite candidate key.",
+        "B) An attribute whose domain contains non-atomic values such as comma-delimited lists or nested relations.",
+        "C) A transitive dependency from a candidate key to a non-prime attribute via another non-prime attribute.",
+        "D) Multiple candidate keys existing for the same relation."
+      ],
+      "correct_answer": "B",
+      "explanation": "First Normal Form (1NF) requires that all attribute values be atomic (indivisible domain elements) and that no repeating groups or nested multi-valued collections exist in any tuple.",
+      "topic": "1NF & Cell Atomicity",
+      "difficulty": "Easy",
+      "hints": [
+        "1NF operates at the cell/domain level rather than on functional dependencies.",
+        "Think about atomic, indivisible values."
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q12",
+      "bank_type": "ai",
+      "statement": "A developer designs a table Student(StudentID, Name, Phone1, Phone2, Phone3). What normalization problem does this design exhibit?",
+      "options": [
+        "A) 2NF violation because Phone1 determines Phone2.",
+        "B) 1NF repeating group violation, because multiple columns represent the same conceptual multi-valued attribute.",
+        "C) 3NF transitive dependency violation.",
+        "D) Lossless join failure."
+      ],
+      "correct_answer": "B",
+      "explanation": "Creating positional columns (Phone1, Phone2, Phone3) is a classic 'repeating group' design flaw violating 1NF principles. It wastes space for students with 1 phone and fails if a student has 4 phones. The correct 1NF design is a separate StudentPhone(StudentID, PhoneNumber) relation.",
+      "topic": "1NF Repeating Groups",
+      "difficulty": "Medium",
+      "hints": [
+        "Why are Phone1, Phone2, Phone3 problematic if a student has 4 numbers or only 1 number?",
+        "Look for repeating groups of columns."
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q13",
+      "bank_type": "ai",
+      "statement": "If a relation R is in 1NF and every candidate key of R consists of exactly one attribute, which normal form is R guaranteed to satisfy?",
+      "options": [
+        "A) R is guaranteed to be in 2NF.",
+        "B) R is guaranteed to be in 3NF.",
+        "C) R is guaranteed to be in BCNF.",
+        "D) R cannot satisfy 2NF without further constraints."
+      ],
+      "correct_answer": "A",
+      "explanation": "A relation violates 2NF only if there is a partial dependency: a non-prime attribute depending on a proper subset of a composite candidate key. If every candidate key is a single attribute, no proper non-empty subset of any candidate key exists! Therefore, no partial dependency can possibly exist, guaranteeing 2NF.",
+      "topic": "2NF Single-Attribute Key Guarantee",
+      "difficulty": "Easy",
+      "hints": [
+        "Can a single-attribute key have a non-empty proper subset?",
+        "Without a proper subset, can any partial dependency exist?"
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q14",
+      "bank_type": "ai",
+      "statement": "Relation ProjectAssignment(EmpID, ProjID, EmpName, ProjName, HoursWorked) has candidate key {EmpID, ProjID} and FDs: EmpID \u2192 EmpName, ProjID \u2192 ProjName. Why does this relation violate 2NF?",
+      "options": [
+        "A) Because HoursWorked transitively depends on EmpName.",
+        "B) Because non-prime attributes EmpName and ProjName depend on proper subsets of the composite candidate key.",
+        "C) Because {EmpID, ProjID} is not a superkey.",
+        "D) Because it contains multivalued dependencies."
+      ],
+      "correct_answer": "B",
+      "explanation": "The candidate key is composite: {EmpID, ProjID}. EmpName depends on {EmpID} (a proper subset of the key), and ProjName depends on {ProjID} (another proper subset). Since EmpName and ProjName are non-prime, these are partial dependencies violating 2NF.",
+      "topic": "2NF Partial Dependencies",
+      "difficulty": "Medium",
+      "hints": [
+        "Is the candidate key composite or single?",
+        "Do EmpName or ProjName depend on the whole key or just part of it?"
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q15",
+      "bank_type": "ai",
+      "statement": "To decompose ProjectAssignment(EmpID, ProjID, EmpName, ProjName, HoursWorked) into 2NF, which set of sub-relations should be created?",
+      "options": [
+        "A) Employee(EmpID, EmpName), Project(ProjID, ProjName), Assignment(EmpID, ProjID, HoursWorked)",
+        "B) EmpProj(EmpID, ProjID, HoursWorked) and Names(EmpName, ProjName)",
+        "C) Employee(EmpID, EmpName, ProjName) and Assignment(ProjID, HoursWorked)",
+        "D) EmpHours(EmpID, HoursWorked) and ProjDetails(ProjID, EmpName, ProjName)"
+      ],
+      "correct_answer": "A",
+      "explanation": "To eliminate partial dependencies in 2NF decomposition, each partial determinant and its dependent attributes are factored into a dedicated relation: Employee(EmpID, EmpName) and Project(ProjID, ProjName). The remaining attributes and the full candidate key form Assignment(EmpID, ProjID, HoursWorked).",
+      "topic": "2NF Decomposition",
+      "difficulty": "Hard",
+      "hints": [
+        "Each partial functional dependency (EmpID \u2192 EmpName and ProjID \u2192 ProjName) moves to its own table.",
+        "The composite key must remain with the fully dependent attribute HoursWorked."
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q16",
+      "bank_type": "ai",
+      "statement": "A relation schema R is in Third Normal Form (3NF) if it is in 2NF and for every non-trivial functional dependency X \u2192 A:",
+      "options": [
+        "A) X is a candidate key and A is a prime attribute.",
+        "B) Either X is a superkey of R OR A is a prime attribute of R.",
+        "C) X must be a single attribute and A must be atomic.",
+        "D) X is a superkey and A is not prime."
+      ],
+      "correct_answer": "B",
+      "explanation": "Codd's and Boyce's formal condition for 3NF states that for every non-trivial functional dependency X \u2192 A, at least one of the two conditions must hold: (1) X is a superkey, OR (2) A is a prime attribute (member of some candidate key).",
+      "topic": "3NF Formal Condition",
+      "difficulty": "Medium",
+      "hints": [
+        "3NF allows a non-superkey determinant as long as the right-hand side has a special property.",
+        "What property must attribute A have if X is not a superkey?"
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q17",
+      "bank_type": "ai",
+      "statement": "Consider relation OrderDetail(OrderID, CustomerID, CustomerCity) with candidate key {OrderID} and FDs: OrderID \u2192 CustomerID, CustomerID \u2192 CustomerCity. Why does this violate 3NF?",
+      "options": [
+        "A) Because OrderID is a composite key.",
+        "B) Because CustomerCity is non-prime and transitively depends on candidate key OrderID via non-key attribute CustomerID.",
+        "C) Because CustomerID \u2192 CustomerCity is a partial dependency.",
+        "D) Because CustomerCity is a prime attribute."
+      ],
+      "correct_answer": "B",
+      "explanation": "Here OrderID is the only candidate key, so CustomerID and CustomerCity are non-prime. In the dependency CustomerID \u2192 CustomerCity, CustomerID is NOT a superkey, and CustomerCity is NOT prime. Hence, CustomerCity transitively depends on OrderID via CustomerID, violating 3NF.",
+      "topic": "3NF Transitive Dependency",
+      "difficulty": "Medium",
+      "hints": [
+        "Is CustomerID a superkey of OrderDetail?",
+        "Is CustomerCity a prime attribute?"
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q18",
+      "bank_type": "ai",
+      "statement": "Relation R(A, B, C) has functional dependencies AB \u2192 C and C \u2192 B. What is the highest normal form satisfied by R?",
+      "options": [
+        "A) 1NF only",
+        "B) 2NF only",
+        "C) 3NF",
+        "D) BCNF"
+      ],
+      "correct_answer": "C",
+      "explanation": "Candidate keys are {A, B} and {A, C} (since {A, C}\u207a = {A, B, C}). Prime attributes are {A, B, C}. In AB \u2192 C, AB is a superkey. In C \u2192 B, C is NOT a superkey, but B is a prime attribute! Since B is prime, C \u2192 B satisfies the 3NF condition. However, C is not a superkey, so it violates BCNF. Highest normal form is 3NF.",
+      "topic": "3NF vs BCNF Formal Distinction",
+      "difficulty": "Hard",
+      "hints": [
+        "Find all candidate keys: check both {A, B} and {A, C}.",
+        "In C \u2192 B, is C a superkey? Is B a prime attribute?"
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q19",
+      "bank_type": "ai",
+      "statement": "When computing the minimal (or canonical) cover of a set of functional dependencies F, which of the following steps is NOT part of the standard algorithm?",
+      "options": [
+        "A) Decomposing all right-hand sides so each dependency has a single attribute on the RHS.",
+        "B) Removing extraneous attributes from the left-hand sides of dependencies.",
+        "C) Removing redundant functional dependencies whose closures are already implied by the rest.",
+        "D) Converting all functional dependencies into multivalued dependencies."
+      ],
+      "correct_answer": "D",
+      "explanation": "The three steps of minimal cover computation are: (1) Singleton RHS (via decomposition), (2) Pruning extraneous LHS attributes, and (3) Pruning redundant FDs. Converting FDs to MVDs is meaningless and not part of the algorithm.",
+      "topic": "Minimal Cover / Canonical Cover",
+      "difficulty": "Hard",
+      "hints": [
+        "Minimal cover simplifies functional dependencies to an irreducible canonical representation.",
+        "Look for an operation that has nothing to do with functional dependency simplification."
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q20",
+      "bank_type": "ai",
+      "statement": "In Bernstein's 3NF synthesis algorithm, what crucial step guarantees that the synthesized decomposition is lossless?",
+      "options": [
+        "A) Removing all candidate keys from the decomposition.",
+        "B) Ensuring that at least one decomposed sub-relation contains a candidate key of the original relation.",
+        "C) Ensuring every sub-relation contains at least three attributes.",
+        "D) Forcing all determinants to be single attributes."
+      ],
+      "correct_answer": "B",
+      "explanation": "Bernstein's synthesis groups dependencies by identical LHS. To guarantee a lossless join, if none of the generated sub-relations contains a candidate key of the original relation R, a new relation consisting of an original candidate key must be explicitly added.",
+      "topic": "3NF Synthesis Algorithm",
+      "difficulty": "Hard",
+      "hints": [
+        "Think about the condition for a decomposition to be lossless: what must the components share or contain?",
+        "If no synthesized relation contains a key of the original schema, what must be added?"
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q21",
+      "bank_type": "ai",
+      "statement": "In a relation R(X, Y, Z), the multivalued dependency X \u21a0 Y holds if and only if for any two tuples t1 and t2 with t1[X] = t2[X]:",
+      "options": [
+        "A) t1[Y] must equal t2[Y].",
+        "B) There exist tuples t3 and t4 in R such that t3[X]=t1[X], t3[Y]=t1[Y], t3[Z]=t2[Z] and t4[X]=t1[X], t4[Y]=t2[Y], t4[Z]=t1[Z].",
+        "C) Y determines Z functionally.",
+        "D) X is a candidate key of R."
+      ],
+      "correct_answer": "B",
+      "explanation": "The formal definition of X \u21a0 Y specifies that the set of Y-values associated with a given X-value is completely independent of the Z-values (where Z = R - (X \u222a Y)). Swapping the Y values between any two tuples sharing X produces tuples that must also exist in R.",
+      "topic": "Multivalued Dependencies (MVDs)",
+      "difficulty": "Medium",
+      "hints": [
+        "MVD means Y and Z are independently associated with X.",
+        "Swapping Y components between matching X tuples must yield valid tuples in R."
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q22",
+      "bank_type": "ai",
+      "statement": "Under what conditions is a multivalued dependency X \u21a0 Y considered trivial in relation schema R?",
+      "options": [
+        "A) Only when X is empty.",
+        "B) Whenever Y \u2286 X or X \u222a Y = R.",
+        "C) Only when X \u2192 Y also holds as a functional dependency.",
+        "D) When Y contains all candidate keys of R."
+      ],
+      "correct_answer": "B",
+      "explanation": "An MVD X \u21a0 Y is trivial if it holds in every legal instance of R regardless of constraints. This occurs if Y is a subset of X (Y \u2286 X) or if the union of X and Y contains all attributes of R (X \u222a Y = R).",
+      "topic": "Trivial vs Non-Trivial MVDs",
+      "difficulty": "Easy",
+      "hints": [
+        "A trivial dependency is one that is mathematically satisfied by every relation instance automatically.",
+        "What if Y is already inside X, or there are no other attributes left in R?"
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q23",
+      "bank_type": "ai",
+      "statement": "A relation schema R is in Fourth Normal Form (4NF) if and only if for every non-trivial multivalued dependency X \u21a0 Y:",
+      "options": [
+        "A) Y is a prime attribute.",
+        "B) X is a superkey of R.",
+        "C) X \u2229 Y is empty.",
+        "D) X \u2192 Y is a partial functional dependency."
+      ],
+      "correct_answer": "B",
+      "explanation": "Fourth Normal Form (4NF) requires that for every non-trivial multivalued dependency X \u21a0 Y holding on R, X must be a superkey of R. Unlike 3NF, there is no alternative condition regarding prime attributes.",
+      "topic": "4NF Formal Condition",
+      "difficulty": "Medium",
+      "hints": [
+        "4NF is the MVD analogue of Boyce-Codd Normal Form (BCNF).",
+        "What does BCNF require for every non-trivial FD?"
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q24",
+      "bank_type": "ai",
+      "statement": "Relation CourseInfo(CourseID, Instructor, Textbook) represents independent 1-to-many relationships: CourseID \u21a0 Instructor and CourseID \u21a0 Textbook. What 4NF decomposition resolves this redundancy?",
+      "options": [
+        "A) R1(CourseID, Instructor) and R2(CourseID, Textbook)",
+        "B) R1(Instructor, Textbook) and R2(CourseID, Instructor)",
+        "C) R1(CourseID, Instructor, Textbook) with no decomposition needed",
+        "D) R1(Instructor, CourseID) and R2(Instructor, Textbook)"
+      ],
+      "correct_answer": "A",
+      "explanation": "By Fagin's Theorem, a relation R(X, Y, Z) can be losslessly decomposed into R1(X, Y) and R2(X, Z) if and only if X \u21a0 Y holds. Factoring CourseInfo into R1(CourseID, Instructor) and R2(CourseID, Textbook) eliminates the combinatorial cross-product redundancy and satisfies 4NF.",
+      "topic": "4NF Decomposition & Fagin's Theorem",
+      "difficulty": "Hard",
+      "hints": [
+        "Fagin's theorem tells us how to binary-decompose on an MVD X \u21a0 Y.",
+        "The determinant CourseID is shared by both decomposed relations."
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q25",
+      "bank_type": "ai",
+      "statement": "For a binary decomposition of relation R into R1 and R2, which condition is necessary and sufficient for the decomposition to be a lossless join under functional dependencies?",
+      "options": [
+        "A) R1 \u2229 R2 must be non-empty and must functionally determine R1 or R2.",
+        "B) R1 and R2 must have the exact same number of attributes.",
+        "C) The union R1 \u222a R2 must be empty.",
+        "D) R1 \u2229 R2 must be a foreign key in both tables."
+      ],
+      "correct_answer": "A",
+      "explanation": "For a binary decomposition (R1, R2), the join is lossless if and only if the common attributes (R1 \u2229 R2) form a superkey of at least one of the component relations: (R1 \u2229 R2) \u2192 R1 or (R1 \u2229 R2) \u2192 R2.",
+      "topic": "Lossless Join Decomposition",
+      "difficulty": "Medium",
+      "hints": [
+        "What must the intersection of the two decomposed relations determine?",
+        "The common attributes must be a superkey of R1 or a superkey of R2."
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q26",
+      "bank_type": "ai",
+      "statement": "In the Tableau Chase algorithm for testing lossless join across k relations, what event confirms that the decomposition is lossless?",
+      "options": [
+        "A) All rows in the tableau become completely distinct.",
+        "B) At least one row in the tableau becomes entirely composed of distinguished symbols (all-alpha row).",
+        "C) No functional dependency can be applied after the first step.",
+        "D) The number of columns equals the number of rows."
+      ],
+      "correct_answer": "B",
+      "explanation": "The Chase algorithm initializes a tableau with distinguished symbols a_j for attributes present in each decomposed relation. If Chase transformations equate symbols such that any single row consists entirely of distinguished symbols (a_1, a_2, ..., a_n), the decomposition is proven lossless.",
+      "topic": "Tableau Chase Algorithm",
+      "difficulty": "Hard",
+      "hints": [
+        "Distinguished symbols represent the guaranteed presence of original attribute values.",
+        "What kind of row proves that a tuple in the natural join corresponds to a genuine original tuple?"
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q27",
+      "bank_type": "ai",
+      "statement": "What is the practical engineering advantage of a dependency-preserving decomposition in relational database management systems?",
+      "options": [
+        "A) It eliminates all primary keys from child tables.",
+        "B) Database integrity constraints (FDs) can be verified on individual tables without requiring expensive multi-table joins.",
+        "C) It guarantees that every decomposed relation is in 4NF.",
+        "D) It reduces the disk storage size by exactly 50%."
+      ],
+      "correct_answer": "B",
+      "explanation": "If a decomposition preserves dependencies, enforcing each original functional dependency requires inspecting only a single table during inserts and updates. If a dependency is not preserved, enforcing it requires computing an expensive natural join across tables on every transaction.",
+      "topic": "Dependency Preservation",
+      "difficulty": "Medium",
+      "hints": [
+        "Think about runtime cost when a user inserts a new record.",
+        "Does checking an FD require joining tables if the decomposition preserves dependencies?"
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q28",
+      "bank_type": "ai",
+      "statement": "Which of the following statements correctly characterizes the fundamental trade-off between 3NF and BCNF?",
+      "options": [
+        "A) BCNF always preserves dependencies, while 3NF does not.",
+        "B) A lossless-join and dependency-preserving decomposition into 3NF is always achievable, whereas BCNF guarantees lossless join but may not preserve all dependencies.",
+        "C) 3NF eliminates all redundancy, while BCNF retains partial dependencies.",
+        "D) BCNF is weaker than 3NF in all academic comparisons."
+      ],
+      "correct_answer": "B",
+      "explanation": "It is a fundamental theorem of relational databases that for any relation and FD set, there always exists a decomposition into 3NF that is BOTH lossless and dependency-preserving. For BCNF, a lossless decomposition is always possible, but dependency preservation cannot always be achieved.",
+      "topic": "3NF vs BCNF Trade-offs",
+      "difficulty": "Medium",
+      "hints": [
+        "Can we always get dependency preservation in BCNF?",
+        "What does Bernstein's synthesis prove for 3NF?"
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q29",
+      "bank_type": "ai",
+      "statement": "Relation Schema R(A, B, C, D) has candidate key {A} and FDs: A \u2192 B, B \u2192 C, and A \u2192 D. What is the highest normal form of R?",
+      "options": [
+        "A) 1NF only",
+        "B) 2NF only",
+        "C) 3NF",
+        "D) BCNF"
+      ],
+      "correct_answer": "B",
+      "explanation": "Candidate key is {A}. Attributes B, C, D are non-prime. Since the candidate key is a single attribute {A}, there are no partial dependencies, so 2NF holds. However, B \u2192 C has non-superkey LHS ({B}) and non-prime RHS (C), which is a transitive dependency violating 3NF. Hence, R is in 2NF only.",
+      "topic": "Normal Form Classification",
+      "difficulty": "Hard",
+      "hints": [
+        "The candidate key is {A}. Does {A} have any proper subsets?",
+        "Look at B \u2192 C: is B a superkey? Is C a prime attribute?"
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    },
+    {
+      "id": "ai-q30",
+      "bank_type": "ai",
+      "statement": "A company stores employees and departments in a single unnormalized table. If deleting the last employee in a department inadvertently erases all record of the department itself, which anomaly has occurred?",
+      "options": [
+        "A) Insertion anomaly",
+        "B) Update / Modification anomaly",
+        "C) Deletion anomaly",
+        "D) Lossless join anomaly"
+      ],
+      "correct_answer": "C",
+      "explanation": "A deletion anomaly occurs when the deletion of data representing one entity (e.g. employee) unintentionally causes the loss of data regarding a completely different entity (e.g. department information).",
+      "topic": "Relational Anomalies",
+      "difficulty": "Easy",
+      "hints": [
+        "Data was removed, leading to unintended side-effects.",
+        "Think of the three classic anomalies: Insertion, Update, and Deletion."
+      ],
+      "question_type": "MCQ",
+      "exam": null,
+      "year": null,
+      "note": null,
+      "source_number": null,
+      "status": "playable",
+      "incomplete_reason": null
+    }
+  ]
+}

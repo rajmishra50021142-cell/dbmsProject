@@ -5,18 +5,22 @@
 
 function getBaseUrl(): string {
   const envUrl = (import.meta.env.VITE_API_BASE_URL || '').trim();
-  if (!envUrl) {
-    return 'http://localhost:8000/api/v1';
-  }
-  let clean = envUrl.replace(/\/+$/, '');
-  if (!clean.endsWith('/api/v1')) {
-    if (clean.endsWith('/api')) {
-      clean = `${clean}/v1`;
-    } else {
-      clean = `${clean}/api/v1`;
+  if (envUrl) {
+    let clean = envUrl.replace(/\/+$/, '');
+    if (!clean.endsWith('/api/v1')) {
+      if (clean.endsWith('/api')) {
+        clean = `${clean}/v1`;
+      } else {
+        clean = `${clean}/api/v1`;
+      }
     }
+    return clean;
   }
-  return clean;
+  // In browser environments, use relative /api/v1 so Vite dev server proxy (or reverse proxy in production) handles requests
+  if (typeof window !== 'undefined' && import.meta.env.MODE !== 'test') {
+    return '/api/v1';
+  }
+  return 'http://localhost:8000/api/v1';
 }
 
 export const API_BASE_URL = getBaseUrl();

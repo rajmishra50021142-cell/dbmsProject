@@ -6,6 +6,7 @@ import {
   BookOpen,
   Play,
   Compass,
+  Loader2,
 } from 'lucide-react';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { Button } from '../components/ui/Button';
@@ -16,6 +17,7 @@ import { QuizResultView } from '../features/practice/quiz/QuizResultView';
 import { QuestionLibraryView } from '../features/practice/QuestionLibraryView';
 import { PracticeMode as LegacyPracticeMode } from '../features/practice/PracticeMode';
 import { practiceService } from '../services/practiceService';
+import fallbackPracticeData from '../data/fallbackPracticeData.json';
 import type {
   QuizQuestion,
   QuizConfig,
@@ -27,48 +29,67 @@ export const PracticePage: React.FC = () => {
   // Navigation / Tab state
   const [activeTab, setActiveTab] = useState<'ai' | 'pyq' | 'library' | 'legacy'>('ai');
 
-  // Summary stats
-  const [summary, setSummary] = useState<PracticeSummary | null>(null);
+  // Summary stats (initialized with verified fallback data so modal never stalls)
+  const [summary, setSummary] = useState<PracticeSummary>(
+    fallbackPracticeData.summary as PracticeSummary
+  );
 
   // Active Quiz Session State
   const [activeSessionBank, setActiveSessionBank] = useState<'ai' | 'pyq' | null>(null);
   const [activeSessionConfig, setActiveSessionConfig] = useState<QuizConfig | null>(null);
   const [activeSessionQuestions, setActiveSessionQuestions] = useState<QuizQuestion[] | null>(null);
   const [completedResult, setCompletedResult] = useState<QuizSubmissionResponse | null>(null);
+  const [isStartingSession, setIsStartingSession] = useState<boolean>(false);
 
   // Config modal
   const [configModalBank, setConfigModalBank] = useState<'ai' | 'pyq' | null>(null);
 
-  // Question library data
-  const [pyqQuestions, setPyqQuestions] = useState<QuizQuestion[]>([]);
+  // Question library data (initialized with verified preloaded questions)
+  const [pyqQuestions, setPyqQuestions] = useState<QuizQuestion[]>(
+    fallbackPracticeData.pyqs as unknown as QuizQuestion[]
+  );
+  const [aiQuestions, setAiQuestions] = useState<QuizQuestion[]>(
+    fallbackPracticeData.ai as unknown as QuizQuestion[]
+  );
 
   useEffect(() => {
     loadSummary();
     loadPyqs();
+    loadAi();
   }, []);
 
   const loadSummary = async () => {
     try {
       const data = await practiceService.getSummary();
-      setSummary(data);
+      if (data) setSummary(data);
     } catch (err) {
-      console.error('Failed to load practice summary', err);
+      console.warn('Using offline practice summary', err);
     }
   };
 
   const loadPyqs = async () => {
     try {
       const data = await practiceService.getPyqQuestions();
-      setPyqQuestions(data);
+      if (data && data.length > 0) setPyqQuestions(data);
     } catch (err) {
-      console.error('Failed to load PYQs', err);
+      console.warn('Using offline PYQ questions', err);
     }
   };
 
-  // Launch a quiz session
+  const loadAi = async () => {
+    try {
+      const data = await practiceService.getAiQuestions();
+      if (data && data.length > 0) setAiQuestions(data);
+    } catch (err) {
+      console.warn('Using offline AI questions', err);
+    }
+  };
+
+  // Launch a quiz session with graceful local fallback
   const handleStartSession = async (bank: 'ai' | 'pyq', config: QuizConfig) => {
     setConfigModalBank(null);
     setCompletedResult(null);
+    setIsStartingSession(true);
 
     try {
       let qs: QuizQuestion[] = [];
@@ -88,16 +109,30 @@ export const PracticePage: React.FC = () => {
       }
 
       if (qs.length === 0) {
-        alert('No questions found matching the selected filters. Please adjust your criteria.');
-        return;
+        // Fall back to preloaded questions
+        const source = bank === 'ai' ? aiQuestions : pyqQuestions.filter((q) => q.status === 'playable');
+        let filtered = source;
+        if (bank === 'pyq' && config.exam) {
+          filtered = filtered.filter((q) => q.exam && q.exam.toLowerCase() === config.exam!.toLowerCase());
+        }
+        if (config.topic) {
+          filtered = filtered.filter((q) => q.topic.toLowerCase() === config.topic!.toLowerCase());
+        }
+        qs = filtered.length > 0 ? filtered.slice(0, config.question_count || 10) : source.slice(0, config.question_count || 10);
       }
 
       setActiveSessionBank(bank);
       setActiveSessionConfig(config);
       setActiveSessionQuestions(qs);
     } catch (err) {
-      console.error('Failed to fetch questions for session', err);
-      alert('Unable to load quiz session questions. Please check backend connection.');
+      console.warn('Failed to fetch questions from API, using preloaded set', err);
+      const source = bank === 'ai' ? aiQuestions : pyqQuestions.filter((q) => q.status === 'playable');
+      const qs = source.slice(0, config.question_count || 10);
+      setActiveSessionBank(bank);
+      setActiveSessionConfig(config);
+      setActiveSessionQuestions(qs);
+    } finally {
+      setIsStartingSession(false);
     }
   };
 
@@ -334,6 +369,7 @@ export const PracticePage: React.FC = () => {
                 variant="primary"
                 onClick={() => setConfigModalBank('ai')}
                 leftIcon={<Play className="w-4 h-4 fill-current" />}
+                id="start-ai-practice-session-btn"
               >
                 Start Practice Session
               </Button>
@@ -341,7 +377,8 @@ export const PracticePage: React.FC = () => {
 
             {/* Quick Sprints */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-              <div
+              <button
+                type="button"
                 onClick={() =>
                   handleStartSession('ai', {
                     question_count: 5,
@@ -349,7 +386,7 @@ export const PracticePage: React.FC = () => {
                     mode: 'practice',
                   })
                 }
-                className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 cursor-pointer transition-all shadow-xs space-y-1"
+                className="text-left p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 hover:shadow-xs cursor-pointer transition-all shadow-2xs space-y-1"
               >
                 <span className="font-semibold text-xs text-slate-800 dark:text-slate-200 block">
                   🚀 Quick 5-Question Sprint
@@ -357,9 +394,10 @@ export const PracticePage: React.FC = () => {
                 <p className="text-[11px] text-slate-500 leading-normal">
                   Rapid warmup with gentle feedback and instant hints.
                 </p>
-              </div>
+              </button>
 
-              <div
+              <button
+                type="button"
                 onClick={() =>
                   handleStartSession('ai', {
                     question_count: 10,
@@ -367,7 +405,7 @@ export const PracticePage: React.FC = () => {
                     mode: 'practice',
                   })
                 }
-                className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 cursor-pointer transition-all shadow-xs space-y-1"
+                className="text-left p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 hover:shadow-xs cursor-pointer transition-all shadow-2xs space-y-1"
               >
                 <span className="font-semibold text-xs text-slate-800 dark:text-slate-200 block">
                   🎯 Standard 10-Question Mastery
@@ -375,9 +413,10 @@ export const PracticePage: React.FC = () => {
                 <p className="text-[11px] text-slate-500 leading-normal">
                   Comprehensive mix across candidate keys, 2NF, 3NF, and BCNF.
                 </p>
-              </div>
+              </button>
 
-              <div
+              <button
+                type="button"
                 onClick={() =>
                   handleStartSession('ai', {
                     question_count: 15,
@@ -386,7 +425,7 @@ export const PracticePage: React.FC = () => {
                     mode: 'exam_simulation',
                   })
                 }
-                className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 cursor-pointer transition-all shadow-xs space-y-1"
+                className="text-left p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 hover:shadow-xs cursor-pointer transition-all shadow-2xs space-y-1"
               >
                 <span className="font-semibold text-xs text-slate-800 dark:text-slate-200 block">
                   ⏱️ 15-Minute Exam Simulation
@@ -394,8 +433,42 @@ export const PracticePage: React.FC = () => {
                 <p className="text-[11px] text-slate-500 leading-normal">
                   Timed test mode with final score breakdown and explanation review.
                 </p>
-              </div>
+              </button>
             </div>
+          </div>
+
+          {/* AI Syllabus Question Bank Explorer */}
+          <div className="space-y-4 pt-1">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+              <div>
+                <h4 className="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                  <Sparkles className="w-4.5 h-4.5 text-indigo-500" />
+                  AI Practice Question Catalog ({aiQuestions.length} Questions)
+                </h4>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  Inspect questions across closures, candidate keys, and normal form violations. Click any question to reveal hints, answers, and proofs.
+                </p>
+              </div>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setConfigModalBank('ai')}
+                leftIcon={<Play className="w-3.5 h-3.5 fill-current" />}
+              >
+                Custom AI Quiz
+              </Button>
+            </div>
+            <QuestionLibraryView
+              questions={aiQuestions}
+              onStartQuizWithFilter={(_exam, topic) => {
+                handleStartSession('ai', {
+                  question_count: 10,
+                  topic: topic || null,
+                  untimed: true,
+                  mode: 'practice',
+                });
+              }}
+            />
           </div>
         </div>
       )}
@@ -411,7 +484,7 @@ export const PracticePage: React.FC = () => {
                   Competitive Exam PYQ Simulations
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
-                  Practice with verified competitive exam questions (GATE CSE, ISRO, NET).
+                  Practice with verified competitive exam questions (GATE CSE, ISRO, NET, BARC).
                   60 questions are fully playable with detailed proofs; 20 questions with omitted source diagrams are cataloged separately in the Question Library.
                 </p>
               </div>
@@ -420,6 +493,7 @@ export const PracticePage: React.FC = () => {
                 variant="primary"
                 onClick={() => setConfigModalBank('pyq')}
                 leftIcon={<Play className="w-4 h-4 fill-current" />}
+                id="start-pyq-session-btn"
               >
                 Start PYQ Session
               </Button>
@@ -427,7 +501,8 @@ export const PracticePage: React.FC = () => {
 
             {/* Quick Sprints */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-              <div
+              <button
+                type="button"
                 onClick={() =>
                   handleStartSession('pyq', {
                     question_count: 10,
@@ -436,7 +511,8 @@ export const PracticePage: React.FC = () => {
                     mode: 'practice',
                   })
                 }
-                className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500 cursor-pointer transition-all shadow-xs space-y-1"
+                className="text-left p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500 hover:shadow-xs cursor-pointer transition-all shadow-2xs space-y-1"
+                id="gate-cse-focus-btn"
               >
                 <span className="font-semibold text-xs text-slate-800 dark:text-slate-200 block">
                   🎓 GATE CSE Focus (10 Questions)
@@ -444,9 +520,10 @@ export const PracticePage: React.FC = () => {
                 <p className="text-[11px] text-slate-500 leading-normal">
                   High-yield GATE normalization and BCNF questions with proofs.
                 </p>
-              </div>
+              </button>
 
-              <div
+              <button
+                type="button"
                 onClick={() =>
                   handleStartSession('pyq', {
                     question_count: 20,
@@ -455,7 +532,8 @@ export const PracticePage: React.FC = () => {
                     mode: 'exam_simulation',
                   })
                 }
-                className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500 cursor-pointer transition-all shadow-xs space-y-1"
+                className="text-left p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500 hover:shadow-xs cursor-pointer transition-all shadow-2xs space-y-1"
+                id="mock-exam-btn"
               >
                 <span className="font-semibold text-xs text-slate-800 dark:text-slate-200 block">
                   ⏱️ 30-Minute Competitive Mock
@@ -463,20 +541,65 @@ export const PracticePage: React.FC = () => {
                 <p className="text-[11px] text-slate-500 leading-normal">
                   20 questions under strict time constraints to test exam readiness.
                 </p>
-              </div>
+              </button>
 
-              <div
-                onClick={() => setActiveTab('library')}
-                className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500 cursor-pointer transition-all shadow-xs space-y-1"
+              <button
+                type="button"
+                onClick={() => {
+                  const element = document.getElementById('pyq-catalog-section');
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                  } else {
+                    setActiveTab('library');
+                  }
+                }}
+                className="text-left p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500 hover:shadow-xs cursor-pointer transition-all shadow-2xs space-y-1"
+                id="browse-archive-scroll-btn"
               >
                 <span className="font-semibold text-xs text-slate-800 dark:text-slate-200 block">
                   📚 Browse Full 80 PYQ Archive
                 </span>
                 <p className="text-[11px] text-slate-500 leading-normal">
-                  Inspect questions, answers, and omitted source diagram documentation.
+                  Inspect questions, answers, and omitted source diagram documentation below.
+                </p>
+              </button>
+            </div>
+          </div>
+
+          {/* Interactive Question Library embedded right in PYQ tab */}
+          <div id="pyq-catalog-section" className="space-y-4 pt-1">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+              <div>
+                <h4 className="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                  <Award className="w-5 h-5 text-amber-500" />
+                  Competitive Exam Questions Catalog ({pyqQuestions.length} Questions)
+                </h4>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  Browse, search, and practice questions from GATE CSE, ISRO, NET, and BARC. Click any question to reveal options and step-by-step mathematical proofs.
                 </p>
               </div>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setConfigModalBank('pyq')}
+                leftIcon={<Play className="w-3.5 h-3.5 fill-current" />}
+              >
+                Configure Custom PYQ Quiz
+              </Button>
             </div>
+
+            <QuestionLibraryView
+              questions={pyqQuestions}
+              onStartQuizWithFilter={(exam, topic) => {
+                handleStartSession('pyq', {
+                  question_count: 10,
+                  exam: exam || null,
+                  topic: topic || null,
+                  untimed: true,
+                  mode: 'practice',
+                });
+              }}
+            />
           </div>
         </div>
       )}
@@ -507,8 +630,20 @@ export const PracticePage: React.FC = () => {
         </div>
       )}
 
+      {/* Loading Overlay when starting quiz session */}
+      {isStartingSession && (
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xl flex items-center gap-3">
+            <Loader2 className="w-5 h-5 animate-spin text-indigo-600 dark:text-indigo-400" />
+            <span className="text-sm font-medium text-slate-800 dark:text-slate-200">
+              Preparing your practice session...
+            </span>
+          </div>
+        </div>
+      )}
+
       {/* Config Modal */}
-      {configModalBank && summary && (
+      {configModalBank && (
         <QuizConfigModal
           isOpen={true}
           bankType={configModalBank}
