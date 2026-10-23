@@ -251,10 +251,22 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
               Supports Microsoft Excel (.xlsx, .xls) • Automatic header detection & multi-sheet parsing
             </p>
           </div>
-          <Button size="sm" variant="outline" className="mt-2" disabled={isInspecting}>
-            <UploadCloud className="w-4 h-4 mr-2" />
-            Select Spreadsheet
-          </Button>
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-2">
+            <Button size="sm" variant="outline" disabled={isInspecting}>
+              <UploadCloud className="w-4 h-4 mr-2" />
+              Select Spreadsheet
+            </Button>
+            <a
+              href="/Normalization_Lab_Demo_Dataset.xlsx"
+              download="Normalization_Lab_Demo_Dataset.xlsx"
+              onClick={(e) => e.stopPropagation()}
+              id="download-demo-dataset-btn"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-emerald-300 dark:border-emerald-700 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 text-xs font-semibold hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors shadow-2xs"
+            >
+              <Download className="w-3.5 h-3.5" />
+              Download Demo Dataset (.xlsx)
+            </a>
+          </div>
         </div>
       ) : (
         /* Workbook Loaded Info Header */
