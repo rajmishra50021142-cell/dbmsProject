@@ -42,6 +42,7 @@ export const navigationItems: NavItem[] = [
   { label: 'Closure Lab', path: '/closure' },
   { label: 'Keys Lab', path: '/keys' },
   { label: 'Normalize', path: '/normalize' },
+  { label: 'Practice', path: '/practice' },
   { label: 'Learn', path: '/learn' },
   { label: 'Help', path: '/help' },
   { label: 'History', path: '/history' },

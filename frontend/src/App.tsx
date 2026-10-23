@@ -6,6 +6,7 @@ import { AnalyzerPage } from './pages/AnalyzerPage';
 import { ClosurePage } from './pages/ClosurePage';
 import { KeysPage } from './pages/KeysPage';
 import { NormalizationPage } from './pages/NormalizationPage';
+import { PracticePage } from './pages/PracticePage';
 import { LearnPage } from './pages/LearnPage';
 import { HelpPage } from './pages/HelpPage';
 import { DevelopedByPage } from './pages/DevelopedByPage';
@@ -22,6 +23,7 @@ export const App: React.FC = () => {
           <Route path="closure" element={<ClosurePage />} />
           <Route path="keys" element={<KeysPage />} />
           <Route path="normalize" element={<NormalizationPage />} />
+          <Route path="practice" element={<PracticePage />} />
           <Route path="learn" element={<LearnPage />} />
           <Route path="help" element={<HelpPage />} />
           <Route path="developed-by" element={<DevelopedByPage />} />

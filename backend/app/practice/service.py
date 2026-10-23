@@ -5,8 +5,21 @@ Provides predefined academic normalization exercises and grades student submissi
 using the actual relational normalization engines from Phases 2–7.
 """
 
-from typing import List, Dict, Any
-from app.practice.schemas import PracticeExercise, PracticeVerifyRequest, PracticeVerifyResponse
+from typing import List, Dict, Any, Optional
+from app.practice.schemas import (
+    PracticeExercise,
+    PracticeVerifyRequest,
+    PracticeVerifyResponse,
+    QuizQuestion,
+    QuizConfig,
+    VerifyAttemptRequest,
+    GentleFeedbackResponse,
+    QuizSubmissionRequest,
+    QuizQuestionReview,
+    QuizSubmissionResponse,
+)
+from app.practice.ai_questions import AI_PRACTICE_QUESTIONS
+from app.practice.pyq_questions import PYQ_QUESTIONS
 from app.schemas.domain_contracts import (
     CanonicalSchemaInput,
     FunctionalDependency,
@@ -351,3 +364,278 @@ class PracticeService:
             feedback="Exercise type not recognized.",
             reasoning_steps=[],
         )
+
+    @staticmethod
+    def get_ai_questions(
+        topic: Optional[str] = None,
+        difficulty: Optional[str] = None,
+        count: Optional[int] = None,
+    ) -> List[QuizQuestion]:
+        """Fetch AI practice questions filtered by optional topic or difficulty."""
+        results = AI_PRACTICE_QUESTIONS
+        if topic and topic.strip():
+            results = [q for q in results if q.topic.lower() == topic.strip().lower()]
+        if difficulty and difficulty.strip():
+            results = [q for q in results if q.difficulty.lower() == difficulty.strip().lower()]
+        if count is not None and count > 0:
+            results = results[:count]
+        return results
+
+    @staticmethod
+    def get_pyq_questions(
+        exam: Optional[str] = None,
+        topic: Optional[str] = None,
+        playable_only: bool = False,
+        count: Optional[int] = None,
+    ) -> List[QuizQuestion]:
+        """Fetch Competitive Exam PYQs with optional filters."""
+        results = PYQ_QUESTIONS
+        if playable_only:
+            results = [q for q in results if q.is_playable]
+        if exam and exam.strip():
+            results = [q for q in results if q.exam and q.exam.lower() == exam.strip().lower()]
+        if topic and topic.strip():
+            results = [q for q in results if q.topic.lower() == topic.strip().lower()]
+        if count is not None and count > 0:
+            results = results[:count]
+        return results
+
+    @staticmethod
+    def get_question_by_id(question_id: str, bank_type: Optional[str] = None) -> Optional[QuizQuestion]:
+        """Find a question by ID across or within banks."""
+        if bank_type == "ai":
+            for q in AI_PRACTICE_QUESTIONS:
+                if q.id == question_id:
+                    return q
+            return None
+        elif bank_type == "pyq":
+            for q in PYQ_QUESTIONS:
+                if q.id == question_id:
+                    return q
+            return None
+        # Search all
+        for q in AI_PRACTICE_QUESTIONS:
+            if q.id == question_id:
+                return q
+        for q in PYQ_QUESTIONS:
+            if q.id == question_id:
+                return q
+        return None
+
+    @staticmethod
+    def verify_attempt(req: VerifyAttemptRequest) -> GentleFeedbackResponse:
+        """
+        Evaluate an answer attempt with gentle, non-shaming, progressive feedback.
+        Attempt 1: Friendly check + Hint 1.
+        Attempt 2: Encouraging prompt + Hint 2.
+        Attempt 3: Warm resolution + Full proof, answer reveal, and concept summary.
+        """
+        q = PracticeService.get_question_by_id(req.question_id, req.bank_type)
+        if not q:
+            return GentleFeedbackResponse(
+                is_correct=False,
+                attempt_number=req.attempt_number,
+                attempts_remaining=max(0, 3 - req.attempt_number),
+                gentle_message="Question not found. Please refresh the practice session.",
+                hint=None,
+            )
+
+        if not q.correct_answer:
+            return GentleFeedbackResponse(
+                is_correct=False,
+                attempt_number=req.attempt_number,
+                attempts_remaining=0,
+                gentle_message=f"This question is marked as incomplete: {q.incomplete_reason or 'No verified key available.'}",
+                hint=None,
+            )
+
+        selected_norm = req.selected_option.strip().upper()
+        if len(selected_norm) > 1 and selected_norm[1] in [")", ".", " "]:
+            selected_letter = selected_norm[0]
+        elif selected_norm in ["A", "B", "C", "D"]:
+            selected_letter = selected_norm
+        else:
+            selected_letter = selected_norm[0] if selected_norm else ""
+
+        is_correct = (selected_letter == q.correct_answer.strip().upper())
+        current_attempt = req.attempt_number
+        attempts_left = max(0, 3 - current_attempt)
+
+        if is_correct:
+            if current_attempt == 1:
+                message = "Outstanding! You got it right on your first attempt."
+            elif current_attempt == 2:
+                message = "Excellent work! Your second attempt hit the mark."
+            else:
+                message = "Spot on! Persistence pays off — great job solving it."
+
+            return GentleFeedbackResponse(
+                is_correct=True,
+                attempt_number=current_attempt,
+                attempts_remaining=attempts_left,
+                gentle_message=message,
+                hint=None,
+                revealed_answer=q.correct_answer,
+                explanation=q.explanation,
+                concept_summary=f"Concept Recap: {q.topic} principles successfully verified.",
+            )
+
+        # Incorrect answers
+        if current_attempt == 1:
+            hint1 = q.hints[0] if (q.hints and len(q.hints) > 0) else "Review the relation schema and candidate key definition."
+            return GentleFeedbackResponse(
+                is_correct=False,
+                attempt_number=1,
+                attempts_remaining=2,
+                gentle_message="Not quite yet, but you're on the right track! Take another look at the relational rules.",
+                hint=hint1,
+                revealed_answer=None,
+                explanation=None,
+                concept_summary=None,
+            )
+        elif current_attempt == 2:
+            hint2 = q.hints[1] if (q.hints and len(q.hints) > 1) else (q.hints[0] if q.hints else "Consider how the functional dependencies isolate prime attributes.")
+            return GentleFeedbackResponse(
+                is_correct=False,
+                attempt_number=2,
+                attempts_remaining=1,
+                gentle_message="Close, but still not quite right. Don't worry — analyze the dependency structure carefully with this extra hint.",
+                hint=hint2,
+                revealed_answer=None,
+                explanation=None,
+                concept_summary=None,
+            )
+        else:
+            return GentleFeedbackResponse(
+                is_correct=False,
+                attempt_number=3,
+                attempts_remaining=0,
+                gentle_message="Good effort! Normalization questions can be tricky. Here is the complete step-by-step mathematical proof and explanation to clarify the concept.",
+                hint=None,
+                revealed_answer=q.correct_answer,
+                explanation=q.explanation,
+                concept_summary=f"Mastery Takeaway: For questions on {q.topic}, always determine candidate keys first and verify whether every non-trivial dependency satisfies the required normal form condition.",
+            )
+
+    @staticmethod
+    def submit_quiz(req: QuizSubmissionRequest) -> QuizSubmissionResponse:
+        """
+        Grade a full quiz submission session, computing overall score,
+        per-question reviews, topic breakdown, and supportive guidance.
+        """
+        bank = AI_PRACTICE_QUESTIONS if req.bank_type == "ai" else PYQ_QUESTIONS
+        q_map = {q.id: q for q in bank}
+
+        target_ids = list(req.answers.keys()) if req.answers else [q.id for q in bank if q.is_playable]
+        
+        total_questions = len(target_ids)
+        answered_count = 0
+        correct_count = 0
+        incorrect_count = 0
+        unanswered_count = 0
+
+        topic_stats: Dict[str, Dict[str, int]] = {}
+        reviews: List[QuizQuestionReview] = []
+
+        for q_id in target_ids:
+            q = q_map.get(q_id)
+            if not q:
+                continue
+
+            user_ans = req.answers.get(q_id)
+            has_answered = bool(user_ans and user_ans.strip())
+
+            user_letter: Optional[str] = None
+            if has_answered:
+                answered_count += 1
+                clean = user_ans.strip().upper()
+                if len(clean) > 1 and clean[1] in [")", ".", " "]:
+                    user_letter = clean[0]
+                elif clean in ["A", "B", "C", "D"]:
+                    user_letter = clean
+                else:
+                    user_letter = clean[0] if clean else None
+            else:
+                unanswered_count += 1
+
+            is_corr = False
+            if q.correct_answer and user_letter:
+                is_corr = (user_letter == q.correct_answer.strip().upper())
+
+            if has_answered:
+                if is_corr:
+                    correct_count += 1
+                else:
+                    incorrect_count += 1
+
+            topic = q.topic or "Relational Normalization"
+            if topic not in topic_stats:
+                topic_stats[topic] = {"total": 0, "correct": 0}
+            topic_stats[topic]["total"] += 1
+            if is_corr:
+                topic_stats[topic]["correct"] += 1
+
+            reviews.append(
+                QuizQuestionReview(
+                    question_id=q.id,
+                    source_number=q.source_number,
+                    statement=q.statement,
+                    options=q.options,
+                    selected_option=user_letter,
+                    correct_answer=q.correct_answer or "N/A",
+                    is_correct=is_corr,
+                    explanation=q.explanation or (q.incomplete_reason or "No explanation available."),
+                    topic=q.topic,
+                    exam=q.exam,
+                    year=q.year,
+                    note=q.note,
+                )
+            )
+
+        score_pct = round((correct_count / total_questions * 100), 1) if total_questions > 0 else 0.0
+
+        if score_pct >= 85:
+            summary_msg = "Outstanding mastery! You have demonstrated exceptional command of relational database normalization theory and competitive exam problem solving."
+        elif score_pct >= 70:
+            summary_msg = "Great performance! You have a solid grasp of normal forms and dependency preservation. Review the few questions missed below to reach full mastery."
+        elif score_pct >= 50:
+            summary_msg = "Good effort! You understand the core concepts. Take time to study the step-by-step proofs for the questions you missed, especially in the topics with lower scores."
+        else:
+            summary_msg = "Valuable practice session! Normalization requires practice with candidate key closures and dependency testing. Review the comprehensive proofs below and give it another try."
+
+        return QuizSubmissionResponse(
+            total_questions=total_questions,
+            answered_count=answered_count,
+            correct_count=correct_count,
+            incorrect_count=incorrect_count,
+            unanswered_count=unanswered_count,
+            score_percentage=score_pct,
+            time_spent_seconds=req.time_spent_seconds,
+            topic_breakdown=topic_stats,
+            question_reviews=reviews,
+            supportive_summary=summary_msg,
+        )
+
+    @staticmethod
+    def get_summary() -> Dict[str, Any]:
+        """Provides an aggregate summary of available practice banks."""
+        ai_topics = sorted(list({q.topic for q in AI_PRACTICE_QUESTIONS}))
+        pyq_topics = sorted(list({q.topic for q in PYQ_QUESTIONS}))
+        pyq_exams = sorted(list({q.exam for q in PYQ_QUESTIONS if q.exam}))
+        playable_pyq = sum(1 for q in PYQ_QUESTIONS if q.is_playable)
+        incomplete_pyq = sum(1 for q in PYQ_QUESTIONS if not q.is_playable)
+
+        return {
+            "ai_practice": {
+                "total_questions": len(AI_PRACTICE_QUESTIONS),
+                "topics": ai_topics,
+                "difficulties": ["Easy", "Medium", "Hard"],
+            },
+            "pyq_practice": {
+                "total_questions": len(PYQ_QUESTIONS),
+                "playable_questions": playable_pyq,
+                "incomplete_questions": incomplete_pyq,
+                "topics": pyq_topics,
+                "exams": pyq_exams,
+            },
+        }

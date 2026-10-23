@@ -12,6 +12,7 @@ import {
   CheckCircle2,
   BookOpen,
   Sparkles,
+  FileSpreadsheet,
   Layers,
   Network,
   HelpCircle,
@@ -19,6 +20,7 @@ import {
 } from 'lucide-react';
 import { SampleDataEditor } from '../features/analyzer/SampleDataEditor';
 import { RawInputEditor } from '../features/analyzer/RawInputEditor';
+import { ExcelWorkbookManager } from '../features/analyzer/ExcelWorkbookManager';
 import { SchemaPreview } from '../features/analyzer/SchemaPreview';
 import { ValidationSummaryPanel } from '../features/analyzer/ValidationSummaryPanel';
 import { ExampleModal } from '../features/analyzer/ExampleModal';
@@ -33,7 +35,7 @@ const DRAFT_STORAGE_KEY = 'normalization_lab_draft_v1';
 const DEFAULT_INITIAL_SCHEMA: RelationSchema = EXAMPLE_SCHEMAS[1].schema; // ENROLLMENT (Classic 2NF)
 
 export const AnalyzerPage: React.FC = () => {
-  const [inputTab, setInputTab] = useState<'raw' | 'sample'>('raw');
+  const [inputTab, setInputTab] = useState<'raw' | 'excel' | 'sample'>('raw');
   const [selectedStage, setSelectedStage] = useState<'1NF' | '2NF' | '3NF' | '4NF'>('1NF');
 
   // Core canonical schema state
@@ -148,6 +150,7 @@ export const AnalyzerPage: React.FC = () => {
 
   const inputTabs = [
     { id: 'raw', label: 'Raw Notation', icon: <Database className="w-3.5 h-3.5" /> },
+    { id: 'excel', label: 'Excel Spreadsheet', icon: <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-500" /> },
     { id: 'sample', label: 'Sample Data', icon: <Table className="w-3.5 h-3.5" /> },
   ];
 
@@ -233,19 +236,22 @@ export const AnalyzerPage: React.FC = () => {
                   <Database className="w-4 h-4 text-indigo-500" />
                   Schema & Dependency Input
                 </CardTitle>
-                <Badge variant={inputTab === 'raw' ? 'accent' : 'neutral'} size="sm">
-                  {inputTab === 'raw' ? 'Raw Mode' : 'Data Mode'}
+                <Badge
+                  variant={inputTab === 'raw' ? 'accent' : inputTab === 'excel' ? 'success' : 'neutral'}
+                  size="sm"
+                >
+                  {inputTab === 'raw' ? 'Raw Mode' : inputTab === 'excel' ? 'Excel Mode' : 'Data Mode'}
                 </Badge>
               </div>
               <CardDescription>
-                Define relational attributes, candidate keys, and dependencies using raw DBMS notation.
+                Define relational attributes, candidate keys, and dependencies using raw notation or an Excel spreadsheet.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <Tabs
                 tabs={inputTabs}
                 activeTab={inputTab}
-                onChange={(tabId) => setInputTab(tabId as 'raw' | 'sample')}
+                onChange={(tabId) => setInputTab(tabId as 'raw' | 'excel' | 'sample')}
               />
 
               {/* TAB 1: RAW DBMS NOTATION */}
@@ -256,7 +262,15 @@ export const AnalyzerPage: React.FC = () => {
                 />
               )}
 
-              {/* TAB 2: SAMPLE DATA TABLE */}
+              {/* TAB 2: EXCEL SPREADSHEET MANAGER */}
+              {inputTab === 'excel' && (
+                <ExcelWorkbookManager
+                  currentSchema={schema}
+                  onApplySchema={(discoveredSchema) => updateSchema(discoveredSchema)}
+                />
+              )}
+
+              {/* TAB 3: SAMPLE DATA TABLE */}
               {inputTab === 'sample' && (
                 <SampleDataEditor
                   attributes={schema.attributes}

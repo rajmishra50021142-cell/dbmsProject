@@ -12,6 +12,8 @@ client = TestClient(app)
 
 @pytest.fixture(autouse=True)
 def clean_history():
+    from app.database.session import init_db
+    init_db()
     # Clean history before and after each test
     client.delete("/api/v1/history")
     yield

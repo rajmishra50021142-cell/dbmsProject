@@ -47,9 +47,10 @@ export async function request<T>(endpoint: string, options: RequestOptions = {})
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
+  const isFormData = typeof FormData !== 'undefined' && fetchOptions.body instanceof FormData;
   const headers: HeadersInit = {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
+    Accept: 'application/json, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, */*',
+    ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
     ...(fetchOptions.headers || {}),
   };
 
@@ -90,6 +91,48 @@ export async function request<T>(endpoint: string, options: RequestOptions = {})
   }
 }
 
+export async function downloadBlob(endpoint: string, body?: unknown, options: RequestOptions = {}): Promise<Blob> {
+  const { timeoutMs = 45000, ...fetchOptions } = options;
+  const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  const url = `${API_BASE_URL}${path}`;
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(url, {
+      ...fetchOptions,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(fetchOptions.headers || {}),
+      },
+      body: body !== undefined ? JSON.stringify(body) : undefined,
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      let errorText: string;
+      try {
+        const json = await response.json();
+        errorText = json.detail || JSON.stringify(json);
+      } catch {
+        errorText = await response.text();
+      }
+      throw new ApiError(`Download failed (${response.status}): ${errorText}`, response.status);
+    }
+
+    return await response.blob();
+  } catch (error: unknown) {
+    clearTimeout(timeoutId);
+    if (error instanceof ApiError) throw error;
+    const message = error instanceof Error ? error.message : 'Network error';
+    throw new ApiError(`Download failed: ${message}`, 0);
+  }
+}
+
 export const apiClient = {
   get: <T>(endpoint: string, options?: RequestOptions) =>
     request<T>(endpoint, { ...options, method: 'GET' }),
@@ -99,4 +142,11 @@ export const apiClient = {
       method: 'POST',
       body: body !== undefined ? JSON.stringify(body) : undefined,
     }),
+  postFormData: <T>(endpoint: string, formData: FormData, options?: RequestOptions) =>
+    request<T>(endpoint, {
+      ...options,
+      method: 'POST',
+      body: formData,
+    }),
+  downloadBlob,
 };

@@ -12,6 +12,7 @@ from app.api.v1.endpoints import (
     practice,
     reports,
     history,
+    excel,
 )
 
 api_router = APIRouter()
@@ -47,4 +48,7 @@ api_router.include_router(reports.router, prefix="/reports", tags=["Reports & Do
 
 # Application Execution & Analysis History
 api_router.include_router(history.router, prefix="/history", tags=["Execution & Analysis History"])
+
+# Excel Upload, Heuristic Discovery & Normalized Export
+api_router.include_router(excel.router, prefix="/excel", tags=["Excel Spreadsheet Normalization"])
 
