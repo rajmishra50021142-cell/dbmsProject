@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Key,
@@ -81,7 +81,7 @@ export const KeyAnalysisLab: React.FC<KeyAnalysisLabProps> = ({ initialSchema })
   };
 
   // Run full automatic key analysis & user-provided key verification
-  const handleRunAnalysis = async () => {
+  const handleRunAnalysis = useCallback(async () => {
     setIsLoading(true);
     setError(null);
 
@@ -101,7 +101,27 @@ export const KeyAnalysisLab: React.FC<KeyAnalysisLabProps> = ({ initialSchema })
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [schema]);
+
+  // Sync initialSchema if provided
+  useEffect(() => {
+    if (initialSchema) {
+      setSchema(initialSchema);
+      setCustomKeyAttrs([]);
+      setCustomKeyResult(null);
+    }
+  }, [initialSchema]);
+
+  // Run analysis when active schema changes
+  useEffect(() => {
+    if (schema.attributes.length > 0) {
+      handleRunAnalysis();
+    } else {
+      setAnalysisResult(null);
+    }
+    setCustomKeyAttrs([]);
+    setCustomKeyResult(null);
+  }, [schema, handleRunAnalysis]);
 
   // Verify custom interactive key selection
   const handleVerifyCustomKey = async () => {

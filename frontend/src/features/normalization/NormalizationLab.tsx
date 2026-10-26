@@ -128,10 +128,17 @@ export const NormalizationLab: React.FC<NormalizationLabProps> = ({ initialSchem
     }
   }, [currentFingerprint]);
 
-  // Initial analysis on mount
+  // Sync initialSchema prop if provided
+  useEffect(() => {
+    if (initialSchema) {
+      setSchema(initialSchema);
+    }
+  }, [initialSchema]);
+
+  // Run analysis when active schema changes
   useEffect(() => {
     runAnalysis(schema);
-  }, []);
+  }, [schema]);
 
   const isStale = useMemo(() => {
     return fingerprintMap !== '' && fingerprintMap !== currentFingerprint;

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo, useEffect } from 'react';
 import {
   FileSpreadsheet,
   UploadCloud,
@@ -11,6 +11,8 @@ import {
   Check,
   Layers,
   FileCheck,
+  Database,
+  XCircle,
 } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
@@ -45,46 +47,81 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
   const [isValidatingRows, setIsValidatingRows] = useState<boolean>(false);
   const [rowValidationResult, setRowValidationResult] = useState<RowValidationResponse | null>(null);
   const [isExporting, setIsExporting] = useState<boolean>(false);
+  const [appliedModeA, setAppliedModeA] = useState<boolean>(false);
 
   // Mode B: Schema discovery
+  const [relationName, setRelationName] = useState<string>('');
   const [isSuggesting, setIsSuggesting] = useState<boolean>(false);
   const [suggestions, setSuggestions] = useState<ExcelSuggestResponse | null>(null);
   const [acceptedFDs, setAcceptedFDs] = useState<Record<number, boolean>>({});
   const [acceptedKeys, setAcceptedKeys] = useState<Record<number, boolean>>({});
+  const [appliedModeB, setAppliedModeB] = useState<boolean>(false);
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  // Clean helper to sanitize relation names
+  const sanitizeName = (raw: string): string => {
+    return raw.replace(/[^a-zA-Z0-9_]/g, '_').replace(/_+/g, '_').toUpperCase();
+  };
+
   // Helper to initialize column mapping based on case-insensitive matches
+  // CRITICAL FIX: Never silently map unmatched attributes to columns[0]
   const autoMapColumns = (attributes: string[], columns: string[]) => {
     const mapping: Record<string, string> = {};
     attributes.forEach((attr) => {
-      const match = columns.find(
+      const cleanAttr = attr.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+      const exactMatch = columns.find(
         (col) => col.trim().toLowerCase() === attr.trim().toLowerCase()
       );
-      if (match) {
-        mapping[attr] = match;
+      if (exactMatch) {
+        mapping[attr] = exactMatch;
       } else {
-        mapping[attr] = columns[0] || '';
+        const fuzzyMatch = columns.find(
+          (col) => col.trim().toLowerCase().replace(/[^a-z0-9]/g, '') === cleanAttr
+        );
+        mapping[attr] = fuzzyMatch || '';
       }
     });
     setColumnMapping(mapping);
+    return mapping;
   };
 
+  // Inspect workbook and initialize workflow
   const handleFileUpload = async (file: File, sheet?: string, headerIdx: number = 0) => {
     setSelectedFile(file);
     setIsInspecting(true);
     setErrorMessage(null);
+    setSuccessMessage(null);
     setInspectData(null);
     setSuggestions(null);
     setRowValidationResult(null);
+    setAppliedModeA(false);
+    setAppliedModeB(false);
 
     try {
       const res = await excelService.inspectWorkbook(file, sheet, headerIdx);
       setInspectData(res);
       setSelectedSheet(res.selected_sheet);
       setHeaderRowIndex(res.header_row_index);
-      autoMapColumns(currentSchema.attributes, res.columns);
+
+      // Default relation name for Mode B: prefer filename or non-generic sheet name
+      const defaultName =
+        res.selected_sheet && res.selected_sheet.toLowerCase() !== 'sheet1'
+          ? sanitizeName(res.selected_sheet)
+          : sanitizeName(res.filename.replace(/\.[^/.]+$/, ''));
+      setRelationName(defaultName);
+
+      // Run auto mapping for Mode A
+      const initialMap = autoMapColumns(currentSchema.attributes, res.columns);
+
+      // Detect if declared schema mismatches the workbook columns
+      const matchedCount = currentSchema.attributes.filter((attr) => Boolean(initialMap[attr])).length;
+      if (currentSchema.attributes.length > 0 && matchedCount === 0) {
+        // If 0 attributes matched, user likely wants Mode B (Discover from workbook)
+        setActiveWorkflow('modeB');
+      }
     } catch (err: any) {
       console.error('Failed to inspect workbook:', err);
       setErrorMessage(err.message || 'Failed to parse Excel workbook. Please verify file format.');
@@ -107,6 +144,45 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
     }
   };
 
+  // Compute mapping validation status for Mode A
+  const mappingValidation = useMemo(() => {
+    if (!inspectData || currentSchema.attributes.length === 0) {
+      return { isValid: true, unmappedAttrs: [], duplicateCols: [] };
+    }
+
+    const unmappedAttrs: string[] = [];
+    const colUsage: Record<string, string[]> = {};
+
+    currentSchema.attributes.forEach((attr) => {
+      const mappedCol = columnMapping[attr];
+      if (!mappedCol) {
+        unmappedAttrs.push(attr);
+      } else {
+        if (!colUsage[mappedCol]) {
+          colUsage[mappedCol] = [];
+        }
+        colUsage[mappedCol].push(attr);
+      }
+    });
+
+    const duplicateCols: { column: string; attributes: string[] }[] = [];
+    Object.entries(colUsage).forEach(([col, attrs]) => {
+      if (attrs.length > 1) {
+        duplicateCols.push({ column: col, attributes: attrs });
+      }
+    });
+
+    const isValid = unmappedAttrs.length === 0 && duplicateCols.length === 0;
+    return { isValid, unmappedAttrs, duplicateCols };
+  }, [inspectData, currentSchema.attributes, columnMapping]);
+
+  // Check if current declared schema is completely distinct from Excel columns
+  const isSchemaMismatch = useMemo(() => {
+    if (!inspectData || currentSchema.attributes.length === 0) return false;
+    const matchedCount = currentSchema.attributes.filter((attr) => Boolean(columnMapping[attr])).length;
+    return matchedCount === 0 || (currentSchema.attributes.length >= 3 && matchedCount < currentSchema.attributes.length / 2);
+  }, [inspectData, currentSchema.attributes, columnMapping]);
+
   // Mode A: Validate rows against FDs
   const handleValidateRows = async () => {
     if (!inspectData) return;
@@ -125,6 +201,50 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
     } finally {
       setIsValidatingRows(false);
     }
+  };
+
+  // Mode A: Apply mapped schema and worksheet data to canonical analysis pipeline
+  const handleApplyMappedSchema = () => {
+    if (!inspectData) return;
+    if (!mappingValidation.isValid) {
+      setErrorMessage('Please resolve unmapped attributes and duplicate column mappings before applying.');
+      return;
+    }
+
+    setErrorMessage(null);
+
+    // Project worksheet preview rows to schema attributes based on column mapping
+    const mappedSampleData = inspectData.preview_rows.map((row) => {
+      const tuple: Record<string, any> = {};
+      currentSchema.attributes.forEach((attr) => {
+        const col = columnMapping[attr];
+        if (col && row[col] !== undefined) {
+          tuple[attr] = row[col];
+        }
+      });
+      return tuple;
+    });
+
+    const updatedSchema: RelationSchema = {
+      ...currentSchema,
+      sample_data: mappedSampleData,
+      source: 'excel',
+      source_metadata: {
+        filename: inspectData.filename,
+        worksheet: selectedSheet,
+        total_rows: inspectData.total_rows,
+        columns: inspectData.columns,
+        header_row_index: headerRowIndex,
+        mode: 'modeA',
+      },
+    };
+
+    onApplySchema(updatedSchema);
+    setAppliedModeA(true);
+    setSuccessMessage(
+      `Linked ${mappedSampleData.length} worksheet row(s) to relation '${currentSchema.name}'. Live Relational Preview, Keys Lab, and Normalization updated.`
+    );
+    setTimeout(() => setSuccessMessage(null), 5000);
   };
 
   // Mode A: Export normalized workbook
@@ -162,7 +282,11 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
         inspectData.preview_rows
       );
       setSuggestions(res);
-      // Default: accept all confident suggestions
+      if (res.relation_name) {
+        setRelationName(sanitizeName(res.relation_name));
+      }
+
+      // Default: accept high confidence suggestions
       const keysMap: Record<number, boolean> = {};
       res.candidate_keys.forEach((_, idx) => {
         keysMap[idx] = true;
@@ -181,32 +305,66 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
     }
   };
 
-  // Apply discovered schema
+  // Automatically discover schema suggestions when switching to Mode B
+  useEffect(() => {
+    if (activeWorkflow === 'modeB' && inspectData && !suggestions && !isSuggesting) {
+      handleDiscoverSchema();
+    }
+  }, [activeWorkflow, inspectData]);
+
+  // Mode B: Apply discovered schema to workspace & run canonical analysis
   const handleApplyDiscoveredSchema = () => {
-    if (!suggestions || !inspectData) return;
+    if (!inspectData) return;
 
-    const chosenKeys: string[][] = suggestions.candidate_keys
-      .filter((_, idx) => acceptedKeys[idx])
-      .map((k) => k.attributes);
+    const chosenKeys: string[][] = suggestions
+      ? suggestions.candidate_keys.filter((_, idx) => acceptedKeys[idx]).map((k) => k.attributes)
+      : [];
 
-    const chosenFDs: FunctionalDependency[] = suggestions.functional_dependencies
-      .filter((_, idx) => acceptedFDs[idx])
-      .map((fd) => ({
-        id: fd.id || `fd-${Math.random().toString(36).substring(2, 7)}`,
-        left: fd.determinant,
-        right: fd.dependent,
-      }));
+    const chosenFDs: FunctionalDependency[] = suggestions
+      ? suggestions.functional_dependencies
+          .filter((_, idx) => acceptedFDs[idx])
+          .map((fd) => ({
+            id: fd.id || `fd-${Math.random().toString(36).substring(2, 7)}`,
+            left: fd.determinant,
+            right: fd.dependent,
+          }))
+      : [];
+
+    const finalName = relationName.trim() ? sanitizeName(relationName) : 'EXCEL_RELATION';
 
     const newSchema: RelationSchema = {
-      name: suggestions.relation_name || 'DISCOVERED_RELATION',
+      name: finalName,
       attributes: inspectData.columns,
       candidate_keys: chosenKeys.length > 0 ? chosenKeys : undefined,
       functional_dependencies: chosenFDs,
       multivalued_dependencies: [],
-      sample_data: inspectData.preview_rows.slice(0, 10),
+      sample_data: inspectData.preview_rows.slice(0, 20),
+      source: 'excel',
+      source_metadata: {
+        filename: inspectData.filename,
+        worksheet: selectedSheet,
+        total_rows: inspectData.total_rows,
+        columns: inspectData.columns,
+        header_row_index: headerRowIndex,
+        mode: 'modeB',
+        unconfirmed_keys: suggestions ? suggestions.candidate_keys.map((k) => k.attributes) : [],
+        unconfirmed_fds: suggestions
+          ? suggestions.functional_dependencies.map((fd) => ({
+              determinant: fd.determinant,
+              dependent: fd.dependent,
+              notation: fd.notation,
+              confidence: fd.confidence,
+            }))
+          : [],
+      },
     };
 
     onApplySchema(newSchema);
+    setAppliedModeB(true);
+    setSuccessMessage(
+      `Discovered schema '${finalName}' (${inspectData.columns.length} attributes, ${chosenFDs.length} FDs) applied to workspace. Live Relational Preview, Keys, and Normalization updated.`
+    );
+    setTimeout(() => setSuccessMessage(null), 5000);
   };
 
   return (
@@ -232,7 +390,7 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
                 handleFileUpload(e.target.files[0]);
               }
             }}
-            accept=".xlsx, .xls"
+            accept=".xlsx, .xls, .csv"
             className="hidden"
             id="excel-file-upload-input"
           />
@@ -248,7 +406,7 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
               {isInspecting ? 'Inspecting workbook structure...' : 'Click to upload or drag & drop Excel workbook'}
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              Supports Microsoft Excel (.xlsx, .xls) • Automatic header detection & multi-sheet parsing
+              Supports Microsoft Excel (.xlsx, .xls) & CSV • Automatic header detection & multi-sheet parsing
             </p>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-2 mt-2">
@@ -274,7 +432,7 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <FileSpreadsheet className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-              <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">
+              <span className="text-sm font-semibold text-slate-800 dark:text-slate-200 font-mono">
                 {inspectData.filename}
               </span>
               <Badge variant="accent" size="sm">
@@ -290,6 +448,9 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
                   setSelectedFile(null);
                   setSuggestions(null);
                   setRowValidationResult(null);
+                  setAppliedModeA(false);
+                  setAppliedModeB(false);
+                  setErrorMessage(null);
                 }}
               >
                 Change File
@@ -303,9 +464,11 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
               <div className="flex items-center gap-1.5">
                 <span className="text-slate-500 font-medium">Worksheet:</span>
                 <select
+                  id="excel-worksheet-select"
+                  aria-label="Worksheet"
                   value={selectedSheet}
                   onChange={(e) => handleSheetChange(e.target.value)}
-                  className="bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded px-2 py-0.5 text-xs text-slate-800 dark:text-slate-200"
+                  className="bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded px-2 py-0.5 text-xs text-slate-800 dark:text-slate-200 font-mono"
                 >
                   {inspectData.sheet_names.map((name) => (
                     <option key={name} value={name}>
@@ -319,6 +482,8 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
             <div className="flex items-center gap-1.5">
               <span className="text-slate-500 font-medium">Header Row:</span>
               <select
+                id="excel-header-row-select"
+                aria-label="Header Row"
                 value={headerRowIndex}
                 onChange={(e) => handleHeaderRowChange(Number(e.target.value))}
                 className="bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded px-2 py-0.5 text-xs text-slate-800 dark:text-slate-200"
@@ -339,6 +504,15 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
         </div>
       )}
 
+      {/* Success Notification */}
+      {successMessage && (
+        <div className="p-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 rounded-lg text-xs text-emerald-800 dark:text-emerald-300 flex items-start gap-2 animate-in fade-in">
+          <CheckCircle className="w-4 h-4 shrink-0 mt-0.5 text-emerald-600" />
+          <span>{successMessage}</span>
+        </div>
+      )}
+
+      {/* Error Message */}
       {errorMessage && (
         <div className="p-3 bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/50 rounded-lg text-xs text-rose-700 dark:text-rose-300 flex items-start gap-2">
           <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
@@ -360,15 +534,10 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
               }`}
             >
               <FileCheck className="w-3.5 h-3.5" />
-              Mode A: Link Schema & Export Normalized (.xlsx)
+              Mode A: Link to Declared Schema
             </button>
             <button
-              onClick={() => {
-                setActiveWorkflow('modeB');
-                if (!suggestions && !isSuggesting) {
-                  handleDiscoverSchema();
-                }
-              }}
+              onClick={() => setActiveWorkflow('modeB')}
               className={`pb-2.5 px-3 text-xs font-semibold border-b-2 flex items-center gap-1.5 transition-colors ${
                 activeWorkflow === 'modeB'
                   ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400'
@@ -380,63 +549,143 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
             </button>
           </div>
 
-          {/* WORKFLOW A: LINK SCHEMA & DECOMPOSE */}
+          {/* WORKFLOW A: LINK DECLARED SCHEMA */}
           {activeWorkflow === 'modeA' && (
             <div className="space-y-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4">
+              {/* Schema Mismatch Notice */}
+              {isSchemaMismatch && (
+                <div className="p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-300 dark:border-amber-800 rounded-lg text-xs text-amber-800 dark:text-amber-200 space-y-2">
+                  <div className="flex items-center gap-1.5 font-bold text-amber-900 dark:text-amber-100">
+                    <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+                    <span>Schema Mismatch with Current Relation</span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed">
+                    The declared schema in your workspace is <strong>{currentSchema.name}</strong> with attributes ({currentSchema.attributes.join(', ')}), but this worksheet contains columns ({inspectData.columns.join(', ')}).
+                  </p>
+                  <div className="flex items-center gap-2 pt-1">
+                    <Button
+                      size="xs"
+                      variant="primary"
+                      onClick={() => setActiveWorkflow('modeB')}
+                      leftIcon={<Sparkles className="w-3 h-3 text-amber-300" />}
+                    >
+                      Switch to Mode B: Discover Schema from Worksheet
+                    </Button>
+                    <span className="text-[11px] text-amber-700 dark:text-amber-300">
+                      Or manually map columns below if this is an alternate representation.
+                    </span>
+                  </div>
+                </div>
+              )}
+
               <div className="space-y-1">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                  <Layers className="w-3.5 h-3.5 text-indigo-500" />
-                  Column Mapping
-                </h4>
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                    <Layers className="w-3.5 h-3.5 text-indigo-500" />
+                    Column Mapping for Relation: {currentSchema.name}
+                  </h4>
+                  <Badge variant={mappingValidation.isValid ? 'success' : 'warning'} size="sm">
+                    {mappingValidation.isValid ? 'Mapping Valid' : 'Mapping Incomplete'}
+                  </Badge>
+                </div>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
-                  Map each relation attribute to the corresponding column header in your Excel worksheet.
+                  Map each declared attribute of <strong>{currentSchema.name}</strong> to a distinct column in worksheet <strong>{selectedSheet}</strong>.
                 </p>
               </div>
 
               {/* Column Mapping Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                {currentSchema.attributes.map((attr) => (
-                  <div
-                    key={attr}
-                    className="flex items-center justify-between p-2 rounded bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700"
-                  >
-                    <span className="font-mono font-medium text-slate-800 dark:text-slate-200 truncate pr-2">
-                      {attr}
-                    </span>
-                    <select
-                      value={columnMapping[attr] || ''}
-                      onChange={(e) =>
-                        setColumnMapping({ ...columnMapping, [attr]: e.target.value })
-                      }
-                      className="bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded px-2 py-1 text-xs text-slate-800 dark:text-slate-200 max-w-[140px]"
+                {currentSchema.attributes.map((attr) => {
+                  const mappedCol = columnMapping[attr] || '';
+                  const isUnmapped = !mappedCol;
+                  const isDup = mappingValidation.duplicateCols.some(
+                    (d) => d.column === mappedCol && mappedCol !== ''
+                  );
+
+                  return (
+                    <div
+                      key={attr}
+                      className={`flex items-center justify-between p-2 rounded border transition-colors ${
+                        isUnmapped
+                          ? 'bg-amber-50/60 dark:bg-amber-950/20 border-amber-200 dark:border-amber-800'
+                          : isDup
+                          ? 'bg-rose-50/60 dark:bg-rose-950/20 border-rose-300 dark:border-rose-800'
+                          : 'bg-slate-50 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700'
+                      }`}
                     >
-                      {inspectData.columns.map((col) => (
-                        <option key={col} value={col}>
-                          {col}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                ))}
+                      <span
+                        className="font-mono font-medium text-slate-800 dark:text-slate-200 truncate pr-2 max-w-[140px]"
+                        title={attr}
+                      >
+                        {attr}
+                      </span>
+                      <select
+                        value={mappedCol}
+                        onChange={(e) =>
+                          setColumnMapping({ ...columnMapping, [attr]: e.target.value })
+                        }
+                        className="bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded px-2 py-1 text-xs text-slate-800 dark:text-slate-200 max-w-[150px] font-mono"
+                      >
+                        <option value="">-- Unmapped --</option>
+                        {inspectData.columns.map((col) => (
+                          <option key={col} value={col}>
+                            {col}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  );
+                })}
               </div>
+
+              {/* Mapping Validation Diagnostic Warnings */}
+              {!mappingValidation.isValid && (
+                <div className="p-3 bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800 rounded-lg text-xs text-rose-800 dark:text-rose-300 space-y-1">
+                  <div className="font-bold flex items-center gap-1.5">
+                    <XCircle className="w-3.5 h-3.5 text-rose-600" />
+                    <span>Mapping Issues Detected</span>
+                  </div>
+                  {mappingValidation.unmappedAttrs.length > 0 && (
+                    <p className="text-[11px]">
+                      Required attributes not yet mapped: <strong>{mappingValidation.unmappedAttrs.join(', ')}</strong>.
+                    </p>
+                  )}
+                  {mappingValidation.duplicateCols.map((dup, i) => (
+                    <p key={i} className="text-[11px]">
+                      Duplicate mapping: Excel column <strong>{dup.column}</strong> is mapped to multiple attributes ({dup.attributes.join(', ')}).
+                    </p>
+                  ))}
+                </div>
+              )}
 
               {/* Actions & Validations */}
               <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
                 <Button
                   size="sm"
+                  variant="primary"
+                  onClick={handleApplyMappedSchema}
+                  disabled={!mappingValidation.isValid}
+                  leftIcon={<Database className="w-3.5 h-3.5" />}
+                  id="apply-mapped-schema-btn"
+                >
+                  {appliedModeA ? 'Update Linked Data in Analysis' : 'Apply Mapped Data & Analyze'}
+                </Button>
+                <Button
+                  size="sm"
                   variant="outline"
                   onClick={handleValidateRows}
                   isLoading={isValidatingRows}
+                  disabled={!mappingValidation.isValid}
                   leftIcon={<CheckCircle className="w-3.5 h-3.5 text-emerald-500" />}
                 >
                   Validate Rows vs FDs
                 </Button>
                 <Button
                   size="sm"
-                  variant="primary"
+                  variant="outline"
                   onClick={handleExportWorkbook}
                   isLoading={isExporting}
-                  leftIcon={<Download className="w-3.5 h-3.5" />}
+                  leftIcon={<Download className="w-3.5 h-3.5 text-indigo-500" />}
                   id="download-normalized-excel-btn"
                 >
                   Download Normalized Workbook (.xlsx)
@@ -480,22 +729,49 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
           {/* WORKFLOW B: SCHEMA DISCOVERY */}
           {activeWorkflow === 'modeB' && (
             <div className="space-y-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4">
-              {/* Scientific Disclaimer */}
+              {/* Relation Name & Attribute Proposal */}
+              <div className="p-3 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg space-y-2">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                    Proposed Relation Definition
+                  </span>
+                  <Badge variant="accent" size="sm">
+                    {inspectData.columns.length} Attributes
+                  </Badge>
+                </div>
+                <div className="flex flex-wrap items-center gap-3">
+                  <label className="text-xs font-medium text-slate-600 dark:text-slate-300">
+                    Relation Name:
+                  </label>
+                  <input
+                    type="text"
+                    value={relationName}
+                    onChange={(e) => setRelationName(e.target.value.toUpperCase())}
+                    placeholder="RELATION_NAME"
+                    className="font-mono text-xs px-2.5 py-1 rounded border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-bold max-w-[220px]"
+                    id="excel-relation-name-input"
+                  />
+                  <span className="text-xs text-slate-400 font-mono">
+                    ({inspectData.columns.join(', ')})
+                  </span>
+                </div>
+              </div>
+
+              {/* Scientific & Academic Disclaimer */}
               <div className="p-3 bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200/80 dark:border-amber-900/40 rounded-lg text-xs text-amber-900 dark:text-amber-200 space-y-1">
                 <div className="font-bold flex items-center gap-1.5 text-amber-800 dark:text-amber-300">
                   <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
                   Empirical Schema Discovery Disclaimer
                 </div>
                 <p className="text-[11px] leading-relaxed text-amber-800/90 dark:text-amber-300/90">
-                  The candidate keys and functional dependencies below are mined empirically from the current spreadsheet sample.
-                  True relational constraints represent formal business assertions and require confirmation before applying to canonical normalization.
+                  Candidate keys and functional dependencies below are mined empirically from the finite sample rows. True relational constraints represent formal business assertions. Review and select the constraints that reflect business reality before applying to the normalization engine.
                 </p>
               </div>
 
               {isSuggesting && (
                 <div className="py-6 text-center space-y-2">
                   <RefreshCw className="w-5 h-5 animate-spin mx-auto text-indigo-500" />
-                  <p className="text-xs text-slate-500">Mining candidate keys and functional dependencies...</p>
+                  <p className="text-xs text-slate-500">Mining candidate keys and functional dependencies from sample rows...</p>
                 </div>
               )}
 
@@ -503,9 +779,14 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
                 <div className="space-y-4">
                   {/* Discovered Candidate Keys */}
                   <div className="space-y-2">
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                      Observed Candidate Keys
-                    </span>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                        Observed Candidate Keys ({suggestions.candidate_keys.length})
+                      </span>
+                      <span className="text-[11px] text-slate-400">
+                        Select to confirm as schema candidate keys
+                      </span>
+                    </div>
                     <div className="space-y-1.5">
                       {suggestions.candidate_keys.length === 0 ? (
                         <p className="text-xs text-slate-400 italic">No simple unique keys detected in sample rows.</p>
@@ -515,10 +796,10 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
                             key={idx}
                             className="flex items-center justify-between p-2 rounded bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs"
                           >
-                            <div className="flex items-center gap-2">
+                            <label className="flex items-center gap-2 cursor-pointer">
                               <input
                                 type="checkbox"
-                                checked={!!acceptedKeys[idx]}
+                                checked={Boolean(acceptedKeys[idx])}
                                 onChange={(e) =>
                                   setAcceptedKeys({ ...acceptedKeys, [idx]: e.target.checked })
                                 }
@@ -533,7 +814,7 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
                               >
                                 {key.confidence} Confidence ({Math.round(key.uniqueness_ratio * 100)}% unique)
                               </Badge>
-                            </div>
+                            </label>
                             <span className="text-[11px] text-slate-400">
                               {key.null_count === 0 ? 'No nulls' : `${key.null_count} nulls`}
                             </span>
@@ -545,28 +826,33 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
 
                   {/* Discovered FDs */}
                   <div className="space-y-2">
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                      Observed Functional Dependencies
-                    </span>
-                    <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                        Observed Functional Dependencies ({suggestions.functional_dependencies.length})
+                      </span>
+                      <span className="text-[11px] text-slate-400">
+                        Select to confirm for normalization analysis
+                      </span>
+                    </div>
+                    <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1">
                       {suggestions.functional_dependencies.length === 0 ? (
-                        <p className="text-xs text-slate-400 italic">No strong non-trivial functional dependencies found.</p>
+                        <p className="text-xs text-slate-400 italic">No non-trivial functional dependencies detected in sample.</p>
                       ) : (
                         suggestions.functional_dependencies.map((fd, idx) => (
                           <div
                             key={idx}
                             className="flex items-center justify-between p-2 rounded bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs"
                           >
-                            <div className="flex items-center gap-2">
+                            <label className="flex items-center gap-2 cursor-pointer">
                               <input
                                 type="checkbox"
-                                checked={!!acceptedFDs[idx]}
+                                checked={Boolean(acceptedFDs[idx])}
                                 onChange={(e) =>
                                   setAcceptedFDs({ ...acceptedFDs, [idx]: e.target.checked })
                                 }
                                 className="rounded text-indigo-600 focus:ring-indigo-500"
                               />
-                              <span className="font-mono text-slate-800 dark:text-slate-200">
+                              <span className="font-mono font-semibold text-slate-800 dark:text-slate-200">
                                 {fd.notation}
                               </span>
                               <Badge
@@ -575,8 +861,8 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
                               >
                                 {fd.confidence}
                               </Badge>
-                            </div>
-                            <span className="text-[11px] text-slate-400 max-w-[200px] truncate">
+                            </label>
+                            <span className="text-[11px] text-slate-400 max-w-[200px] truncate" title={fd.notes}>
                               {fd.notes}
                             </span>
                           </div>
@@ -615,8 +901,11 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
                     </div>
                   )}
 
-                  {/* Confirm & Apply Button */}
-                  <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex justify-end">
+                  {/* Readiness Summary & Confirm Button */}
+                  <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+                    <div className="text-xs text-slate-500 dark:text-slate-400">
+                      Confirmed: <strong>{Object.values(acceptedKeys).filter(Boolean).length} key(s)</strong> • <strong>{Object.values(acceptedFDs).filter(Boolean).length} FD(s)</strong>
+                    </div>
                     <Button
                       size="sm"
                       variant="primary"
@@ -624,7 +913,7 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
                       leftIcon={<Check className="w-3.5 h-3.5" />}
                       id="apply-discovered-schema-btn"
                     >
-                      Apply Discovered Schema to Workspace
+                      {appliedModeB ? 'Update Schema in Analysis' : 'Apply Discovered Schema to Workspace'}
                     </Button>
                   </div>
                 </div>
@@ -638,6 +927,9 @@ export const ExcelWorkbookManager: React.FC<ExcelWorkbookManagerProps> = ({
               <span className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
                 <Table className="w-3.5 h-3.5 text-indigo-500" />
                 Worksheet Sample Rows ({inspectData.preview_rows.length} rows previewed)
+              </span>
+              <span className="text-[11px] text-slate-400 font-mono">
+                Sheet: {selectedSheet}
               </span>
             </div>
             <div className="overflow-x-auto max-h-44 text-xs font-mono">

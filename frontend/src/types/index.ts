@@ -61,6 +61,22 @@ export interface RelationSchema {
   functional_dependencies: FunctionalDependency[];
   multivalued_dependencies: MultivaluedDependency[];
   sample_data?: SampleTuple[];
+  source?: 'raw' | 'excel';
+  source_metadata?: {
+    filename?: string;
+    worksheet?: string;
+    total_rows?: number;
+    columns?: string[];
+    header_row_index?: number;
+    mode?: 'modeA' | 'modeB';
+    unconfirmed_keys?: string[][];
+    unconfirmed_fds?: {
+      determinant: string[];
+      dependent: string[];
+      notation: string;
+      confidence?: string;
+    }[];
+  };
 }
 
 export interface ValidationIssue {

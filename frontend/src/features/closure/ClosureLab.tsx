@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Sparkles,
@@ -86,6 +86,29 @@ export const ClosureLab: React.FC<ClosureLabProps> = ({ initialSchema }) => {
     }
     setError('No saved schema draft found in localStorage.');
   };
+
+  // Sync initialSchema if provided
+  useEffect(() => {
+    if (initialSchema) {
+      setSchema(initialSchema);
+      setSelectedAttrs(initialSchema.attributes.length > 0 ? [initialSchema.attributes[0]] : []);
+      setClosureResult(null);
+      setQueryResult(null);
+      setError(null);
+    }
+  }, [initialSchema]);
+
+  // Invalidate stale closures when schema changes
+  useEffect(() => {
+    const valid = selectedAttrs.filter((a) => schema.attributes.includes(a));
+    if (valid.length === 0 && schema.attributes.length > 0) {
+      setSelectedAttrs([schema.attributes[0]]);
+    } else if (valid.length !== selectedAttrs.length) {
+      setSelectedAttrs(valid);
+    }
+    setClosureResult(null);
+    setQueryResult(null);
+  }, [schema]);
 
   const toggleTargetAttr = (attr: string) => {
     if (selectedAttrs.includes(attr)) {

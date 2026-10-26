@@ -27,8 +27,9 @@ import { ExampleModal } from '../features/analyzer/ExampleModal';
 import { ResetConfirmModal } from '../features/analyzer/ResetConfirmModal';
 import { VisualizationWorkspace } from '../features/visualization/VisualizationWorkspace';
 import { schemaService } from '../services/schemaService';
+import { normalizationService } from '../services/normalizationService';
 import { EXAMPLE_SCHEMAS } from '../config/examples';
-import type { RelationSchema, ValidationResult } from '../types';
+import type { RelationSchema, ValidationResult, FullNormalizationAnalysisResult } from '../types';
 
 const DRAFT_STORAGE_KEY = 'normalization_lab_draft_v1';
 
@@ -53,6 +54,7 @@ export const AnalyzerPage: React.FC = () => {
 
   // Validation state
   const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
+  const [analysisResult, setAnalysisResult] = useState<FullNormalizationAnalysisResult | null>(null);
   const [isValidating, setIsValidating] = useState<boolean>(false);
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving'>('saved');
 
@@ -68,6 +70,19 @@ export const AnalyzerPage: React.FC = () => {
     try {
       const res = await schemaService.validateSchema(schemaToValidate);
       setValidationResult(res);
+
+      // If schema has attributes and at least one confirmed FD, run full normalization analysis
+      if (res.valid && schemaToValidate.functional_dependencies.length > 0) {
+        try {
+          const normRes = await normalizationService.analyzeFullNormalization(schemaToValidate);
+          setAnalysisResult(normRes);
+        } catch (normErr) {
+          console.warn('Normalization engine analysis failed for current schema', normErr);
+          setAnalysisResult(null);
+        }
+      } else {
+        setAnalysisResult(null);
+      }
     } catch (err) {
       console.warn('Backend validation unreachable, using optimistic local validation', err);
       // Fallback local check
@@ -94,6 +109,7 @@ export const AnalyzerPage: React.FC = () => {
         warnings: [],
         canonical_input: schemaToValidate,
       });
+      setAnalysisResult(null);
     } finally {
       setIsValidating(false);
     }
@@ -258,7 +274,7 @@ export const AnalyzerPage: React.FC = () => {
               {inputTab === 'raw' && (
                 <RawInputEditor
                   initialSchema={schema}
-                  onParsedSuccess={(parsed) => updateSchema(parsed)}
+                  onParsedSuccess={(parsed) => updateSchema({ ...parsed, source: 'raw' })}
                 />
               )}
 
@@ -334,6 +350,7 @@ export const AnalyzerPage: React.FC = () => {
             </div>
             <VisualizationWorkspace
               schema={schema}
+              analysisResult={analysisResult}
               initialMode="graph"
               initialStage={selectedStage}
             />
