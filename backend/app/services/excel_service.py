@@ -5,6 +5,7 @@ and verified normalized spreadsheet export.
 
 import io
 import re
+import csv
 from typing import List, Dict, Any, Optional, Set, Tuple
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
@@ -36,71 +37,108 @@ class ExcelService:
         file_bytes: bytes,
         filename: str,
         sheet_name: Optional[str] = None,
+        header_row_index: Optional[int] = None,
         max_preview_rows: int = 50,
     ) -> ExcelInspectResponse:
         """
-        Safely inspects an uploaded Excel (.xlsx) file without executing macros.
+        Safely inspects an uploaded Excel (.xlsx) or CSV (.csv) file without executing macros.
         Extracts available sheets, column headers, preview records, and flags issues.
         """
-        # Validate magic bytes for ZIP/OOXML format (.xlsx)
-        if not file_bytes.startswith(b"PK\x03\x04"):
-            raise ValueError("Invalid file format. Uploaded file is not a valid Excel (.xlsx) workbook.")
+        is_csv = filename.lower().endswith(".csv")
 
-        wb = openpyxl.load_workbook(io.BytesIO(file_bytes), data_only=True, read_only=True)
-        sheet_names = wb.sheetnames
+        if is_csv:
+            text = None
+            for enc in ("utf-8-sig", "utf-8", "latin-1", "cp1252"):
+                try:
+                    text = file_bytes.decode(enc)
+                    break
+                except UnicodeDecodeError:
+                    continue
+            if text is None:
+                text = file_bytes.decode("utf-8", errors="replace")
+            reader = csv.reader(io.StringIO(text))
+            raw_rows = [tuple(row) for row in reader]
+            base_name = filename.rsplit(".", 1)[0] or "CSV_Data"
+            sheet_names = [base_name]
+            active_sheet_name = base_name
+        else:
+            # Validate magic bytes for ZIP/OOXML format (.xlsx)
+            if not file_bytes.startswith(b"PK\x03\x04"):
+                raise ValueError("Invalid file format. Uploaded file is not a valid Excel (.xlsx) workbook.")
 
-        if not sheet_names:
+            try:
+                wb = openpyxl.load_workbook(io.BytesIO(file_bytes), data_only=True, read_only=True)
+            except Exception as e:
+                raise ValueError(f"Unable to parse Excel workbook: {str(e)}")
+
+            sheet_names = wb.sheetnames
+            if not sheet_names:
+                wb.close()
+                raise ValueError("The uploaded Excel workbook contains no worksheets.")
+
+            active_sheet_name = sheet_name if sheet_name and sheet_name in sheet_names else sheet_names[0]
+            sheet = wb[active_sheet_name]
+
+            raw_rows = list(sheet.iter_rows(values_only=True))
             wb.close()
-            raise ValueError("The uploaded Excel workbook contains no worksheets.")
-
-        active_sheet_name = sheet_name if sheet_name and sheet_name in sheet_names else sheet_names[0]
-        sheet = wb[active_sheet_name]
 
         issues: List[ExcelIssue] = []
-        raw_rows = list(sheet.iter_rows(values_only=True))
-        wb.close()
 
         if not raw_rows:
             return ExcelInspectResponse(
                 filename=filename,
                 sheets=sheet_names,
+                sheet_names=sheet_names,
                 selected_sheet=active_sheet_name,
                 headers=[],
+                columns=[],
+                header_row_index=0,
                 total_rows=0,
                 preview_rows=[],
                 issues=[
                     ExcelIssue(
                         severity="warning",
                         code="EMPTY_WORKSHEET",
+                        category="missing",
                         message=f"Worksheet '{active_sheet_name}' is completely empty.",
                     )
                 ],
+                has_non_atomic_values=False,
             )
 
-        # Locate first non-empty row as header
-        header_row_index = -1
-        raw_headers = []
-        for idx, row in enumerate(raw_rows):
-            if any(cell is not None and str(cell).strip() != "" for cell in row):
-                header_row_index = idx
-                raw_headers = [cell for cell in row]
-                break
+        # Determine header row index
+        if header_row_index is not None and 0 <= header_row_index < len(raw_rows):
+            actual_header_idx = header_row_index
+            raw_headers = [cell for cell in raw_rows[actual_header_idx]]
+        else:
+            actual_header_idx = -1
+            raw_headers = []
+            for idx, row in enumerate(raw_rows):
+                if any(cell is not None and str(cell).strip() != "" for cell in row):
+                    actual_header_idx = idx
+                    raw_headers = [cell for cell in row]
+                    break
 
-        if header_row_index == -1:
+        if actual_header_idx == -1:
             return ExcelInspectResponse(
                 filename=filename,
                 sheets=sheet_names,
+                sheet_names=sheet_names,
                 selected_sheet=active_sheet_name,
                 headers=[],
+                columns=[],
+                header_row_index=0,
                 total_rows=0,
                 preview_rows=[],
                 issues=[
                     ExcelIssue(
                         severity="error",
                         code="NO_HEADER_ROW",
+                        category="header",
                         message="No header row with attribute names could be identified.",
                     )
                 ],
+                has_non_atomic_values=False,
             )
 
         # Normalize headers and detect blank or duplicate column names
@@ -116,9 +154,10 @@ class ExcelService:
                     ExcelIssue(
                         severity="warning",
                         code="EMPTY_COLUMN_HEADER",
+                        category="missing",
                         message=f"Empty header in column {col_letter}; auto-assigned name '{gen_name}'.",
                         column=gen_name,
-                        row=header_row_index + 1,
+                        row=actual_header_idx + 1,
                     )
                 )
             else:
@@ -131,9 +170,10 @@ class ExcelService:
                         ExcelIssue(
                             severity="warning",
                             code="DUPLICATE_HEADER",
+                            category="duplicate",
                             message=f"Duplicate column header '{h_name}' at column {col_letter}; renamed to '{dup_name}'.",
                             column=dup_name,
-                            row=header_row_index + 1,
+                            row=actual_header_idx + 1,
                         )
                     )
                 else:
@@ -141,7 +181,7 @@ class ExcelService:
                     seen_headers.add(h_name)
 
         # Extract data rows
-        data_rows_raw = raw_rows[header_row_index + 1 :]
+        data_rows_raw = raw_rows[actual_header_idx + 1 :]
         parsed_rows: List[Dict[str, Any]] = []
 
         for row_idx, r in enumerate(data_rows_raw):
@@ -173,6 +213,7 @@ class ExcelService:
                             ExcelIssue(
                                 severity="info",
                                 code="POTENTIAL_NON_ATOMIC",
+                                category="atomic",
                                 message=f"Column '{h}' in row {row_i + 1} contains delimited values ('{val}'). Review for 1NF atomicity.",
                                 column=h,
                                 row=row_i + 2,
@@ -180,14 +221,20 @@ class ExcelService:
                         )
                         break
 
+        has_non_atomic_values = any(iss.code == "POTENTIAL_NON_ATOMIC" for iss in issues)
+
         return ExcelInspectResponse(
             filename=filename,
             sheets=sheet_names,
+            sheet_names=sheet_names,
             selected_sheet=active_sheet_name,
             headers=headers,
+            columns=headers,
+            header_row_index=actual_header_idx,
             total_rows=total_rows,
             preview_rows=preview,
-            issues=issues[:20],  # Cap issues to 20 for readability
+            issues=issues[:20],
+            has_non_atomic_values=has_non_atomic_values,
         )
 
     @staticmethod
@@ -211,22 +258,30 @@ class ExcelService:
         if total_rows == 0:
             return ExcelSuggestResponse(
                 relation_name=rel_name,
+                candidate_keys=[],
                 suggested_keys=[],
+                functional_dependencies=[],
                 suggested_fds=[],
                 atomicity_reviews=[],
                 data_quality_notes=["Spreadsheet contains no data rows to analyze."],
+                sample_row_count=0,
             )
 
         # 1. Uniqueness / Candidate Key Suggestions (Single and Pairs)
         single_unique: Set[str] = set()
         for attr in attributes:
             values = [r.get(attr) for r in rows if r.get(attr) is not None and str(r.get(attr)).strip() != ""]
+            null_count = sum(1 for r in rows if r.get(attr) is None or str(r.get(attr)).strip() == "")
+            uniqueness_ratio = len(set(values)) / total_rows if total_rows > 0 else 0.0
             if len(values) == total_rows and len(set(values)) == total_rows:
                 single_unique.add(attr)
                 suggested_keys.append(
                     ObservedKey(
                         attributes=[attr],
                         is_unique=True,
+                        uniqueness_ratio=1.0,
+                        null_count=null_count,
+                        confidence="High",
                         explanation=f"Attribute '{attr}' contains strictly unique values across all {total_rows} uploaded rows.",
                     )
                 )
@@ -246,14 +301,15 @@ class ExcelService:
                             ObservedKey(
                                 attributes=[a1, a2],
                                 is_unique=True,
+                                uniqueness_ratio=1.0,
+                                null_count=0,
+                                confidence="High",
                                 explanation=f"Composite key {{{a1}, {a2}}} is unique across all {total_rows} observed rows.",
                             )
                         )
 
         # 2. Heuristic Functional Dependency Mining
-        # Check X -> Y where X != Y and X is not already a unique key
         candidate_dets: List[List[str]] = [[a] for a in attributes if a not in single_unique]
-        # Also include pairs if single attribute determinants are few
         if len(candidate_dets) < 5 and len(attributes) >= 3:
             for i in range(len(attributes)):
                 for j in range(i + 1, len(attributes)):
@@ -265,13 +321,11 @@ class ExcelService:
                 if target in det:
                     continue
 
-                # Check if for every row, det uniquely determines target
                 mapping: Dict[Tuple, Any] = {}
                 holds = True
                 for r in rows:
                     key_val = tuple(r.get(k) for k in det)
                     t_val = r.get(target)
-                    # Ignore null determinants
                     if any(kv is None or str(kv).strip() == "" for kv in key_val):
                         continue
                     if key_val in mapping:
@@ -281,15 +335,22 @@ class ExcelService:
                     else:
                         mapping[key_val] = t_val
 
-                # If holds and has non-trivial grouping (more than 1 distinct determinant value)
                 if holds and len(mapping) > 1 and len(mapping) < total_rows:
                     det_str = ", ".join(det)
+                    fd_id = f"sug-fd-{len(suggested_fds) + 1}"
                     suggested_fds.append(
                         ObservedFD(
+                            id=fd_id,
                             left=det,
                             right=[target],
+                            determinant=det,
+                            dependent=[target],
+                            notation=f"{det_str} → {target}",
                             holds=True,
+                            violation_count=0,
+                            confidence="Strong",
                             explanation=f"In all {total_rows} sample rows, identical values of {{{det_str}}} always map to the exact same value of '{target}'.",
+                            notes=f"Determinant maps to a unique dependent value across all {total_rows} sample rows.",
                             is_heuristic=True,
                         )
                     )
@@ -300,7 +361,6 @@ class ExcelService:
             for idx, r in enumerate(rows):
                 val = r.get(attr)
                 if isinstance(val, str) and ("," in val or ";" in val or "|" in val):
-                    # Check if it has multiple tokens
                     parts = [p.strip() for p in re.split(r"[,;|]", val) if p.strip()]
                     if len(parts) > 1 and not re.match(r"^\d+([,.]\d+)?$", val):
                         delim = "," if "," in val else (";" if ";" in val else "|")
@@ -311,6 +371,8 @@ class ExcelService:
                                 sample_value=val,
                                 delimiter_detected=delim,
                                 message=f"Contains multiple values separated by '{delim}'. If these represent multiple domain entries, normalize to 1NF by splitting into separate rows or relations.",
+                                reason=f"Column '{attr}' contains delimiter '{delim}' indicating potential repeating group.",
+                                suggested_action="Split delimited multi-values into individual rows or a separate child table.",
                             )
                         )
                         found_count += 1
@@ -318,7 +380,6 @@ class ExcelService:
                             break
 
         # 4. Data Quality Notes
-        # Check duplicate rows
         row_tuples = [tuple(r.get(a) for a in attributes) for r in rows]
         dup_count = len(row_tuples) - len(set(row_tuples))
         if dup_count > 0:
@@ -326,7 +387,6 @@ class ExcelService:
                 f"Found {dup_count} duplicate row(s) in the uploaded worksheet. In relational databases, relations are mathematical sets and should not contain duplicate tuples."
             )
 
-        # Check null values
         null_counts = {
             a: sum(1 for r in rows if r.get(a) is None or str(r.get(a)).strip() == "")
             for a in attributes
@@ -336,12 +396,19 @@ class ExcelService:
             null_summary = ", ".join([f"{a} ({null_counts[a]} nulls)" for a in high_nulls[:3]])
             data_quality_notes.append(f"Missing/blank cells detected in: {null_summary}.")
 
+        disclaimer_text = "Important: These dependencies and keys are suggestions derived from finite observed spreadsheet rows. In relational theory, genuine constraints must hold for all valid database instances, not merely the sample uploaded. Please review and confirm before running formal normalization."
+
         return ExcelSuggestResponse(
             relation_name=rel_name,
+            candidate_keys=suggested_keys[:5],
             suggested_keys=suggested_keys[:5],
+            functional_dependencies=suggested_fds[:10],
             suggested_fds=suggested_fds[:10],
             atomicity_reviews=atomicity_reviews[:10],
             data_quality_notes=data_quality_notes,
+            sample_row_count=total_rows,
+            disclaimer=disclaimer_text,
+            caveat=disclaimer_text,
         )
 
     @staticmethod
@@ -349,6 +416,7 @@ class ExcelService:
         attributes: List[str],
         functional_dependencies: List[FunctionalDependency],
         rows: List[Dict[str, Any]],
+        column_mapping: Optional[Dict[str, str]] = None,
     ) -> List[Dict[str, Any]]:
         """
         Validates whether uploaded spreadsheet records satisfy the declared functional dependencies.
@@ -360,23 +428,23 @@ class ExcelService:
             left_attrs = fd.left
             right_attrs = fd.right
 
-            # Only check if all attributes exist in rows
-            if not all(a in attributes for a in left_attrs + right_attrs):
-                continue
+            # Resolve mapped column names in rows
+            left_cols = [column_mapping.get(a, a) if column_mapping else a for a in left_attrs]
+            right_cols = [column_mapping.get(a, a) if column_mapping else a for a in right_attrs]
 
             value_map: Dict[Tuple, Tuple[int, Dict[str, Any]]] = {}
             for r_idx, row in enumerate(rows):
-                left_val = tuple(row.get(a) for a in left_attrs)
+                left_val = tuple(row.get(col) for col in left_cols)
                 # Skip if any LHS is null
                 if any(v is None or str(v).strip() == "" for v in left_val):
                     continue
 
-                right_val = {a: row.get(a) for a in right_attrs}
+                right_val = {right_attrs[i]: row.get(right_cols[i]) for i in range(len(right_attrs))}
 
                 if left_val in value_map:
                     orig_row_idx, orig_right_val = value_map[left_val]
                     if orig_right_val != right_val:
-                        left_str = ", ".join(f"{a}={row.get(a)}" for a in left_attrs)
+                        left_str = ", ".join(f"{left_attrs[i]}={left_val[i]}" for i in range(len(left_attrs)))
                         contradictions.append({
                             "dependency": f"{', '.join(left_attrs)} → {', '.join(right_attrs)}",
                             "message": (
@@ -401,6 +469,7 @@ class ExcelService:
         candidate_keys: List[List[str]],
         rows: List[Dict[str, Any]],
         target_normal_form: str = "3NF",
+        column_mapping: Optional[Dict[str, str]] = None,
     ) -> bytes:
         """
         Executes real normalization decomposition via Phase 7 decomposition engine and Phase 5/6
@@ -508,7 +577,10 @@ class ExcelService:
             row_count = 0
 
             for orig_row in rows:
-                proj_tuple = tuple(orig_row.get(attr) for attr in rel.attributes)
+                proj_tuple = tuple(
+                    orig_row.get(column_mapping.get(attr, attr) if column_mapping else attr)
+                    for attr in rel.attributes
+                )
                 if proj_tuple not in seen_tuples:
                     seen_tuples.add(proj_tuple)
                     row_cells = list(proj_tuple)
