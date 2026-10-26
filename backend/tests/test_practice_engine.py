@@ -25,11 +25,15 @@ def test_practice_summary():
     assert "ai_practice" in data
     assert "pyq_practice" in data
     assert data["ai_practice"]["total_questions"] == 30
-    assert data["pyq_practice"]["total_questions"] == 80
-    assert data["pyq_practice"]["playable_questions"] == 60
-    assert data["pyq_practice"]["incomplete_questions"] == 20
+    assert data["pyq_practice"]["total_questions"] == 115
+    assert data["pyq_practice"]["playable_questions"] == 110
+    assert data["pyq_practice"]["incomplete_questions"] == 5
     assert len(data["ai_practice"]["topics"]) > 0
     assert len(data["pyq_practice"]["exams"]) > 0
+    # Exact 3 GATE categories
+    assert "Functional Dependencies and Normalization" in data["pyq_practice"]["topics"]
+    assert "Structured Query Language (SQL)" in data["pyq_practice"]["topics"]
+    assert "ER Diagrams" in data["pyq_practice"]["topics"]
 
 
 def test_ai_practice_questions_fetch_and_filters():
@@ -62,17 +66,17 @@ def test_ai_practice_questions_fetch_and_filters():
 
 
 def test_pyq_practice_questions_fetch_and_filters():
-    # Fetch all 80
+    # Fetch all 115 authentic GATE CSE questions
     response = client.get("/api/v1/practice/pyqs/questions")
     assert response.status_code == 200
     all_pyq = response.json()
-    assert len(all_pyq) == 80
+    assert len(all_pyq) == 115
 
-    # Exactly 60 playable and 20 incomplete
+    # Exactly 110 playable and 5 historical subjective incomplete
     playable = [q for q in all_pyq if q["status"] == "playable"]
     incomplete = [q for q in all_pyq if q["status"] == "incomplete"]
-    assert len(playable) == 60
-    assert len(incomplete) == 20
+    assert len(playable) == 110
+    assert len(incomplete) == 5
 
     # Incomplete questions must provide reason why omitted from scored pools
     for inc in incomplete:
@@ -82,14 +86,121 @@ def test_pyq_practice_questions_fetch_and_filters():
     # Test playable_only query param
     resp_playable = client.get("/api/v1/practice/pyqs/questions?playable_only=true")
     assert resp_playable.status_code == 200
-    assert len(resp_playable.json()) == 60
+    assert len(resp_playable.json()) == 110
 
     # Test exam filter (GATE CSE)
     resp_gate = client.get("/api/v1/practice/pyqs/questions?exam=GATE+CSE")
     assert resp_gate.status_code == 200
     gate_qs = resp_gate.json()
-    assert len(gate_qs) > 0
-    assert all(q["exam"] == "GATE CSE" for q in gate_qs)
+    assert len(gate_qs) == 115
+    assert all("GATE" in q["exam"] for q in gate_qs)
+
+
+def test_mixed_gate_dbms_quiz_selection_rule():
+    # In Mixed GATE DBMS Quiz (topic=None or all), first 4-5 questions must be from FD/Norm, rest from others
+    resp = client.get("/api/v1/practice/pyqs/questions?playable_only=true&count=10")
+    assert resp.status_code == 200
+    qs = resp.json()
+    assert len(qs) == 10
+
+    # No duplicates in quiz
+    q_ids = [q["id"] for q in qs]
+    assert len(set(q_ids)) == 10
+
+    # First 5 must be Functional Dependencies & Normalization
+    for q in qs[:5]:
+        assert "Functional Dependencies" in q["topic"]
+
+    # At least some remaining should be from SQL or ER
+    remaining_topics = [q["topic"] for q in qs[5:]]
+    assert any("SQL" in t or "ER" in t for t in remaining_topics)
+
+
+def test_category_specific_filtering_isolation():
+    # Normalization & FD pool: 100% from FD
+    resp_fd = client.get("/api/v1/practice/pyqs/questions?topic=Functional+Dependencies+and+Normalization&playable_only=true&count=15")
+    assert resp_fd.status_code == 200
+    fd_qs = resp_fd.json()
+    assert len(fd_qs) == 15
+    assert all("Functional Dependencies" in q["topic"] for q in fd_qs)
+
+    # SQL pool: 100% from SQL
+    resp_sql = client.get("/api/v1/practice/pyqs/questions?topic=Structured+Query+Language+(SQL)&playable_only=true&count=15")
+    assert resp_sql.status_code == 200
+    sql_qs = resp_sql.json()
+    assert len(sql_qs) == 15
+    assert all("SQL" in q["topic"] for q in sql_qs)
+
+    # ER Diagrams pool: 100% from ER
+    resp_er = client.get("/api/v1/practice/pyqs/questions?topic=ER+Diagrams&playable_only=true&count=10")
+    assert resp_er.status_code == 200
+    er_qs = resp_er.json()
+    assert len(er_qs) == 10
+    assert all("ER" in q["topic"] for q in er_qs)
+
+
+def test_msq_and_nat_grading_accuracy():
+    # MSQ Test: gate-fd-q01 (Answer: C, D)
+    q_msq = PracticeService.get_question_by_id("gate-fd-q01", "pyq")
+    assert q_msq is not None
+    assert q_msq.question_type == "MSQ"
+
+    # Correct MSQ (unordered matching "D, C")
+    resp_msq_corr = client.post(
+        "/api/v1/practice/verify-attempt",
+        json={
+            "question_id": "gate-fd-q01",
+            "bank_type": "pyq",
+            "selected_option": "D, C",
+            "attempt_number": 1,
+        },
+    )
+    assert resp_msq_corr.status_code == 200
+    assert resp_msq_corr.json()["is_correct"] is True
+
+    # Partial / Incorrect MSQ ("C" only)
+    resp_msq_inc = client.post(
+        "/api/v1/practice/verify-attempt",
+        json={
+            "question_id": "gate-fd-q01",
+            "bank_type": "pyq",
+            "selected_option": "C",
+            "attempt_number": 1,
+        },
+    )
+    assert resp_msq_inc.status_code == 200
+    assert resp_msq_inc.json()["is_correct"] is False
+
+    # NAT Test: gate-fd-q05 (Answer: 8)
+    q_nat = PracticeService.get_question_by_id("gate-fd-q05", "pyq")
+    assert q_nat is not None
+    assert q_nat.question_type == "NAT"
+
+    # Correct NAT ("8")
+    resp_nat_corr = client.post(
+        "/api/v1/practice/verify-attempt",
+        json={
+            "question_id": "gate-fd-q05",
+            "bank_type": "pyq",
+            "selected_option": "8",
+            "attempt_number": 1,
+        },
+    )
+    assert resp_nat_corr.status_code == 200
+    assert resp_nat_corr.json()["is_correct"] is True
+
+    # Incorrect NAT ("5")
+    resp_nat_inc = client.post(
+        "/api/v1/practice/verify-attempt",
+        json={
+            "question_id": "gate-fd-q05",
+            "bank_type": "pyq",
+            "selected_option": "5",
+            "attempt_number": 1,
+        },
+    )
+    assert resp_nat_inc.status_code == 200
+    assert resp_nat_inc.json()["is_correct"] is False
 
 
 def test_gentle_retry_progression():

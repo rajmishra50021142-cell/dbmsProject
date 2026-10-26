@@ -111,14 +111,26 @@ export const PracticePage: React.FC = () => {
       if (qs.length === 0) {
         // Fall back to preloaded questions
         const source = bank === 'ai' ? aiQuestions : pyqQuestions.filter((q) => q.status === 'playable');
-        let filtered = source;
-        if (bank === 'pyq' && config.exam) {
-          filtered = filtered.filter((q) => q.exam && q.exam.toLowerCase() === config.exam!.toLowerCase());
+        if (bank === 'pyq') {
+          if (config.topic && config.topic !== 'all') {
+            const catQs = source.filter((q) => q.topic.toLowerCase() === config.topic!.toLowerCase());
+            qs = [...catQs].sort(() => 0.5 - Math.random()).slice(0, config.question_count || 10);
+          } else {
+            // Mixed GATE DBMS Quiz: first 4-5 FD/Norm, rest from other categories
+            const fdPool = [...source.filter(q => q.topic.includes('Functional Dependencies'))].sort(() => 0.5 - Math.random());
+            const otherPool = [...source.filter(q => !q.topic.includes('Functional Dependencies'))].sort(() => 0.5 - Math.random());
+            const total = config.question_count || 10;
+            const fdCount = Math.min(Math.min(5, total), fdPool.length);
+            const remainingCount = total - fdCount;
+            qs = [...fdPool.slice(0, fdCount), ...otherPool.slice(0, remainingCount)];
+          }
+        } else {
+          let filtered = source;
+          if (config.topic && config.topic !== 'all') {
+            filtered = filtered.filter((q) => q.topic.toLowerCase() === config.topic!.toLowerCase());
+          }
+          qs = [...filtered].sort(() => 0.5 - Math.random()).slice(0, config.question_count || 10);
         }
-        if (config.topic) {
-          filtered = filtered.filter((q) => q.topic.toLowerCase() === config.topic!.toLowerCase());
-        }
-        qs = filtered.length > 0 ? filtered.slice(0, config.question_count || 10) : source.slice(0, config.question_count || 10);
       }
 
       setActiveSessionBank(bank);
@@ -127,7 +139,26 @@ export const PracticePage: React.FC = () => {
     } catch (err) {
       console.warn('Failed to fetch questions from API, using preloaded set', err);
       const source = bank === 'ai' ? aiQuestions : pyqQuestions.filter((q) => q.status === 'playable');
-      const qs = source.slice(0, config.question_count || 10);
+      let qs: QuizQuestion[] = [];
+      if (bank === 'pyq') {
+        if (config.topic && config.topic !== 'all') {
+          const catQs = source.filter((q) => q.topic.toLowerCase() === config.topic!.toLowerCase());
+          qs = [...catQs].sort(() => 0.5 - Math.random()).slice(0, config.question_count || 10);
+        } else {
+          const fdPool = [...source.filter(q => q.topic.includes('Functional Dependencies'))].sort(() => 0.5 - Math.random());
+          const otherPool = [...source.filter(q => !q.topic.includes('Functional Dependencies'))].sort(() => 0.5 - Math.random());
+          const total = config.question_count || 10;
+          const fdCount = Math.min(Math.min(5, total), fdPool.length);
+          const remainingCount = total - fdCount;
+          qs = [...fdPool.slice(0, fdCount), ...otherPool.slice(0, remainingCount)];
+        }
+      } else {
+        let filtered = source;
+        if (config.topic && config.topic !== 'all') {
+          filtered = filtered.filter((q) => q.topic.toLowerCase() === config.topic!.toLowerCase());
+        }
+        qs = [...filtered].sort(() => 0.5 - Math.random()).slice(0, config.question_count || 10);
+      }
       setActiveSessionBank(bank);
       setActiveSessionConfig(config);
       setActiveSessionQuestions(qs);
@@ -241,15 +272,14 @@ export const PracticePage: React.FC = () => {
                 <Award className="w-5 h-5" />
               </div>
               <Badge variant="warning" size="sm">
-                80 PYQs (60 Playable)
+                115 GATE Questions (110 Playable)
               </Badge>
             </div>
             <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
               Competitive Exam PYQs
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-              Real questions from GATE CSE, ISRO, NET, and BARC. Complete archival fidelity
-              with verified answer keys and step-by-step mathematical proofs.
+              Authentic GATE CSE questions covering Functional Dependencies & Normalization (56), SQL (44), and ER Diagrams (15) with official answer keys and 200 DPI figures.
             </p>
           </div>
           <Button
@@ -317,7 +347,7 @@ export const PracticePage: React.FC = () => {
           id="tab-pyq-practice"
         >
           <Award className="w-4 h-4 text-amber-500" />
-          Competitive Exam PYQs
+          Competitive Exam PYQs (115)
         </button>
 
         <button
@@ -330,7 +360,7 @@ export const PracticePage: React.FC = () => {
           id="tab-pyq-library"
         >
           <BookOpen className="w-4 h-4 text-emerald-500" />
-          PYQ Library Archive (All 80)
+          PYQ Library Archive (All 115)
         </button>
 
         <button
@@ -481,11 +511,11 @@ export const PracticePage: React.FC = () => {
               <div className="space-y-1">
                 <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
                   <Award className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-                  Competitive Exam PYQ Simulations
+                  Competitive Exam PYQ Simulations (Authentic GATE CSE)
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
-                  Practice with verified competitive exam questions (GATE CSE, ISRO, NET, BARC).
-                  60 questions are fully playable with detailed proofs; 20 questions with omitted source diagrams are cataloged separately in the Question Library.
+                  Practice with authentic GATE CSE previous-year questions across Functional Dependencies & Normalization (56), SQL (44), and ER Diagrams (15).
+                  110 questions are fully playable with official answer keys; 5 historical subjective questions are archived for reference.
                 </p>
               </div>
               <Button
@@ -506,19 +536,19 @@ export const PracticePage: React.FC = () => {
                 onClick={() =>
                   handleStartSession('pyq', {
                     question_count: 10,
-                    exam: 'GATE CSE',
+                    topic: 'Functional Dependencies and Normalization',
                     untimed: true,
                     mode: 'practice',
                   })
                 }
                 className="text-left p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500 hover:shadow-xs cursor-pointer transition-all shadow-2xs space-y-1"
-                id="gate-cse-focus-btn"
+                id="gate-fd-focus-btn"
               >
                 <span className="font-semibold text-xs text-slate-800 dark:text-slate-200 block">
-                  🎓 GATE CSE Focus (10 Questions)
+                  🎯 FD & Normalization (10 Qs)
                 </span>
                 <p className="text-[11px] text-slate-500 leading-normal">
-                  High-yield GATE normalization and BCNF questions with proofs.
+                  100% drawn from the 56 authentic GATE Normalization questions.
                 </p>
               </button>
 
@@ -526,41 +556,41 @@ export const PracticePage: React.FC = () => {
                 type="button"
                 onClick={() =>
                   handleStartSession('pyq', {
-                    question_count: 20,
-                    time_limit_seconds: 1800,
-                    untimed: false,
-                    mode: 'exam_simulation',
+                    question_count: 10,
+                    topic: 'Structured Query Language (SQL)',
+                    untimed: true,
+                    mode: 'practice',
                   })
                 }
                 className="text-left p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500 hover:shadow-xs cursor-pointer transition-all shadow-2xs space-y-1"
-                id="mock-exam-btn"
+                id="gate-sql-focus-btn"
               >
                 <span className="font-semibold text-xs text-slate-800 dark:text-slate-200 block">
-                  ⏱️ 30-Minute Competitive Mock
+                  ⚡ SQL Queries & Joins (10 Qs)
                 </span>
                 <p className="text-[11px] text-slate-500 leading-normal">
-                  20 questions under strict time constraints to test exam readiness.
+                  100% drawn from the 44 authentic GATE SQL questions.
                 </p>
               </button>
 
               <button
                 type="button"
-                onClick={() => {
-                  const element = document.getElementById('pyq-catalog-section');
-                  if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                  } else {
-                    setActiveTab('library');
-                  }
-                }}
+                onClick={() =>
+                  handleStartSession('pyq', {
+                    question_count: 15,
+                    topic: 'all',
+                    untimed: true,
+                    mode: 'practice',
+                  })
+                }
                 className="text-left p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500 hover:shadow-xs cursor-pointer transition-all shadow-2xs space-y-1"
-                id="browse-archive-scroll-btn"
+                id="mixed-gate-quiz-btn"
               >
                 <span className="font-semibold text-xs text-slate-800 dark:text-slate-200 block">
-                  📚 Browse Full 80 PYQ Archive
+                  🏆 Mixed GATE DBMS Quiz (15 Qs)
                 </span>
                 <p className="text-[11px] text-slate-500 leading-normal">
-                  Inspect questions, answers, and omitted source diagram documentation below.
+                  First 5 from FD/Normalization, remaining 10 randomized from SQL & ER.
                 </p>
               </button>
             </div>
@@ -575,7 +605,7 @@ export const PracticePage: React.FC = () => {
                   Competitive Exam Questions Catalog ({pyqQuestions.length} Questions)
                 </h4>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
-                  Browse, search, and practice questions from GATE CSE, ISRO, NET, and BARC. Click any question to reveal options and step-by-step mathematical proofs.
+                  Browse, search, and practice questions from authentic GATE CSE Database Management Systems papers with verified answer keys.
                 </p>
               </div>
               <Button

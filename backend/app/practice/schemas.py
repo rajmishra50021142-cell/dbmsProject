@@ -72,7 +72,9 @@ class QuizQuestion(BaseModel):
     exam: Optional[str] = Field(default=None, description="Source exam name (e.g. GATE CSE, ISRO CSE)")
     year: Optional[str] = Field(default=None, description="Exam year (e.g. 2026, 2024)")
     note: Optional[str] = Field(default=None, description="Source caveats or paraphrasing note")
-    source_number: Optional[int] = Field(default=None, description="Original 1..80 compilation number if PYQ")
+    source_number: Optional[int] = Field(default=None, description="Original compilation question number")
+    marks: Optional[int] = Field(default=None, description="Question mark value (1 or 2)")
+    figure_url: Optional[str] = Field(default=None, description="Optional path to high-res question figure asset")
     status: Literal["playable", "incomplete"] = Field(default="playable", description="'playable' or 'incomplete'")
     incomplete_reason: Optional[str] = Field(default=None, description="Reason if missing diagram, table, or FDs")
 

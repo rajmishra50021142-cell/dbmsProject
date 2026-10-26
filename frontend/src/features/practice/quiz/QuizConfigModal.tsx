@@ -202,24 +202,55 @@ export const QuizConfigModal: React.FC<QuizConfigModalProps> = ({
             </div>
           </div>
 
-          {/* Filter by Topic */}
+          {/* Filter by Topic / Category Mode */}
           <div className="space-y-2">
             <label className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
               <Filter className="w-3.5 h-3.5 text-slate-400" />
-              Topic Filter
+              {bankType === 'pyq' ? 'GATE Topic / Category Mode' : 'Topic Filter'}
             </label>
-            <select
-              value={selectedTopic}
-              onChange={(e) => setSelectedTopic(e.target.value)}
-              className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-800 dark:text-slate-200"
-            >
-              <option value="all">All Topics (Full Syllabus)</option>
-              {availableTopics.map((topic) => (
-                <option key={topic} value={topic}>
-                  {topic}
-                </option>
-              ))}
-            </select>
+            {bankType === 'pyq' ? (
+              <div className="space-y-2">
+                <select
+                  value={selectedTopic}
+                  onChange={(e) => setSelectedTopic(e.target.value)}
+                  className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-800 dark:text-slate-200"
+                  id="pyq-topic-select"
+                >
+                  <option value="all">Mixed GATE DBMS Quiz (FD/Norm first, then SQL & ER)</option>
+                  <option value="Functional Dependencies and Normalization">
+                    Functional Dependencies & Normalization (56 questions)
+                  </option>
+                  <option value="Structured Query Language (SQL)">
+                    Structured Query Language (SQL) (44 questions)
+                  </option>
+                  <option value="ER Diagrams">
+                    ER Diagrams (15 questions)
+                  </option>
+                </select>
+                <p className="text-[11px] text-slate-500 leading-relaxed">
+                  {selectedTopic === 'all'
+                    ? 'Mode A: Places first 4–5 questions from Functional Dependencies & Normalization, then randomly selects from SQL and ER Diagrams without repeats.'
+                    : selectedTopic === 'Functional Dependencies and Normalization'
+                    ? 'Mode B: 100% of questions drawn exclusively from the 56-question Functional Dependencies & Normalization pool.'
+                    : selectedTopic === 'Structured Query Language (SQL)'
+                    ? 'Mode C: 100% of questions drawn exclusively from the 44-question SQL pool.'
+                    : 'Mode D: 100% of questions drawn exclusively from the 15-question ER Diagrams pool.'}
+                </p>
+              </div>
+            ) : (
+              <select
+                value={selectedTopic}
+                onChange={(e) => setSelectedTopic(e.target.value)}
+                className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-800 dark:text-slate-200"
+              >
+                <option value="all">All Topics (Full Syllabus)</option>
+                {availableTopics.map((topic) => (
+                  <option key={topic} value={topic}>
+                    {topic}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
 
           {/* Difficulty (AI Practice) or Exam (PYQs) */}

@@ -12,11 +12,11 @@ const mockSummary: PracticeSummary = {
     difficulties: ['Easy', 'Medium', 'Hard'],
   },
   pyq_practice: {
-    total_questions: 80,
-    playable_questions: 60,
-    incomplete_questions: 20,
-    topics: ['Armstrong Axioms', 'BCNF Decomposition', 'Lossless Join'],
-    exams: ['GATE CSE', 'ISRO CSE', 'UGC NET'],
+    total_questions: 115,
+    playable_questions: 110,
+    incomplete_questions: 5,
+    topics: ['Functional Dependencies and Normalization', 'Structured Query Language (SQL)', 'ER Diagrams'],
+    exams: ['GATE CSE'],
   },
 };
 
@@ -54,7 +54,7 @@ describe('PracticePage Component', () => {
 
     await waitFor(() => {
       expect(screen.getByText('30 Questions')).toBeInTheDocument();
-      expect(screen.getByText('80 PYQs (60 Playable)')).toBeInTheDocument();
+      expect(screen.getByText('115 GATE Questions (110 Playable)')).toBeInTheDocument();
     });
   });
 
@@ -72,7 +72,7 @@ describe('PracticePage Component', () => {
     fireEvent.click(libraryTab);
 
     await waitFor(() => {
-      expect(screen.getByText(/60 Playable • 20 Incomplete/i)).toBeInTheDocument();
+      expect(screen.getByText(/110 Scored \/ Playable • 5 Historical Subjective/i)).toBeInTheDocument();
     });
 
     // Click Academic Exercises Tab

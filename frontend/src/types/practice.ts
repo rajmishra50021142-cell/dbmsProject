@@ -13,6 +13,8 @@ export interface QuizQuestion {
   year?: string;
   note?: string;
   source_number?: number;
+  marks?: number;
+  figure_url?: string;
   status: 'playable' | 'incomplete';
   incomplete_reason?: string;
 }

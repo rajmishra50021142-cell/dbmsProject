@@ -37,14 +37,14 @@ describe('PracticePage Interactive PYQ Clicks', () => {
     expect(screen.getByText('Start Competitive PYQ Session')).toBeInTheDocument();
   });
 
-  it('directly starts GATE CSE focus quiz when clicking GATE CSE Focus card', async () => {
+  it('directly starts GATE FD & Normalization quiz when clicking FD Focus card', async () => {
     render(<PracticePage />);
 
     // Switch to PYQ tab
     const pyqTab = screen.getByRole('button', { name: /Competitive Exam PYQs/i });
     fireEvent.click(pyqTab);
 
-    const gateBtn = document.getElementById('gate-cse-focus-btn')!;
+    const gateBtn = document.getElementById('gate-fd-focus-btn')!;
     expect(gateBtn).toBeInTheDocument();
     fireEvent.click(gateBtn);
 
@@ -54,13 +54,13 @@ describe('PracticePage Interactive PYQ Clicks', () => {
     });
   });
 
-  it('directly starts 30-Minute Mock quiz when clicking mock exam button', async () => {
+  it('directly starts Mixed GATE DBMS quiz when clicking mixed exam button', async () => {
     render(<PracticePage />);
 
     const pyqTab = screen.getByRole('button', { name: /Competitive Exam PYQs/i });
     fireEvent.click(pyqTab);
 
-    const mockBtn = document.getElementById('mock-exam-btn')!;
+    const mockBtn = document.getElementById('mixed-gate-quiz-btn')!;
     expect(mockBtn).toBeInTheDocument();
     fireEvent.click(mockBtn);
 
@@ -79,7 +79,7 @@ describe('PracticePage Interactive PYQ Clicks', () => {
     expect(screen.getByText(/Competitive Exam Questions Catalog/i)).toBeInTheDocument();
 
     // Find first question expand trigger and click it
-    const question1 = screen.getByText(/Let an inference system include the rule/i);
+    const question1 = screen.getByText(/Let P, Q, R and S be the attributes/i);
     expect(question1).toBeInTheDocument();
     fireEvent.click(question1);
 

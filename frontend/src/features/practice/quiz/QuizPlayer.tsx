@@ -6,6 +6,7 @@ import {
   ArrowRight,
   CheckCircle2,
   Send,
+  Check,
 } from 'lucide-react';
 import { Button } from '../../../components/ui/Button';
 import { Badge } from '../../../components/ui/Badge';
@@ -91,13 +92,46 @@ export const QuizPlayer: React.FC<QuizPlayerProps> = ({
       return;
     }
 
-    setSelectedOption(optionLetter);
+    if (currentQ?.question_type === 'MSQ') {
+      const currentList = selectedOption ? selectedOption.split(',').map((s) => s.trim()).filter(Boolean) : [];
+      let updatedList: string[];
+      if (currentList.includes(optionLetter)) {
+        updatedList = currentList.filter((l) => l !== optionLetter);
+      } else {
+        updatedList = [...currentList, optionLetter];
+      }
+      updatedList.sort();
+      const updatedStr = updatedList.join(', ');
+      setSelectedOption(updatedStr);
 
-    // In exam simulation, save answer immediately
+      if (config.mode === 'exam_simulation' && currentQId) {
+        setAnswers((prev) => ({
+          ...prev,
+          [currentQId]: updatedStr,
+        }));
+      }
+    } else {
+      setSelectedOption(optionLetter);
+
+      // In exam simulation, save answer immediately
+      if (config.mode === 'exam_simulation' && currentQId) {
+        setAnswers((prev) => ({
+          ...prev,
+          [currentQId]: optionLetter,
+        }));
+      }
+    }
+  };
+
+  const handleNumericChange = (val: string) => {
+    if (config.mode === 'practice' && currentFeedback && (currentFeedback.is_correct || currentFeedback.attempt_number >= 3)) {
+      return;
+    }
+    setSelectedOption(val);
     if (config.mode === 'exam_simulation' && currentQId) {
       setAnswers((prev) => ({
         ...prev,
-        [currentQId]: optionLetter,
+        [currentQId]: val,
       }));
     }
   };
@@ -151,6 +185,9 @@ export const QuizPlayer: React.FC<QuizPlayerProps> = ({
   };
 
   const handleNext = () => {
+    if (currentQId && selectedOption && !answers[currentQId]) {
+      setAnswers((prev) => ({ ...prev, [currentQId]: selectedOption }));
+    }
     if (currentIndex < questions.length - 1) {
       setCurrentIndex((prev) => prev + 1);
     } else {
@@ -159,9 +196,19 @@ export const QuizPlayer: React.FC<QuizPlayerProps> = ({
   };
 
   const handlePrevious = () => {
+    if (currentQId && selectedOption && !answers[currentQId]) {
+      setAnswers((prev) => ({ ...prev, [currentQId]: selectedOption }));
+    }
     if (currentIndex > 0) {
       setCurrentIndex((prev) => prev - 1);
     }
+  };
+
+  const handlePaletteSelect = (idx: number) => {
+    if (currentQId && selectedOption && !answers[currentQId]) {
+      setAnswers((prev) => ({ ...prev, [currentQId]: selectedOption }));
+    }
+    setCurrentIndex(idx);
   };
 
   const handleToggleFlag = () => {
@@ -263,6 +310,25 @@ export const QuizPlayer: React.FC<QuizPlayerProps> = ({
                 <Badge variant="accent" size="sm">
                   {currentQ.topic}
                 </Badge>
+                {currentQ.question_type && (
+                  <Badge
+                    variant={
+                      currentQ.question_type === 'MSQ'
+                        ? 'warning'
+                        : currentQ.question_type === 'NAT'
+                        ? 'info'
+                        : 'neutral'
+                    }
+                    size="sm"
+                  >
+                    {currentQ.question_type}
+                  </Badge>
+                )}
+                {currentQ.marks && (
+                  <Badge variant="neutral" size="sm">
+                    {currentQ.marks} {currentQ.marks === 1 ? 'Mark' : 'Marks'}
+                  </Badge>
+                )}
                 {currentQ.difficulty && (
                   <Badge variant="neutral" size="sm">
                     {currentQ.difficulty}
@@ -302,6 +368,31 @@ export const QuizPlayer: React.FC<QuizPlayerProps> = ({
               {currentQ.statement}
             </div>
 
+            {/* Authentic Diagram / Figure Crop (if present) */}
+            {currentQ.figure_url && (
+              <div className="my-3 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 p-2 sm:p-4 flex flex-col items-center justify-center shadow-2xs">
+                <img
+                  src={currentQ.figure_url}
+                  alt={`GATE Diagram ${currentQ.source_number || ''}`}
+                  className="max-h-[460px] w-auto max-w-full object-contain rounded"
+                  loading="lazy"
+                />
+                <span className="text-[11px] text-slate-400 mt-2 font-mono">
+                  Authentic GATE Question Figure (200 DPI Source Archival Crop)
+                </span>
+              </div>
+            )}
+
+            {/* MSQ Notice Banner */}
+            {currentQ.question_type === 'MSQ' && (
+              <div className="p-2.5 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60 text-xs text-amber-900 dark:text-amber-200 flex items-center gap-2">
+                <Badge variant="warning" size="sm">MSQ</Badge>
+                <span className="font-medium">
+                  Multiple-Select Question: One or more options may be correct. Select all correct options.
+                </span>
+              </div>
+            )}
+
             {/* Caveat Note if memory-based */}
             {currentQ.note && (
               <p className="text-xs text-slate-400 italic bg-slate-50 dark:bg-slate-800/40 p-2.5 rounded border border-slate-200/60 dark:border-slate-800/60">
@@ -309,38 +400,79 @@ export const QuizPlayer: React.FC<QuizPlayerProps> = ({
               </p>
             )}
 
-            {/* Options List */}
-            <div className="space-y-2.5 pt-2">
-              {currentQ.options.map((optionText, idx) => {
-                const optionLetter = String.fromCharCode(65 + idx); // A, B, C, D
-                const isSelected = selectedOption === optionLetter;
-
-                return (
-                  <div
-                    key={idx}
-                    onClick={() => handleOptionSelect(optionLetter)}
-                    className={`p-3.5 rounded-xl border-2 cursor-pointer transition-all flex items-start gap-3 ${
-                      isSelected
-                        ? 'border-indigo-600 bg-indigo-50/40 dark:bg-indigo-950/20 text-indigo-950 dark:text-indigo-100'
-                        : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900'
-                    }`}
-                  >
-                    <div
-                      className={`w-6 h-6 rounded-md flex items-center justify-center font-mono font-bold text-xs shrink-0 transition-colors ${
-                        isSelected
-                          ? 'bg-indigo-600 text-white'
-                          : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-                      }`}
-                    >
-                      {optionLetter}
-                    </div>
-                    <span className="text-sm font-sans pt-0.5 leading-relaxed">
-                      {optionText.replace(/^[A-D]\)\s*/, '')}
+            {/* Options List OR NAT Numeric Input */}
+            {currentQ.question_type === 'NAT' ? (
+              <div className="pt-2 space-y-3">
+                <div className="p-4 rounded-xl border border-indigo-100 dark:border-indigo-950/50 bg-indigo-50/30 dark:bg-indigo-950/20 space-y-2">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                    Numerical Answer Input (Integer or Decimal)
+                  </label>
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                    <input
+                      type="number"
+                      step="any"
+                      value={selectedOption}
+                      onChange={(e) => handleNumericChange(e.target.value)}
+                      disabled={config.mode === 'practice' && currentFeedback && (currentFeedback.is_correct || currentFeedback.attempt_number >= 3)}
+                      placeholder="Enter numeric value (e.g. 4 or 2.5)"
+                      className="w-full max-w-sm px-4 py-2.5 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-mono text-base focus:outline-hidden focus:border-indigo-600 transition-colors"
+                      id="nat-answer-input"
+                    />
+                    <span className="text-xs text-slate-500">
+                      GATE Virtual Calculator Numerical Format
                     </span>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-2.5 pt-2">
+                {currentQ.options.map((optionText, idx) => {
+                  const optionLetter = String.fromCharCode(65 + idx); // A, B, C, D
+                  const isSelected = currentQ.question_type === 'MSQ'
+                    ? selectedOption.split(',').map((s) => s.trim()).includes(optionLetter)
+                    : selectedOption === optionLetter;
+
+                  return (
+                    <div
+                      key={idx}
+                      onClick={() => handleOptionSelect(optionLetter)}
+                      className={`p-3.5 rounded-xl border-2 cursor-pointer transition-all flex items-start justify-between gap-3 ${
+                        isSelected
+                          ? 'border-indigo-600 bg-indigo-50/40 dark:bg-indigo-950/20 text-indigo-950 dark:text-indigo-100'
+                          : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900'
+                      }`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div
+                          className={`w-6 h-6 rounded-md flex items-center justify-center font-mono font-bold text-xs shrink-0 transition-colors ${
+                            isSelected
+                              ? 'bg-indigo-600 text-white'
+                              : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                          }`}
+                        >
+                          {optionLetter}
+                        </div>
+                        <span className="text-sm font-sans pt-0.5 leading-relaxed">
+                          {optionText.replace(/^[A-D]\)\s*/, '')}
+                        </span>
+                      </div>
+
+                      {currentQ.question_type === 'MSQ' && (
+                        <div
+                          className={`w-4 h-4 rounded border flex items-center justify-center shrink-0 mt-1 transition-colors ${
+                            isSelected
+                              ? 'bg-indigo-600 border-indigo-600 text-white'
+                              : 'border-slate-300 dark:border-slate-600'
+                          }`}
+                        >
+                          {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
 
             {/* Practice Mode: Check Answer Button (if not yet checked or feedback cleared) */}
             {config.mode === 'practice' && !currentFeedback && (
@@ -431,7 +563,7 @@ export const QuizPlayer: React.FC<QuizPlayerProps> = ({
                 return (
                   <button
                     key={q.id}
-                    onClick={() => setCurrentIndex(idx)}
+                    onClick={() => handlePaletteSelect(idx)}
                     className={`h-8 rounded-lg text-xs font-mono transition-all border flex items-center justify-center ${btnClass}`}
                   >
                     {idx + 1}

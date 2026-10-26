@@ -5,6 +5,8 @@ Provides predefined academic normalization exercises and grades student submissi
 using the actual relational normalization engines from Phases 2–7.
 """
 
+import random
+import re
 from typing import List, Dict, Any, Optional
 from app.practice.schemas import (
     PracticeExercise,
@@ -387,18 +389,49 @@ class PracticeService:
         topic: Optional[str] = None,
         playable_only: bool = False,
         count: Optional[int] = None,
+        randomize: bool = False,
     ) -> List[QuizQuestion]:
-        """Fetch Competitive Exam PYQs with optional filters."""
-        results = PYQ_QUESTIONS
+        """Fetch Competitive Exam PYQs with authentic GATE CSE selection rules."""
+        pool = PYQ_QUESTIONS
         if playable_only:
-            results = [q for q in results if q.is_playable]
-        if exam and exam.strip():
-            results = [q for q in results if q.exam and q.exam.lower() == exam.strip().lower()]
-        if topic and topic.strip():
-            results = [q for q in results if q.topic.lower() == topic.strip().lower()]
-        if count is not None and count > 0:
-            results = results[:count]
-        return results
+            pool = [q for q in pool if q.is_playable]
+        if exam and exam.strip() and exam.strip().lower() != 'all':
+            pool = [q for q in pool if q.exam and q.exam.lower() == exam.strip().lower()]
+
+        is_mixed = not topic or topic.strip().lower() in ['all', 'mixed', 'mixed gate dbms quiz']
+
+        if is_mixed:
+            if not randomize and (count is None or count >= len(pool)):
+                return pool[:count] if count else pool
+
+            # Mixed selection:
+            # 1. First 4-5 questions from Functional Dependencies & Normalization (randomized)
+            fd_pool = [q for q in pool if 'functional' in q.topic.lower() or 'normalization' in q.topic.lower()]
+            target_count = count if count and count > 0 else len(pool)
+            fd_target = min(5, min(len(fd_pool), target_count))
+            if target_count < 5:
+                fd_target = min(len(fd_pool), target_count)
+
+            selected_fd = random.sample(fd_pool, fd_target) if len(fd_pool) >= fd_target else list(fd_pool)
+            remaining_needed = target_count - len(selected_fd)
+
+            # Remaining from other categories + remaining FD
+            remaining_pool = [q for q in pool if q not in selected_fd]
+            selected_rest = random.sample(remaining_pool, min(remaining_needed, len(remaining_pool))) if remaining_needed > 0 else []
+
+            return selected_fd + selected_rest
+        else:
+            # Topic-specific selection (100% from that category)
+            filtered = [q for q in pool if topic.strip().lower() in q.topic.lower() or q.topic.lower() in topic.strip().lower()]
+            if not filtered:
+                filtered = [q for q in pool if q.topic.strip().lower() == topic.strip().lower()]
+
+            if randomize:
+                sample_count = min(count, len(filtered)) if count else len(filtered)
+                return random.sample(filtered, sample_count)
+            if count is not None and count > 0:
+                return filtered[:count]
+            return filtered
 
     @staticmethod
     def get_question_by_id(question_id: str, bank_type: Optional[str] = None) -> Optional[QuizQuestion]:
@@ -423,6 +456,41 @@ class PracticeService:
         return None
 
     @staticmethod
+    def check_answer_correctness(q: QuizQuestion, user_ans: Optional[str]) -> bool:
+        """Grading logic supporting MCQ, MSQ (multiple-select), and NAT (numerical)."""
+        if not user_ans or not q.correct_answer:
+            return False
+
+        user_str = user_ans.strip()
+        correct_str = q.correct_answer.strip()
+
+        # 1. Multiple-Select Question (MSQ)
+        if q.question_type == "MSQ" or "," in correct_str:
+            user_letters = set(re.findall(r'[A-D]', user_str.upper()))
+            correct_letters = set(re.findall(r'[A-D]', correct_str.upper()))
+            return user_letters == correct_letters and len(correct_letters) > 0
+
+        # 2. Numerical Answer Question (NAT)
+        if q.question_type == "NAT" or re.match(r'^-?\d+(?:\.\d+)?$', correct_str):
+            clean_user = re.sub(r'[^\d.-]', '', user_str)
+            try:
+                val_user = float(clean_user)
+                val_expected = float(correct_str)
+                return abs(val_user - val_expected) < 1e-2
+            except (ValueError, TypeError):
+                return clean_user == correct_str
+
+        # 3. Single-choice MCQ
+        clean_u = user_str.upper()
+        if len(clean_u) > 1 and clean_u[1] in [")", ".", " "]:
+            user_letter = clean_u[0]
+        elif clean_u in ["A", "B", "C", "D"]:
+            user_letter = clean_u
+        else:
+            user_letter = clean_u[0] if clean_u else ""
+        return user_letter == correct_str.upper()
+
+    @staticmethod
     def verify_attempt(req: VerifyAttemptRequest) -> GentleFeedbackResponse:
         """
         Evaluate an answer attempt with gentle, non-shaming, progressive feedback.
@@ -440,7 +508,7 @@ class PracticeService:
                 hint=None,
             )
 
-        if not q.correct_answer:
+        if not q.correct_answer or q.status == "incomplete":
             return GentleFeedbackResponse(
                 is_correct=False,
                 attempt_number=req.attempt_number,
@@ -449,15 +517,7 @@ class PracticeService:
                 hint=None,
             )
 
-        selected_norm = req.selected_option.strip().upper()
-        if len(selected_norm) > 1 and selected_norm[1] in [")", ".", " "]:
-            selected_letter = selected_norm[0]
-        elif selected_norm in ["A", "B", "C", "D"]:
-            selected_letter = selected_norm
-        else:
-            selected_letter = selected_norm[0] if selected_norm else ""
-
-        is_correct = (selected_letter == q.correct_answer.strip().upper())
+        is_correct = PracticeService.check_answer_correctness(q, req.selected_option)
         current_attempt = req.attempt_number
         attempts_left = max(0, 3 - current_attempt)
 
@@ -487,19 +547,19 @@ class PracticeService:
                 is_correct=False,
                 attempt_number=1,
                 attempts_remaining=2,
-                gentle_message="Not quite yet, but you're on the right track! Take another look at the relational rules.",
+                gentle_message="Not quite yet, but you're on the right track! Take another look at the rules.",
                 hint=hint1,
                 revealed_answer=None,
                 explanation=None,
                 concept_summary=None,
             )
         elif current_attempt == 2:
-            hint2 = q.hints[1] if (q.hints and len(q.hints) > 1) else (q.hints[0] if q.hints else "Consider how the functional dependencies isolate prime attributes.")
+            hint2 = q.hints[1] if (q.hints and len(q.hints) > 1) else (q.hints[0] if q.hints else "Consider the relational schema constraints carefully.")
             return GentleFeedbackResponse(
                 is_correct=False,
                 attempt_number=2,
                 attempts_remaining=1,
-                gentle_message="Close, but still not quite right. Don't worry — analyze the dependency structure carefully with this extra hint.",
+                gentle_message="Close, but still not quite right. Analyze the problem carefully with this extra hint.",
                 hint=hint2,
                 revealed_answer=None,
                 explanation=None,
@@ -510,11 +570,11 @@ class PracticeService:
                 is_correct=False,
                 attempt_number=3,
                 attempts_remaining=0,
-                gentle_message="Good effort! Normalization questions can be tricky. Here is the complete step-by-step mathematical proof and explanation to clarify the concept.",
+                gentle_message="Good effort! Competitive exam questions can be challenging. Here is the verified answer and explanation.",
                 hint=None,
                 revealed_answer=q.correct_answer,
                 explanation=q.explanation,
-                concept_summary=f"Mastery Takeaway: For questions on {q.topic}, always determine candidate keys first and verify whether every non-trivial dependency satisfies the required normal form condition.",
+                concept_summary=f"Mastery Takeaway: For questions on {q.topic}, always determine candidate keys or schema definitions first and verify each condition step-by-step.",
             )
 
     @staticmethod
@@ -527,7 +587,7 @@ class PracticeService:
         q_map = {q.id: q for q in bank}
 
         target_ids = list(req.answers.keys()) if req.answers else [q.id for q in bank if q.is_playable]
-        
+
         total_questions = len(target_ids)
         answered_count = 0
         correct_count = 0
@@ -545,22 +605,12 @@ class PracticeService:
             user_ans = req.answers.get(q_id)
             has_answered = bool(user_ans and user_ans.strip())
 
-            user_letter: Optional[str] = None
             if has_answered:
                 answered_count += 1
-                clean = user_ans.strip().upper()
-                if len(clean) > 1 and clean[1] in [")", ".", " "]:
-                    user_letter = clean[0]
-                elif clean in ["A", "B", "C", "D"]:
-                    user_letter = clean
-                else:
-                    user_letter = clean[0] if clean else None
             else:
                 unanswered_count += 1
 
-            is_corr = False
-            if q.correct_answer and user_letter:
-                is_corr = (user_letter == q.correct_answer.strip().upper())
+            is_corr = PracticeService.check_answer_correctness(q, user_ans) if has_answered else False
 
             if has_answered:
                 if is_corr:
@@ -568,7 +618,7 @@ class PracticeService:
                 else:
                     incorrect_count += 1
 
-            topic = q.topic or "Relational Normalization"
+            topic = q.topic or "Relational DBMS"
             if topic not in topic_stats:
                 topic_stats[topic] = {"total": 0, "correct": 0}
             topic_stats[topic]["total"] += 1
@@ -581,7 +631,7 @@ class PracticeService:
                     source_number=q.source_number,
                     statement=q.statement,
                     options=q.options,
-                    selected_option=user_letter,
+                    selected_option=user_ans if has_answered else None,
                     correct_answer=q.correct_answer or "N/A",
                     is_correct=is_corr,
                     explanation=q.explanation or (q.incomplete_reason or "No explanation available."),
@@ -595,13 +645,13 @@ class PracticeService:
         score_pct = round((correct_count / total_questions * 100), 1) if total_questions > 0 else 0.0
 
         if score_pct >= 85:
-            summary_msg = "Outstanding mastery! You have demonstrated exceptional command of relational database normalization theory and competitive exam problem solving."
+            summary_msg = "Outstanding mastery! You have demonstrated exceptional command of GATE CSE Database Management System problem solving."
         elif score_pct >= 70:
-            summary_msg = "Great performance! You have a solid grasp of normal forms and dependency preservation. Review the few questions missed below to reach full mastery."
+            summary_msg = "Great performance! You have a solid grasp of DBMS principles. Review the few questions missed below to reach full mastery."
         elif score_pct >= 50:
-            summary_msg = "Good effort! You understand the core concepts. Take time to study the step-by-step proofs for the questions you missed, especially in the topics with lower scores."
+            summary_msg = "Good effort! You understand the core concepts. Take time to study the step-by-step proofs for the questions you missed."
         else:
-            summary_msg = "Valuable practice session! Normalization requires practice with candidate key closures and dependency testing. Review the comprehensive proofs below and give it another try."
+            summary_msg = "Valuable practice session! GATE questions require thorough practice with keys, queries, and constraints. Review the solutions below and try again."
 
         return QuizSubmissionResponse(
             total_questions=total_questions,
@@ -620,8 +670,12 @@ class PracticeService:
     def get_summary() -> Dict[str, Any]:
         """Provides an aggregate summary of available practice banks."""
         ai_topics = sorted(list({q.topic for q in AI_PRACTICE_QUESTIONS}))
-        pyq_topics = sorted(list({q.topic for q in PYQ_QUESTIONS}))
-        pyq_exams = sorted(list({q.exam for q in PYQ_QUESTIONS if q.exam}))
+        pyq_topics = [
+            "Functional Dependencies and Normalization",
+            "Structured Query Language (SQL)",
+            "ER Diagrams",
+        ]
+        pyq_exams = ["GATE CSE"]
         playable_pyq = sum(1 for q in PYQ_QUESTIONS if q.is_playable)
         incomplete_pyq = sum(1 for q in PYQ_QUESTIONS if not q.is_playable)
 

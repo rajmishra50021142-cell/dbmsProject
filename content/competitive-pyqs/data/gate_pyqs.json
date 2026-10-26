@@ -1,0 +1,3098 @@
+[
+  {
+    "id": "gate-fd-q01",
+    "bank_type": "pyq",
+    "statement": "Let P, Q, R and S be the attributes of a relation in a relational schema. Let X → Y indicate functional dependency in the context of a relational database, where X, Y ⊆ {P, Q, R, S}. Which of the following options is/are always true?",
+    "options": [
+      "A) If ({P, Q} → {R} and {P} → {R}), then {Q} → {R}",
+      "B) If {P, Q} → {R}, then ({P} → {R} or {Q} → {R})",
+      "C) If ({P} → {R} and {Q} → {S}), then {P, Q} → {R, S}",
+      "D) If {P} → {R}, then {P, Q} → {R}"
+    ],
+    "correct_answer": "C, D",
+    "explanation": "Official GATE CSE 2026 Set 1 Answer: C, D.\nTopic: Functional Dependencies (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Functional Dependencies",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Functional Dependencies.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2026 Set 1 questions."
+    ],
+    "question_type": "MSQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2026 Set 1",
+    "figure_url": "/pyq-assets/gate_fd_q01.png",
+    "source_number": 1,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q02",
+    "bank_type": "pyq",
+    "statement": "In the context of relational database normalization, which of the following statements is/ are true?",
+    "options": [
+      "A) It is always possible to obtain a dependency-preserving 3NF decomposition of a relation",
+      "B) It is always possible to obtain a dependency-preserving 1NF decomposition of a relation",
+      "C) It is not always possible to obtain a dependency-preserving BCNF decomposition of a relation",
+      "D) It is not always possible to obtain a dependency-preserving 2NF decomposition of a relation"
+    ],
+    "correct_answer": "A, B, C",
+    "explanation": "Official GATE CSE 2026 Set 1 Answer: A, B, C.\nTopic: Normal Form Guarantees (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Normal Form Guarantees",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Normal Form Guarantees.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2026 Set 1 questions."
+    ],
+    "question_type": "MSQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2026 Set 1",
+    "figure_url": "/pyq-assets/gate_fd_q02.png",
+    "source_number": 2,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q03",
+    "bank_type": "pyq",
+    "statement": "Which of the following statements about a relation R in first normal form (1NF) is/are TRUE?",
+    "options": [
+      "A) R can have a multi-attribute key",
+      "B) R cannot have a foreign key",
+      "C) R cannot have a composite attribute",
+      "D) R cannot have more than one candidate key"
+    ],
+    "correct_answer": "A, C",
+    "explanation": "Official GATE CSE 2024 Set 1 Answer: A, C.\nTopic: 1NF Properties (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "1NF Properties",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of 1NF Properties.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2024 Set 1 questions."
+    ],
+    "question_type": "MSQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2024 Set 1",
+    "figure_url": "/pyq-assets/gate_fd_q03.png",
+    "source_number": 3,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q04",
+    "bank_type": "pyq",
+    "statement": "In a relational data model, which one of the following statements is TRUE?",
+    "options": [
+      "A) A relation with only two attributes is always in BCNF.",
+      "B) If all attributes of a relation are prime attributes, then the relation is in BCNF.",
+      "C) Every relation has at least one non-prime attribute.",
+      "D) BCNF decompositions preserve functional dependencies."
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2022 Answer: A.\nTopic: BCNF Properties (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "BCNF Properties",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of BCNF Properties.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2022 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2022",
+    "figure_url": "/pyq-assets/gate_fd_q04.png",
+    "source_number": 4,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q05",
+    "bank_type": "pyq",
+    "statement": "Consider a relation R(A, B, C, D, E) with the following three functional dependencies:\nAB → C ; BC → D ; C → E\nThe number of superkeys in the relation R is _________.",
+    "options": [],
+    "correct_answer": "8",
+    "explanation": "Official GATE CSE 2022 Answer: 8.\nTopic: Superkey Counting (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Superkey Counting",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Superkey Counting.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2022 questions."
+    ],
+    "question_type": "NAT",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2022",
+    "figure_url": "/pyq-assets/gate_fd_q05.png",
+    "source_number": 5,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q06",
+    "bank_type": "pyq",
+    "statement": "Consider the following statements S1 and S2 about the relational data model:\nS1: A relation scheme can have at most one foreign key.\nS2: A foreign key in a relation scheme R cannot be used to refer to tuples of R.\nWhich one of the following choices is correct?",
+    "options": [
+      "A) S1 is true and S2 is false.",
+      "B) Both S1 and S2 are true.",
+      "C) Both S1 and S2 are false.",
+      "D) S1 is false and S2 is true."
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2021 Set 2 Answer: C.\nTopic: Foreign Key Constraints (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Foreign Key Constraints",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Foreign Key Constraints.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2021 Set 2 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2021 Set 2",
+    "figure_url": "/pyq-assets/gate_fd_q06.png",
+    "source_number": 6,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q07",
+    "bank_type": "pyq",
+    "statement": "The following functional dependencies hold true for the relational schema R(A, B, C, D):\nE = {A → B, B → C, C → D, D → A}\nWhich of the following is/are candidate keys of R?",
+    "options": [
+      "A) A, B, C, D",
+      "B) AB, CD",
+      "C) A only",
+      "D) B only"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2017 Set 1 Answer: A.\nTopic: Candidate Keys (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Candidate Keys",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Candidate Keys.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2017 Set 1 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2017 Set 1",
+    "figure_url": "/pyq-assets/gate_fd_q07.png",
+    "source_number": 7,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q08",
+    "bank_type": "pyq",
+    "statement": "A database of research articles in a journal uses the following schema.\n(VOLUME, NUMBER, STARTPAGE, ENDPAGE, TITLE, YEAR, PRICE)\nThe primary key is (VOLUME, NUMBER, STARTPAGE, ENDPAGE) and the following functional\ndependencies exist in the schema.\n(VOLUME, NUMBER, STARTPAGE, ENDPAGE) → TITLE\n(VOLUME, NUMBER) → YEAR\n(VOLUME, NUMBER, STARTPAGE, ENDPAGE) → PRICE\nThe database is redesigned to use the following schemas.\n(VOLUME, NUMBER, STARTPAGE, ENDPAGE, TITLE, PRICE)\n(VOLUME, NUMBER, YEAR)\nWhich is the weakest normal form that the new database satisfies, but the old one does not?",
+    "options": [
+      "A) 1NF",
+      "B) 2NF",
+      "C) 3NF",
+      "D) BCNF"
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 2016 Set 1 Answer: B.\nTopic: Candidate Keys (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Candidate Keys",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Candidate Keys.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2016 Set 1 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2016 Set 1",
+    "figure_url": "/pyq-assets/gate_fd_q08.png",
+    "source_number": 8,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q09",
+    "bank_type": "pyq",
+    "statement": "Consider the relation\nwith the following set of functional dependencies\nWhich of the following is the trivial functional dependency in\nwhere\nis closure of  ?",
+    "options": [
+      "A) (B)",
+      "C) (D)"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2015 Set 3 Answer: C.\nTopic: Candidate Keys (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Candidate Keys",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Candidate Keys.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2015 Set 3 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2015 Set 3",
+    "figure_url": "/pyq-assets/gate_fd_q09.png",
+    "source_number": 9,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q10",
+    "bank_type": "pyq",
+    "statement": "Consider the relation scheme\nand the set of functional\ndependencies\non .\nWhat is the key for ?",
+    "options": [
+      "A) (B)",
+      "C) (D) Google Play GET IT ON Solutions: questions.examside.com · Page 4 / 21 --- PAGE 5 --- P Y Q P D F"
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 2014 Set 1 Answer: B.\nTopic: Normal Form Classification (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Normal Form Classification",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Normal Form Classification.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2014 Set 1 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2014 Set 1",
+    "figure_url": "/pyq-assets/gate_fd_q10.png",
+    "source_number": 10,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q11",
+    "bank_type": "pyq",
+    "statement": "Given an instance of the STUDENTS relation as shown below:\nStudentID\nStudentName\nStudentEmail\nStudentAge\nCPI\n2345\nShankar\nshankar@math\nX\n9.4\n1287\nSwati\nswati@ee\n19\n9.5\n7853\nShankar\nshankar@cse\n19\n9.4\n9876\nSwati\nswati@mech\n18\n9.3\n8765\nGanesh\nganesh@civil\n19\n8.7\nFor (StudentName, StudentAge) to be a key for this instance, the value X should NOT be equal to\n_______________.",
+    "options": [],
+    "correct_answer": "19",
+    "explanation": "Official GATE CSE 2014 Set 2 Answer: 19.\nTopic: Instance Violation Analysis (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Instance Violation Analysis",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Instance Violation Analysis.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2014 Set 2 questions."
+    ],
+    "question_type": "NAT",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2014 Set 2",
+    "figure_url": "/pyq-assets/gate_fd_q11.png",
+    "source_number": 11,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q12",
+    "bank_type": "pyq",
+    "statement": "The maximum number of superkeys for the relation schema with candidate keys as given in the problem is ______.",
+    "options": [],
+    "correct_answer": "8",
+    "explanation": "Official GATE CSE 2014 Set 2 Answer: 8.\nTopic: Superkeys Counting (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Superkeys Counting",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Superkeys Counting.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2014 Set 2 questions."
+    ],
+    "question_type": "NAT",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2014 Set 2",
+    "figure_url": "/pyq-assets/gate_fd_q12.png",
+    "source_number": 12,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q13",
+    "bank_type": "pyq",
+    "statement": "A prime attribute of a relation scheme  is an attribute that appears",
+    "options": [
+      "A) In all candidate keys of",
+      "B) In some candidate key of",
+      "C) In a foreign key of",
+      "D) Only in the primary key of"
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 2014 Set 3 Answer: B.\nTopic: Prime Attributes (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Prime Attributes",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Prime Attributes.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2014 Set 3 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2014 Set 3",
+    "figure_url": "/pyq-assets/gate_fd_q13.png",
+    "source_number": 13,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q14",
+    "bank_type": "pyq",
+    "statement": "Which of the following is TRUE?",
+    "options": [
+      "A) Every relation in is also in",
+      "B) A relation is in if every non-prime attribute of is fully functionally dependent on every key of",
+      "C) Every relation in is also in",
+      "D) No relation can be in both and Google Play GET IT ON Solutions: questions.examside.com · Page 5 / 21 --- PAGE 6 --- P Y Q P D F"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2012 Answer: C.\nTopic: Normal Form Hierarchy (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Normal Form Hierarchy",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Normal Form Hierarchy.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2012 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2012",
+    "figure_url": "/pyq-assets/gate_fd_q14.png",
+    "source_number": 14,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q15",
+    "bank_type": "pyq",
+    "statement": "Consider a relational table with a single record for each registered student with the following\nattributes.\n1. Registration_Num: Unique registration number of each registered student\n2. UID: Unique identity number, unique at the national level for each citizen\n3. BankAccount_Num: Unique account number at the bank. A student can have multiple accounts or\njoint accounts. This attribute stores the primary account number.\n4. Name: Name of the student\n5. Hostel_Room: Room number of the hostel\nWhich of the following options is INCORRECT?",
+    "options": [
+      "A) BankAccount_Num is a candidate key",
+      "B) Registration_Num can be a primary key",
+      "C) UID is a candidate key if all students are from the same country",
+      "D) If is a superkey such that is NULL then is also a superkey"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2011 Answer: A.\nTopic: Candidate Keys (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Candidate Keys",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Candidate Keys.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2011 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2011",
+    "figure_url": "/pyq-assets/gate_fd_q15.png",
+    "source_number": 15,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q16",
+    "bank_type": "pyq",
+    "statement": "Which one of the following statements about normal forms is FALSE?",
+    "options": [
+      "A) is stricter than",
+      "B) Lossless, dependency preserving decomposition into is always possible",
+      "C) Lossless, dependency - preserving decomposition into is always possible",
+      "D) Any relation with two attributes is in"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2005 Answer: C.\nTopic: Normal Form Hierarchy (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Normal Form Hierarchy",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Normal Form Hierarchy.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2005 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2005",
+    "figure_url": "/pyq-assets/gate_fd_q16.png",
+    "source_number": 16,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q17",
+    "bank_type": "pyq",
+    "statement": "A table has fields,\nwith the following functional dependencies:\nin terms of Normalization, this table is in",
+    "options": [
+      "A) (B)",
+      "C) (D) None of these"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2005 Answer: A.\nTopic: Highest Normal Form (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Highest Normal Form",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Highest Normal Form.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2005 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2005",
+    "figure_url": "/pyq-assets/gate_fd_q17.png",
+    "source_number": 17,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q18",
+    "bank_type": "pyq",
+    "statement": "Relation  with an associated set of functional dependencies,\nis decomposed into\nThe\nredundancy (arising out of functional dependencies) in the resulting set of relations is",
+    "options": [
+      "A) Zero",
+      "B) More than zero but less than that of an equivalent decomposition",
+      "C) Proportional to the size of",
+      "D) Indeterminate Google Play GET IT ON Solutions: questions.examside.com · Page 6 / 21 --- PAGE 7 --- P Y Q P D F"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2002 Answer: A.\nTopic: Lossless Join Decomposition (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Lossless Join Decomposition",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Lossless Join Decomposition.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2002 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2002",
+    "figure_url": "/pyq-assets/gate_fd_q18.png",
+    "source_number": 18,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q19",
+    "bank_type": "pyq",
+    "statement": "Consider a schema\nand functional dependencies\nand\n. Then the\ndecomposition of  into\nand\nis",
+    "options": [
+      "A) Dependency preserving and lossless join",
+      "B) Lossless join but not dependency preserving",
+      "C) Dependency preserving but not lossless join",
+      "D) Not dependency preserving and not lossless join"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2001 Answer: C.\nTopic: Lossless & Preservation (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Lossless & Preservation",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Lossless & Preservation.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2001 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2001",
+    "figure_url": "/pyq-assets/gate_fd_q19.png",
+    "source_number": 19,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q20",
+    "bank_type": "pyq",
+    "statement": "Let\nbe a relation scheme with the following dependencies:\nWhich of the following is a key for",
+    "options": [
+      "A) (B)",
+      "C) (D)"
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 1999 Answer: B.\nTopic: Candidate Keys (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Candidate Keys",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Candidate Keys.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 1999 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "1999",
+    "figure_url": "/pyq-assets/gate_fd_q20.png",
+    "source_number": 20,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q21",
+    "bank_type": "pyq",
+    "statement": "Which normal form is considered adequate for normal relational database design?",
+    "options": [
+      "A) (B)",
+      "C) (D)"
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 1998 Answer: D.\nTopic: Adequate Normal Form (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Adequate Normal Form",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Adequate Normal Form.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 1998 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "1998",
+    "figure_url": "/pyq-assets/gate_fd_q21.png",
+    "source_number": 21,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q22",
+    "bank_type": "pyq",
+    "statement": "State True or False with reason: There is always a decomposition into Boyce-Codd normal form (BCNF) that is dependency preserving.",
+    "options": [
+      "A) True",
+      "B) False"
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 1994 Answer: B.\nTopic: BCNF Preservation (1 Mark).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "BCNF Preservation",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of BCNF Preservation.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 1994 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "1994",
+    "figure_url": "/pyq-assets/gate_fd_q22.png",
+    "source_number": 22,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q23",
+    "bank_type": "pyq",
+    "statement": "In the context of schema normalization in relational DBMS, consider a set  of functional\ndependencies. The set of all functional dependencies implied by  is called the closure of . To\ncompute the closure of , Armstrong's Axioms can be applied. Consider\n, and  as sets of\nattributes over a relational schema. The three rules of Armstrong's Axioms are described as follows.\nReflexivity: If\n, then\nAugmentation: If\n, then\nfor any\nTransitivity: If\nand\n, then\nThe additional rule of Union is defined as follows.\nUnion: If\nand\n, then\nIt can be proved that the additional rule of Union is also implied by the three rules of Armstrong's\nAxioms. Listed below are four combinations of these three rules. Which one of these combinations\nis both necessary and sufficient for the proof?",
+    "options": [
+      "A) Reflexivity, Augmentation, and Transitivity",
+      "B) Reflexivity and Augmentation",
+      "C) Transitivity",
+      "D) Augmentation and Transitivity"
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 2026 Set 2 Answer: D.\nTopic: Armstrong Axioms & Closure (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Armstrong Axioms & Closure",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Armstrong Axioms & Closure.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2026 Set 2 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2026 Set 2",
+    "figure_url": "/pyq-assets/gate_fd_q23.png",
+    "source_number": 23,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q24",
+    "bank_type": "pyq",
+    "statement": "Consider a relational database schema with a relation R. The number of candidate keys is ________.",
+    "options": [],
+    "correct_answer": "6",
+    "explanation": "Official GATE CSE 2026 Set 1 Answer: 6.\nTopic: Candidate Keys Counting (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Candidate Keys Counting",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Candidate Keys Counting.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2026 Set 1 questions."
+    ],
+    "question_type": "NAT",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2026 Set 1",
+    "figure_url": "/pyq-assets/gate_fd_q24.png",
+    "source_number": 24,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q25",
+    "bank_type": "pyq",
+    "statement": "Consider the following relational schema along with all the functional dependencies that hold on\nthem.\nWhich of the following statement(s) is/are TRUE?",
+    "options": [
+      "A) is in 3NF",
+      "B) is in 3 NF",
+      "C) is NOT in 3 NF",
+      "D) is NOT in 3NF Google Play GET IT ON Solutions: questions.examside.com · Page 8 / 21 --- PAGE 9 --- P Y Q P D F"
+    ],
+    "correct_answer": "C, D",
+    "explanation": "Official GATE CSE 2025 Set 2 Answer: C, D.\nTopic: Decomposition Analysis (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Decomposition Analysis",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Decomposition Analysis.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2025 Set 2 questions."
+    ],
+    "question_type": "MSQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2025 Set 2",
+    "figure_url": "/pyq-assets/gate_fd_q25.png",
+    "source_number": 25,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q26",
+    "bank_type": "pyq",
+    "statement": "Consider a relational schema team(name, city, owner), with functional dependencies \\{name\ncity,\nname\nowner}.\nThe relation team is decomposed into two relations,\n(name, city) and\n(name, owner). Which of\nthe following statement(s) is/are TRUE?",
+    "options": [
+      "A) The relation team is NOT in BCNF.",
+      "B) The relations and are in BCNF.",
+      "C) The decomposition constitutes a lossless join.",
+      "D) The relation team is NOT in 3NF."
+    ],
+    "correct_answer": "B, C",
+    "explanation": "Official GATE CSE 2025 Set 1 Answer: B, C.\nTopic: BCNF & 3NF Testing (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "BCNF & 3NF Testing",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of BCNF & 3NF Testing.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2025 Set 1 questions."
+    ],
+    "question_type": "MSQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2025 Set 1",
+    "figure_url": "/pyq-assets/gate_fd_q26.png",
+    "source_number": 26,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q27",
+    "bank_type": "pyq",
+    "statement": "A functional dependency is termed as a useful functional dependency if and only if it satisfies all the required criteria. The number of such dependencies is ________.",
+    "options": [],
+    "correct_answer": "50",
+    "explanation": "Official GATE CSE 2024 Set 2 Answer: 50.\nTopic: Useful Functional Dependencies (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Useful Functional Dependencies",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Useful Functional Dependencies.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2024 Set 2 questions."
+    ],
+    "question_type": "NAT",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2024 Set 2",
+    "figure_url": "/pyq-assets/gate_fd_q27.png",
+    "source_number": 27,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q28",
+    "bank_type": "pyq",
+    "statement": "The symbol → indicates functional dependency in the context of a relational database. Which of the following statements is/are TRUE?",
+    "options": [
+      "A) (X, Y) → (Z, W) implies X → (Z, W)",
+      "B) (X, Y) → (Z, W) implies (X, Y) → Z",
+      "C) ((X, Y) → Z and W → Y) implies (X, W) → Z",
+      "D) (X → Y and Y → Z) implies X → Z"
+    ],
+    "correct_answer": "B, C, D",
+    "explanation": "Official GATE CSE 2024 Set 1 Answer: B, C, D.\nTopic: Functional Dependency Inferences (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Functional Dependency Inferences",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Functional Dependency Inferences.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2024 Set 1 questions."
+    ],
+    "question_type": "MSQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2024 Set 1",
+    "figure_url": "/pyq-assets/gate_fd_q28.png",
+    "source_number": 28,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q29",
+    "bank_type": "pyq",
+    "statement": "Suppose the following functional dependencies hold on a relation U with attributes P, Q, R, S, and T :\nP → QR\nRS → T\nWhich of the following functional dependencies can be inferred from the above functional\ndependencies?",
+    "options": [
+      "A) P → R",
+      "B) PS → T",
+      "C) R → T",
+      "D) PS → Q Google Play GET IT ON Solutions: questions.examside.com · Page 9 / 21 --- PAGE 10 --- P Y Q P D F"
+    ],
+    "correct_answer": "A, B, D",
+    "explanation": "Official GATE CSE 2021 Set 2 Answer: A, B, D.\nTopic: Candidate Keys & Superkeys (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Candidate Keys & Superkeys",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Candidate Keys & Superkeys.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2021 Set 2 questions."
+    ],
+    "question_type": "MSQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2021 Set 2",
+    "figure_url": "/pyq-assets/gate_fd_q29.png",
+    "source_number": 29,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q30",
+    "bank_type": "pyq",
+    "statement": "Consider the relation R(P, Q, S, T, X, Y, Z, W) with the following functional dependencies.\nPQ → X; P → YX; Q → Y; Y → ZW\nConsider the decomposition of the relation R into the constituent relations according to the\nfollowing two decomposition schemes.\nD1 : R = [(P, Q, S, T); (P, T, X); (Q, Y); (Y, Z, W)]\nD2 : R = [(P, Q, S); (T, X); (Q, Y); (Y, Z, W)]\nWhich one of the following options is correct?",
+    "options": [
+      "A) D1 is a lossy decomposition, but D2 is a lossless decomposition.",
+      "B) Both D1 and D2 are lossless decompositions.",
+      "C) Both D1 and D2 are lossy decompositions.",
+      "D) D1 is a lossless decomposition, but D2 is a lossy decomposition."
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 2021 Set 1 Answer: D.\nTopic: Candidate Keys (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Candidate Keys",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Candidate Keys.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2021 Set 1 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2021 Set 1",
+    "figure_url": "/pyq-assets/gate_fd_q30.png",
+    "source_number": 30,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q31",
+    "bank_type": "pyq",
+    "statement": "Consider a relational table R that is in 3NF, but not in BCNF. Which one of the following statements\nis TRUE?",
+    "options": [
+      "A) A cell in R holds a set instead of an atomic value.",
+      "B) R has a nontrivial functional dependency X A, where X is not a superkey and A is a non-prime attribute and X is not a proper subset of any key",
+      "C) R has a nontrivial functional dependency X A, where X is not a superkey and A is a non-prime attribute and X is a proper subset of some key.",
+      "D) R has a nontrivial functional dependency X A, where X is not a superkey and A is a prime attribute. Google Play GET IT ON Solutions: questions.examside.com · Page 10 / 21 --- PAGE 11 --- P Y Q P D F"
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 2020 Answer: D.\nTopic: 3NF vs BCNF Distinction (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "3NF vs BCNF Distinction",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of 3NF vs BCNF Distinction.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2020 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2020",
+    "figure_url": "/pyq-assets/gate_fd_q31.png",
+    "source_number": 31,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q32",
+    "bank_type": "pyq",
+    "statement": "Let the set of functional dependencies\nF = {QR → S, R → P, S → Q}\nhold on a relation schema X = (PQRS). X is not in BCNF. Suppose X is decomposed into two\nschemas Y and Z, where Y = (PR) and Z = (QRS).\nConsider the two statements given below.\nI. Both Y and Z are in BCNF\nII. Decomposition of X into Y and Z is dependency preserving and lossless\nWhich of the above statements is/are correct?",
+    "options": [
+      "A) I only",
+      "B) Neither I nor II",
+      "C) II only",
+      "D) Both I and II"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2019 Answer: C.\nTopic: Highest Normal Form (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Highest Normal Form",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Highest Normal Form.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2019 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2019",
+    "figure_url": "/pyq-assets/gate_fd_q32.png",
+    "source_number": 32,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q33",
+    "bank_type": "pyq",
+    "statement": "Consider the following four relational schemas. For each schema, all non-trivial functional\ndependencies are listed. The underlined attributes are the respective primary keys.\nSchema I: Registration (rollno, courses)\nField ‘courses’ is a set-valued attribute containing the set of courses a student has registered for.\nNon-trivial functional dependency:\nrollno\ncourses\nSchema II: Registration (rollno, courseid, email)\nNon-trivial functional dependencies:\nrollno, courseid\nemail\nemail\nrollno\nSchema III: Registration (rollno, courseid, marks, grade)\nNon-trivial functional dependencies:\nrollno, courseid\nmarks, grade\nmarks\ngrade\nSchema IV: Registration (rollno, courseid, credit)\nNon-trivial functional dependencies:\nrollno, courseid\ncredit\ncourseid\ncredit\nWhich one of the relational schemas above is in 3NF but not in BCNF?",
+    "options": [
+      "A) Schema I",
+      "B) Schema II",
+      "C) Schema III",
+      "D) Schema IV Google Play GET IT ON Solutions: questions.examside.com · Page 11 / 21 --- PAGE 12 --- P Y Q P D F"
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 2018 Answer: B.\nTopic: Normal Form Comparison (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Normal Form Comparison",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Normal Form Comparison.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2018 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2018",
+    "figure_url": "/pyq-assets/gate_fd_q33.png",
+    "source_number": 33,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q34",
+    "bank_type": "pyq",
+    "statement": "Given the following two statements:\nEvery table with two single-valued attributes is in\nand\nis a minimal cover for the set of functional dependencies\nWhich one of the following is CORRECT?",
+    "options": [
+      "A) is TRUE and is FALSE",
+      "B) Both and are TRUE.",
+      "C) is FALSE and is TRUE.",
+      "D) Both and are FALSE."
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2014 Set 1 Answer: A.\nTopic: Binary Relation Normal Form (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Binary Relation Normal Form",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Binary Relation Normal Form.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2014 Set 1 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2014 Set 1",
+    "figure_url": "/pyq-assets/gate_fd_q34.png",
+    "source_number": 34,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q35",
+    "bank_type": "pyq",
+    "statement": "Relation R has eight attributes ABCDEFGH. Fields of R contain only atomic values.\nis a set of functional dependencies (FDs)\nso that\nis exactly the set of FDs that hold for R.\nHow many candidate keys does the relation R have?",
+    "options": [
+      "A) (B)",
+      "C) (D)"
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 2013 Answer: B.\nTopic: Candidate Keys (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Candidate Keys",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Candidate Keys.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2013 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2013",
+    "figure_url": "/pyq-assets/gate_fd_q35.png",
+    "source_number": 35,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q36",
+    "bank_type": "pyq",
+    "statement": "Relation R has eight attributes ABCDEFGH. Fields of R contain only atomic values.\nis a set of functional dependencies (FDs)\nso that\nis exactly the set of FDs that hold for R.\nThe relation R is",
+    "options": [
+      "A) in but not in",
+      "B) in but not in",
+      "C) in but not in",
+      "D) in"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2013 Answer: A.\nTopic: Minimal Cover (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Minimal Cover",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Minimal Cover.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2013 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2013",
+    "figure_url": "/pyq-assets/gate_fd_q36.png",
+    "source_number": 36,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q37",
+    "bank_type": "pyq",
+    "statement": "Consider the following relational schema:\nSuppliers(sid: integer, sname: string, city: string, street: string)\nParts(pid: integer, pname: string, color: string)\nCatalog(sid: integer, pid: integer, cost: real)\nAssume that, in the suppliers relation above, each supplier and each street within a city has a unique\nname, and (sname, city) forms a candidate key. No other functional dependencies are implied other\nthan those implied by primary and candidate keys. Which one of the following is TRUE about the\nabove schema?",
+    "options": [
+      "A) The schema is in BCNF.",
+      "B) The schema is in 3NF but not in BCNF.",
+      "C) The schema is in 2NF but not in 3NF.",
+      "D) The schema is not in 2NF. Google Play GET IT ON Solutions: questions.examside.com · Page 12 / 21 --- PAGE 13 --- P Y Q P D F"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2009 Answer: A.\nTopic: Candidate Keys (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Candidate Keys",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Candidate Keys.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2009 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2009",
+    "figure_url": "/pyq-assets/gate_fd_q37.png",
+    "source_number": 37,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q38",
+    "bank_type": "pyq",
+    "statement": "Consider the following relational schemes for a library database:\nBook (Title, Author, Catalog_no, Publisher, Year, Price)\nCollection (Title, Author, Catalog_no)\nwith the following functional dependencies:\nI. Title Author\nCatalog_no\nII. Catalog_no\nTitle Author Publisher Year\nIII. Publisher Title Year\nPrice\nAssume {Author, Title} is the key for both schemes. Which of the following statements is true?",
+    "options": [
+      "A) Both Book and Collection are in",
+      "B) Both Book and Collection are in only",
+      "C) Book is in and Collection is in",
+      "D) Both Book and Collection are in only"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2008 Answer: C.\nTopic: BCNF & Lossless Decomposition (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "BCNF & Lossless Decomposition",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of BCNF & Lossless Decomposition.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2008 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2008",
+    "figure_url": "/pyq-assets/gate_fd_q38.png",
+    "source_number": 38,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q39",
+    "bank_type": "pyq",
+    "statement": "Which one of the following statements is FALSE?",
+    "options": [
+      "A) Any relation with two attributes is in",
+      "B) A relation in which every key has only one attribute is in .",
+      "C) A prime attribute can be transitively dependent on a key in a relation.",
+      "D) A prime attribute can be transitively dependent on a key in a relation. Google Play GET IT ON Solutions: questions.examside.com · Page 13 / 21 --- PAGE 14 --- P Y Q P D F"
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 2007 Answer: D.\nTopic: Normal Form Properties (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Normal Form Properties",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Normal Form Properties.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2007 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2007",
+    "figure_url": "/pyq-assets/gate_fd_q39.png",
+    "source_number": 39,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q40",
+    "bank_type": "pyq",
+    "statement": "Consider the relation enrolled (student, course) in which (student, course ) is the primary key, and\nthe relation Paid (student, amount) where student is the primary key. Assume no null values and no\nforeign keys or integrity constraints. Assume that amounts\nand\nwere\neach paid by\n% of the students. Consider these query plans (Plan  on left, Plan  on right) to ''List\nall courses taken by students who have paid more than\n.\nEmrolled\npaid\nProbe index\nOn student\nSequential\nscan, select\namount > x\nIndexed nested loop join\nProject on course\nEmrolled\npaid\nProbe index\nOn student\nIndexed nested loop join\nSelect on amount > x\nSequential scan\nProject on course\nA disk seek takes\n, disk data transfer bandwidth is\nand checking a tuple to see if\namount is greater than  takes\nWhich of the following statements is correct?",
+    "options": [
+      "A) Plan and Plan will not output identical row sets for all databases",
+      "B) A course may be listed more than once in the output of plan for some databases",
+      "C) For Plan executes faster than plan for all databases",
+      "D) For Plan executes slower than plan for all databases Google Play GET IT ON Solutions: questions.examside.com · Page 14 / 21 --- PAGE 15 --- P Y Q P D F"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2006 Answer: C.\nTopic: Highest Normal Form (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Highest Normal Form",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Highest Normal Form.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2006 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2006",
+    "figure_url": "/pyq-assets/gate_fd_q40.png",
+    "source_number": 40,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q41",
+    "bank_type": "pyq",
+    "statement": "The following functional dependencies are given :\nWhich one of the following options is false?",
+    "options": [
+      "A) (B)",
+      "C) (D)"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2006 Answer: C.\nTopic: Extraneous Attributes (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Extraneous Attributes",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Extraneous Attributes.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2006 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2006",
+    "figure_url": "/pyq-assets/gate_fd_q41.png",
+    "source_number": 41,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q42",
+    "bank_type": "pyq",
+    "statement": "In a schema with attributes\nand\nfollowing set of functional dependencies are given\nWhich of the following functional dependencies is NOT implied by the above set?",
+    "options": [
+      "A) (B)",
+      "C) (D)"
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 2005 Answer: B.\nTopic: Candidate Keys (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Candidate Keys",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Candidate Keys.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2005 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2005",
+    "figure_url": "/pyq-assets/gate_fd_q42.png",
+    "source_number": 42,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q43",
+    "bank_type": "pyq",
+    "statement": "Consider a relation scheme\non which the following functional\ndependencies hold:\nWhat are the candidate keys of",
+    "options": [
+      "A) (B)",
+      "C) (D)"
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 2005 Answer: D.\nTopic: Highest Normal Form (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Highest Normal Form",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Highest Normal Form.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2005 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2005",
+    "figure_url": "/pyq-assets/gate_fd_q43.png",
+    "source_number": 43,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q44",
+    "bank_type": "pyq",
+    "statement": "The relation scheme student Performance (Name, CourseNo, RollNo, Grade) has the following\nfunctional dependencies:\nName, courseNo\ngrade\nRollNo, courseNo\ngrade\nName\nrollNo\nRollNo\nname\nThe highest normal form of this relation scheme is",
+    "options": [
+      "A) (B)",
+      "C) (D) Google Play GET IT ON Solutions: questions.examside.com · Page 15 / 21 --- PAGE 16 --- P Y Q P D F"
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 2004 Answer: B.\nTopic: 2NF & 3NF Violations (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "2NF & 3NF Violations",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of 2NF & 3NF Violations.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2004 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2004",
+    "figure_url": "/pyq-assets/gate_fd_q44.png",
+    "source_number": 44,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q45",
+    "bank_type": "pyq",
+    "statement": "A relation Empdt  is defined with attributes empcode (unique), name, street, city, state and pincode.\nFor any pincode, there is only one city and state. Also, for any given street city and the state, there is\njust one pincode. In normalization terms, Empdt is a relation in",
+    "options": [
+      "A) only",
+      "B) and hence also in",
+      "C) and hence also in and",
+      "D) and hence also in and"
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 2004 Answer: B.\nTopic: 3NF Decomposition (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "3NF Decomposition",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of 3NF Decomposition.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2004 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2004",
+    "figure_url": "/pyq-assets/gate_fd_q45.png",
+    "source_number": 45,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q46",
+    "bank_type": "pyq",
+    "statement": "Consider the following functional dependencies in a database.\nThe relation (Roll_number, Name, Date_of_Birth, Age) is",
+    "options": [
+      "A) In but not in",
+      "B) In but not in",
+      "C) In",
+      "D) None of the above"
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 2003 Answer: D.\nTopic: Highest Normal Form (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Highest Normal Form",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Highest Normal Form.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2003 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2003",
+    "figure_url": "/pyq-assets/gate_fd_q46.png",
+    "source_number": 46,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q47",
+    "bank_type": "pyq",
+    "statement": "Relation  is decomposed using a set of functional dependencies,\nand relation  is decomposed\nusing another set of functional dependencies,\nOne decomposition is definitely\nthe other\nis definitely.\nbut it is not known which is which. To make a guaranteed identification, which\none of the following tests should be used on the decompositions? (Assume that the closures of\nand  are available).",
+    "options": [
+      "A) Dependency-preservation",
+      "B) Lossless-join",
+      "C) definition",
+      "D) definition Google Play GET IT ON Solutions: questions.examside.com · Page 16 / 21 --- PAGE 17 --- P Y Q P D F"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2002 Answer: C.\nTopic: Lossless Join Testing (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Lossless Join Testing",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Lossless Join Testing.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2002 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2002",
+    "figure_url": "/pyq-assets/gate_fd_q47.png",
+    "source_number": 47,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q48",
+    "bank_type": "pyq",
+    "statement": "From the following instance of a relation schema\nwe can conclude that:",
+    "options": [
+      "A) A functionally determines and functionally determines",
+      "B) A functionally determines and does not functionally determines",
+      "C) does not functionally determines",
+      "D) A does not functionally determine and does not functionally determine"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2002 Answer: C.\nTopic: Instance-Observed FDs (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Instance-Observed FDs",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Instance-Observed FDs.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2002 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2002",
+    "figure_url": "/pyq-assets/gate_fd_q48.png",
+    "source_number": 48,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q49",
+    "bank_type": "pyq",
+    "statement": "is a relation. Which of the following does not have a lossless-join, dependency\npreserving\ndecomposition?",
+    "options": [
+      "A) (B)",
+      "C) (D)"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2001 Answer: C.\nTopic: Lossless & Preservation (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Lossless & Preservation",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Lossless & Preservation.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2001 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2001",
+    "figure_url": "/pyq-assets/gate_fd_q49.png",
+    "source_number": 49,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q50",
+    "bank_type": "pyq",
+    "statement": "Given the following relation instance\nWhich of the following functional dependencies are satisfied by the instance?",
+    "options": [
+      "A) and",
+      "B) and",
+      "C) and",
+      "D) and Google Play GET IT ON Solutions: questions.examside.com · Page 17 / 21 --- PAGE 18 --- P Y Q P D F"
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 2000 Answer: B.\nTopic: Instance FDs Validation (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Instance FDs Validation",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Instance FDs Validation.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2000 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2000",
+    "figure_url": "/pyq-assets/gate_fd_q50.png",
+    "source_number": 50,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q51",
+    "bank_type": "pyq",
+    "statement": "Consider the schema\nand the dependencies\nand\nlet\nand\nbe a decomposition such that\nThe decomposition is:",
+    "options": [
+      "A) Not in",
+      "B) In but not",
+      "C) In but not in",
+      "D) In both and"
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 1999 Answer: D.\nTopic: Highest Normal Form (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Highest Normal Form",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Highest Normal Form.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 1999 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "1999",
+    "figure_url": "/pyq-assets/gate_fd_q51.png",
+    "source_number": 51,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q52",
+    "bank_type": "pyq",
+    "statement": "Consider the following database relations containing the attributes\nBook–id\nSubject–Category–of–book\nName–of–Author\nNationality–of–Author\nWith book–id as the primary key.\n(a) What is the highest normal form satisfied by this relation?\n(b) Suppose the attributes Book–title and Author–address are added to the relation, and the primary\nkey is changed to {Name–of–Author, Book–title}, what will be the highest normal form satisfied by\nthe relation?",
+    "options": [],
+    "correct_answer": "(a) (b)",
+    "explanation": "Official GATE CSE 1998 Answer: (a) (b).\nTopic: Subjective Decomposition (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Subjective Decomposition",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Subjective Decomposition.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 1998 questions."
+    ],
+    "question_type": "Descriptive",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "1998",
+    "figure_url": "/pyq-assets/gate_fd_q52.png",
+    "source_number": 52,
+    "status": "incomplete",
+    "incomplete_reason": "Historical subjective question from GATE 1998 without multiple choice or integer key."
+  },
+  {
+    "id": "gate-fd-q53",
+    "bank_type": "pyq",
+    "statement": "Consider the following database relations containing the attributes\nBook–id\nSubject–Category–of–book\nName–of–Author\nNationality–of–Author\nWith book–id as the primary key.\n(a) What is the highest normal form satisfied by this relation?\n(b) Suppose the attributes Book–title and Author–address are added to the relation, and the primary\nkey is changed to {Name–of–Author, Book–title}, what will be the highest normal form satisfied by\nthe relation?",
+    "options": [],
+    "correct_answer": "(a) (b)",
+    "explanation": "Official GATE CSE 1998 Answer: (a) (b).\nTopic: Subjective Normalization (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Subjective Normalization",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Subjective Normalization.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 1998 questions."
+    ],
+    "question_type": "Descriptive",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "1998",
+    "figure_url": "/pyq-assets/gate_fd_q53.png",
+    "source_number": 53,
+    "status": "incomplete",
+    "incomplete_reason": "Historical subjective question from GATE 1998 without multiple choice or integer key."
+  },
+  {
+    "id": "gate-fd-q54",
+    "bank_type": "pyq",
+    "statement": "For a database relation\nwhere the domains of\ninclude only atomic values, only\nthe following functional dependencies and those that can be inferred from them hold:\nThis relation is",
+    "options": [
+      "A) In but not in",
+      "B) In but not in",
+      "C) In",
+      "D) None of the above Google Play GET IT ON Solutions: questions.examside.com · Page 18 / 21 --- PAGE 19 --- P Y Q P D F"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 1997 Answer: A.\nTopic: Candidate Keys & BCNF (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Candidate Keys & BCNF",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Candidate Keys & BCNF.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 1997 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "1997",
+    "figure_url": "/pyq-assets/gate_fd_q54.png",
+    "source_number": 54,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q55",
+    "bank_type": "pyq",
+    "statement": "Let\nand\nbe two relations in which  is the foreign key of  that refers to the\nprimary key of\nConsider the following four operations  and\n(a) Insert into  (b) Insert into\n(c) Delete from  (d) Delete from $$S$\nWhich of the following statements is true about the referential integrity constraint above?",
+    "options": [
+      "A) None of (a), (b), (c) or (d) can cause its violation",
+      "B) All of (a), (b), (c) and (d) can cause its violation",
+      "C) Both (a) and (d) can cause its violation",
+      "D) Both (b) and (c) can cause its violation"
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 1997 Answer: D.\nTopic: Referential Integrity Constraints (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Referential Integrity Constraints",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Referential Integrity Constraints.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 1997 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "1997",
+    "figure_url": "/pyq-assets/gate_fd_q55.png",
+    "source_number": 55,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-fd-q56",
+    "bank_type": "pyq",
+    "statement": "(a) Consider the relation scheme\nwith the following functional dependencies:\nShow that the scheme  is the Third Normal Form\nbut not in Boyce-Code Normal Form\n(b) Determine the minimal keys of relation\nGoogle Play\nGET IT ON\nSolutions: questions.examside.com · Page 19 / 21\n--- PAGE 20 ---\nP Y Q P D F\nAnswer Key\n1. C, D\n2. A, B, C\n3. A, C\n4. A\n5. 8\n6. C\n7. A\n8. B\n9. C\n10. B\n11. 19\n12. 8\n13. B\n14. C\n15. A\n16. C\n17. A\n18. A\n19. C\n20. B\n21. D\n22. B\n23. D\n24. (6)\n25. C, D\n26. B, C\n27. 50\n28. B, C, D\n29. A, B, D\n30. D\n31. D\n32. C\n33. B\n34. A\n35. B\n36. A\n37. A\n38. C\n39. D\n40. C\n41. C\n42. B\n43. D\n44. B\n45. B\n46. D\n47. C\n48. C\n49. C\n50. B\n51. D\n52. (a)\n(b)\n53. (a)\n(b)\n54. A\n55. D\n56. Solve it.\nFor numerical answers given as a range, any value within the range is correct. Full solutions: scan the QR code next to each question, or visit\nquestions.examside.com.\nGoogle Play\nGET IT ON\nSolutions: questions.examside.com · Page 20 / 21",
+    "options": [],
+    "correct_answer": "Solve it.",
+    "explanation": "Official GATE CSE 1995 Answer: Solve it..\nTopic: Subjective Proof (2 Marks).\nKey reasoning: This question from GATE CSE tests core Functional Dependencies and Normalization principles. Refer to standard relational DBMS definitions.",
+    "topic": "Functional Dependencies and Normalization",
+    "subtopic": "Subjective Proof",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Subjective Proof.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 1995 questions."
+    ],
+    "question_type": "Descriptive",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "1995",
+    "figure_url": "/pyq-assets/gate_fd_q56.png",
+    "source_number": 56,
+    "status": "incomplete",
+    "incomplete_reason": "Historical proof question from GATE 1995: 'Prove that any relation with two attributes is in BCNF'."
+  },
+  {
+    "id": "gate-sql-q01",
+    "bank_type": "pyq",
+    "statement": "Consider a relational database containing schemas:\nCatalogue (sno, pno, cost), Suppliers (sno, sname, location), Parts (pno, pname, part_spec)\nThe primary key of each table is indicated by underlining the constituent fields.\n\nSELECT s.sno, s.sname\nFROM Suppliers s, Catalogue c\nWHERE s.sno = c.sno AND\n      Cost > (SELECT AVG (cost)\n              FROM Catalogue\n              WHERE pno = 'P4'\n              GROUP BY pno);\n\nThe number of rows returned by the above SQL query is:",
+    "options": [
+      "A) 4",
+      "B) 5",
+      "C) 2",
+      "D) 0"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2020 Answer: A.\nTopic: SQL Subqueries & Aggregation (1 Mark).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Subqueries & Aggregation",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of SQL Subqueries & Aggregation.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2020 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2020",
+    "figure_url": "/pyq-assets/gate_sql_q01.png",
+    "source_number": 1,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q02",
+    "bank_type": "pyq",
+    "statement": "Consider the following two tables and four queries in SQL.\nBook (isbn, bname), Stock (isbn, copies)\nQuery 1:\nSELECT B.isbn, S.copies\nFROM Book B INNER JOIN Stock S\nON B.isbn = S.isbn;\nQuery 2:\nSELECT B.isbn, S.copies\nFROM Book B LEFT OUTER JOIN Stock S\nON B.isbn = S.isbn;\nQuery 3:\nSELECT B.isbn, S.copies\nFROM Book B RIGHT OUTER JOIN Stock S\nON B.isbn = S.isbn;\nQuery 4:\nSELECT B.isbn, S.copies\nFROM Book B FULL OUTER JOIN Stock S\nON B.isbn = S.isbn;\nWhich one of the queries above is certain to have an output that is a superset of the outputs of the other three queries?",
+    "options": [
+      "A) Query 1",
+      "B) Query 2",
+      "C) Query 3",
+      "D) Query 4"
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 2018 Answer: D.\nTopic: SQL Relational Division / Set Operations (1 Mark).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Relational Division / Set Operations",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of SQL Relational Division / Set Operations.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2018 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2018",
+    "figure_url": "/pyq-assets/gate_sql_q02.png",
+    "source_number": 2,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q03",
+    "bank_type": "pyq",
+    "statement": "Consider the following tables T1 and T2.\nT1\nP\nQ\n2\n2\n3\n8\n7\n3\n5\n8\n6\n9\n8\n5\n9\n8\nT2\nR\nS\n2\n2\n8\n3\n3\n2\n9\n7\n5\n7\n7\n2\nIn table T1, P is the primary key and Q is the foreign key referencing R in table T2 with on-delete cascade and on-update cascade. In\ntable T2, R is the primary key and S is the foreign key referencing P in table T1 with on-delete set NULL and on-update cascade. In order\nto delete record\nfrom table T1, the number of additional records that need to be deleted from table T1 is ______.\nGoogle Play\nGET IT ON\nSolutions: questions.examside.com · Page 3 / 24\n--- PAGE 4 ---\nP Y Q P D F",
+    "options": [],
+    "correct_answer": "0",
+    "explanation": "Official GATE CSE 2017 Set 2 Answer: 0.\nTopic: SQL Joins & NULL Evaluation (1 Mark).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Joins & NULL Evaluation",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of SQL Joins & NULL Evaluation.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2017 Set 2 questions."
+    ],
+    "question_type": "NAT",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2017 Set 2",
+    "figure_url": "/pyq-assets/gate_sql_q03.png",
+    "source_number": 3,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q04",
+    "bank_type": "pyq",
+    "statement": "Consider a database that has the relation schema EMP (EmpId, EmpName, and DeptName). An instance of the schema EMP and a SQL\nquery on it are given below.\nEMP\nEmpId\nEmpName\nDeptName\n1\nXYA\nAA\n2\nXYB\nAA\n3\nXYC\nAA\n4\nXYD\nAA\n5\nXYE\nAB\n6\nXYF\nAB\n7\nXYG\nAB\n8\nXYH\nAC\n9\nXYI\nAC\n10\nXYJ\nAC\n11\nXYK\nAD\n12\nXYL\nAD\n13\nXYM\nAE\nSELECT AVG(EC.Num)\nFROM EC\nWHERE (DeptName, Num) IN\n(SELECT DeptName, COUNT(EmpId) AS\nEC(DeptName, Num)\nFROM EMP\nGROUP BY DeptName)\nThe output of executing the SQL query is ________.",
+    "options": [],
+    "correct_answer": "2.6",
+    "explanation": "Official GATE CSE 2017 Set 1 Answer: 2.6.\nTopic: SQL Aggregate Functions (AVG) (1 Mark).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Aggregate Functions (AVG)",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of SQL Aggregate Functions (AVG).",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2017 Set 1 questions."
+    ],
+    "question_type": "NAT",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2017 Set 1",
+    "figure_url": "/pyq-assets/gate_sql_q04.png",
+    "source_number": 4,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q05",
+    "bank_type": "pyq",
+    "statement": "Consider the following relation\nCinema(theater, address, capacity)\nWhich of the following options will be needed at the end of the\nquery\nSELECT\naddress\nFROM Cinema\nsuch that it always finds the addresses of theaters with maximum capacity?",
+    "options": [
+      "A) WHERE .capacity >= All (select .capacity from Cinema )",
+      "B) WHERE .capacity >= Any (select .capacity from Cinema )",
+      "C) WHERE .capacity > All (select max( .capacity) from Cinema )",
+      "D) WHERE .capacity > Any (select max( .capacity) from Cinema )"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2015 Set 3 Answer: A.\nTopic: SQL Correlated Subquery (1 Mark).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Correlated Subquery",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of SQL Correlated Subquery.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2015 Set 3 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2015 Set 3",
+    "figure_url": "/pyq-assets/gate_sql_q05.png",
+    "source_number": 5,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q06",
+    "bank_type": "pyq",
+    "statement": "SELECT operation in SQL is equivalent to",
+    "options": [
+      "A) the selection operation in relational algebra",
+      "B) the selection operation in relational algebra, except that SELECT in SQL retains duplicates",
+      "C) the projection operation in relational algebra",
+      "D) the projection operation in relational algebra, except that SELECT in SQL retains duplicates Google Play GET IT ON Solutions: questions.examside.com · Page 4 / 24 --- PAGE 5 --- P Y Q P D F"
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 2015 Set 1 Answer: D.\nTopic: SQL NULL Comparisons (1 Mark).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL NULL Comparisons",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of SQL NULL Comparisons.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2015 Set 1 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2015 Set 1",
+    "figure_url": "/pyq-assets/gate_sql_q06.png",
+    "source_number": 6,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q07",
+    "bank_type": "pyq",
+    "statement": "Given the following statements:\nS1: A foreign key declaration can always be replaced by an equivalent check assertion in SQL.\nS2: Given the table R(a,b,c) where a and b together form the primary key, the following is a valid table definition.\nCREATE TABLE S (\na INTEGER,\nd INTEGER,\ne INTEGER,\nPRIMARY KEY (d),\nFOREIGN KEY (a) references R)\nWhich one of the following statements is CORRECT?",
+    "options": [
+      "A) S1 is TRUE and S2 is FALSE.",
+      "B) Both S1 and S2 are TRUE.",
+      "C) S1 is FALSE and S2 is TRUE.",
+      "D) Both S1 and S2 are FALSE."
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 2014 Set 1 Answer: D.\nTopic: SQL View & Integrity Constraints (1 Mark).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL View & Integrity Constraints",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of SQL View & Integrity Constraints.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2014 Set 1 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2014 Set 1",
+    "figure_url": "/pyq-assets/gate_sql_q07.png",
+    "source_number": 7,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q08",
+    "bank_type": "pyq",
+    "statement": "Which of the following statements are TRUE about an SQL query?\nP: An SQL query can contain a HAVING clause even if it does not have a GROUP BY clause\nQ: An SQL query can contain a HAVING clause only if it has a GROUP BY clause\nR: All attributes used in the GROUP BY clause must appear in the SELECT clause\nS: Not all attributes used in the GROUP BY clause need to appear in the SELECT clause",
+    "options": [
+      "A) P and R",
+      "B) P and S",
+      "C) Q and R",
+      "D) Q and S Google Play GET IT ON Solutions: questions.examside.com · Page 5 / 24 --- PAGE 6 --- P Y Q P D F"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2012 Answer: C.\nTopic: SQL GROUP BY & HAVING (1 Mark).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL GROUP BY & HAVING",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of SQL GROUP BY & HAVING.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2012 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2012",
+    "figure_url": "/pyq-assets/gate_sql_q08.png",
+    "source_number": 8,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q09",
+    "bank_type": "pyq",
+    "statement": "A relational schema for a train reservation database is given below.\nPassenger(pid, pname, age)\nReservation(pid, class, tid)\nTable: Passenger\npid\npname\nAge\n0\n'Sachin'\n65\n1\n'Rahul'\n66\n2\n'Sourav'\n67\n3\n'Anil'\n69\nTable: Reservation\npid\nclass\ntid\n0\n'AC'\n8200\n1\n'AC'\n8201\n2\n'SC'\n8201\n5\n'AC'\n8203\n1\n'SC'\n8204\n3\n'AC'\n8202\nWhat pids are returned by the following SQL query for the above instance of the tables?\nSELECT pid\nFROM   Reservation\nWHERE  class = 'AC' AND\nEXISTS (SELECT *\nFROM Passenger\nWHERE age > 65 AND\nPassenger.pid = Reservation.pid)",
+    "options": [
+      "A) 1, 0",
+      "B) 1, 2",
+      "C) 1, 3",
+      "D) 1, 5"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2010 Answer: C.\nTopic: SQL Foreign Key & Integrity Constraints (1 Mark).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Foreign Key & Integrity Constraints",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of SQL Foreign Key & Integrity Constraints.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2010 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2010",
+    "figure_url": "/pyq-assets/gate_sql_q09.png",
+    "source_number": 9,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q10",
+    "bank_type": "pyq",
+    "statement": "Consider the following relation schema pertaining to a students database:\nStudents (rollno, name, address)\nEnroll(rollno,courseno, coursename)\nWhere the primary keys are shown underlined. The number of tuples in the student and Enroll tables are 120 and 8 respectively. What\nare the maximum and minimum number of tuples that can be present in (Student * Enroll), where '*' denotes natural join?",
+    "options": [
+      "A) 8, 8",
+      "B) 120, 8",
+      "C) 960, 8",
+      "D) 960, 120 Google Play GET IT ON Solutions: questions.examside.com · Page 6 / 24 --- PAGE 7 --- P Y Q P D F 34 questions"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2004 Answer: A.\nTopic: SQL Joins & Grouping (1 Mark).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Joins & Grouping",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of SQL Joins & Grouping.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2004 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2004",
+    "figure_url": "/pyq-assets/gate_sql_q10.png",
+    "source_number": 10,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q11",
+    "bank_type": "pyq",
+    "statement": "Consider the following relational schema:\nStudents (rollno : integer, name: string, age: integer, cgpa: real)\nCourses (courseno : integer, cname: string, credits: integer)\nEnrolled (rollno : integer, courseno : integer, grade: string)\nWhich of the following options is/are correct SQL query/queries to retrieve the names of the students enrolled in course number (i.e., courseno) 1470?",
+    "options": [
+      "A) SELECT S.name FROM Students S WHERE EXISTS (SELECT * FROM Enrolled E WHERE E.courseno = 1470 AND E.rollno = S.rollno);",
+      "B) SELECT S.name FROM Students S WHERE SIZEOF (SELECT * FROM Enrolled E WHERE E.courseno = 1470 AND E.rollno = S.rollno) > 0;",
+      "C) SELECT S.name FROM Students S WHERE 0 < (SELECT COUNT(*) FROM Enrolled E WHERE E.courseno = 1470 AND E.rollno = S.rollno);",
+      "D) SELECT S.name FROM Students S NATURAL JOIN Enrolled E WHERE E.courseno = 1470;"
+    ],
+    "correct_answer": "A, C, D",
+    "explanation": "Official GATE CSE 2025 Set 2 Answer: A, C, D.\nTopic: SQL Correlated Subqueries & Exists (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Correlated Subqueries & Exists",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Correlated Subqueries & Exists.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2025 Set 2 questions."
+    ],
+    "question_type": "MSQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2025 Set 2",
+    "figure_url": "/pyq-assets/gate_sql_q11.png",
+    "source_number": 11,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q12",
+    "bank_type": "pyq",
+    "statement": "Consider the database tables of a sports league: player(pid, pname, age), team(tid, tname, city, cid), coach(cid, cname), members(pid, tid).\nAn instance of the table and an SQL query are given.\n\nSELECT MIN(P.age)\nFROM player P\nWHERE P.pid IN (\n    SELECT M.pid\n    FROM team T, coach C, members M\n    WHERE C.cname = 'Mark'\n    AND T.cid = C.cid\n    AND M.tid = T.tid\n)\n\nThe value returned by the given SQL query is _________ . (Answer in integer)",
+    "options": [],
+    "correct_answer": "26",
+    "explanation": "Official GATE CSE 2025 Set 1 Answer: 26.\nTopic: SQL Joins & Subqueries (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Joins & Subqueries",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Joins & Subqueries.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2025 Set 1 questions."
+    ],
+    "question_type": "NAT",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2025 Set 1",
+    "figure_url": "/pyq-assets/gate_sql_q12.png",
+    "source_number": 12,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q13",
+    "bank_type": "pyq",
+    "statement": "Consider the table named Student in a relational database. The primary key of this table is rollNum.\n\nSELECT *\nFROM Student\nWHERE gender = 'F' AND marks > 65;\n\nThe number of rows returned by the query is _________.",
+    "options": [],
+    "correct_answer": "2",
+    "explanation": "Official GATE CSE 2023 Answer: 2.\nTopic: SQL Filtering & WHERE Conditions (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Filtering & WHERE Conditions",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Filtering & WHERE Conditions.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2023 questions."
+    ],
+    "question_type": "NAT",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2023",
+    "figure_url": "/pyq-assets/gate_sql_q13.png",
+    "source_number": 13,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q14",
+    "bank_type": "pyq",
+    "statement": "Consider the relational database with the following four schemas and their respective instances.\nStudent(\n, sName, dNo) Dept(\n, dName)\nCourse(\n, cName, dNo) Register(\n,\n)\nSQL Query :\nSELECT * FROM Student AS S WHERE NOT EXIST\n(SELECT cNo FROM Course WHERE dNo = \"D01\"\nEXCEPT\nSELECT cNo FROM Register WHERE sNo = S.sNo)\nThe number of rows returned by the above SQL query is _____________.",
+    "options": [],
+    "correct_answer": "2",
+    "explanation": "Official GATE CSE 2022 Answer: 2.\nTopic: SQL NOT EXISTS & EXCEPT (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL NOT EXISTS & EXCEPT",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL NOT EXISTS & EXCEPT.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2022 questions."
+    ],
+    "question_type": "NAT",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2022",
+    "figure_url": "/pyq-assets/gate_sql_q14.png",
+    "source_number": 14,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q15",
+    "bank_type": "pyq",
+    "statement": "The relation scheme given below is used to store information about the employees of a company, where empId is the key and deptId\nindicates the department to which the employee is assigned. Each employee is assigned to exactly one department.\nemp(empId, name, gender, salary, deptId)\nConsider the following SQL query:\nselect deptId, count(*)\nfrom emp\nwhere gender = \"female\" and salary > (select avg(salary) from emp)\ngroup by deptId;\nThe above query gives, for each department in the company, the number of female employees whose salary is greater than the average\nsalary of",
+    "options": [
+      "A) female employees in the department.",
+      "B) employees in the department.",
+      "C) employees in the company.",
+      "D) female employees in the company. Google Play GET IT ON Solutions: questions.examside.com · Page 9 / 24 --- PAGE 10 --- P Y Q P D F"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2021 Set 2 Answer: C.\nTopic: SQL GROUP BY & Aggregate Subquery (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL GROUP BY & Aggregate Subquery",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL GROUP BY & Aggregate Subquery.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2021 Set 2 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2021 Set 2",
+    "figure_url": "/pyq-assets/gate_sql_q15.png",
+    "source_number": 15,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q16",
+    "bank_type": "pyq",
+    "statement": "A relational database contains two tables Student and Performance as shown below :\nThe primary key of the Student table is Roll_no. For the Performance table, the columns Roll_no. and Subject_code together from the\nprimary key. Consider the SQL query given below:\nSELECT S.Student_name, sum (P.Marks)\nFROM Student S, Performance P\nGROUP BY S.Student_name;\nThe number of rows returned by the above SQL query is _________.",
+    "options": [],
+    "correct_answer": "5",
+    "explanation": "Official GATE CSE 2019 Answer: 5.\nTopic: SQL Aggregate SUM & GROUP BY (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Aggregate SUM & GROUP BY",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Aggregate SUM & GROUP BY.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2019 questions."
+    ],
+    "question_type": "NAT",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2019",
+    "figure_url": "/pyq-assets/gate_sql_q16.png",
+    "source_number": 16,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q17",
+    "bank_type": "pyq",
+    "statement": "Consider the following database table named top_scorer.\nplayer\ncountry\ngoals\nKlose\nGermany\n16\nRonaldo\nBrazil\n15\nG Müller\nGermany\n14\nFontaine\nFrance\n13\nPelé\nBrazil\n12\nKlinsmann\nGermany\n11\nKocsis\nHungary\n11\nBatistuta\nArgentina\n10\nCubillas\nPeru\n10\nLato\nPoland\n10\nLineker\nEngland\n10\nT Müller\nGermany\n10\nRahn\nGermany\n10\nConsider the following SQL query:\nSELECT ta.player FROM top_scorer AS ta\nWHERE ta.goals >ALL (SELECT tb.goals\nFROM top_scorer AS tb\nWHERE tb.country = 'Spain')\nAND ta.goals >ANY (SELECT tc.goals\nFROM top_scorer AS tc\nWHERE tc.country = 'Germany')\nThe number of tuples returned by the above SQL query is ____________.\nGoogle Play\nGET IT ON\nSolutions: questions.examside.com · Page 10 / 24\n--- PAGE 11 ---\nP Y Q P D F",
+    "options": [],
+    "correct_answer": "7",
+    "explanation": "Official GATE CSE 2017 Set 2 Answer: 7.\nTopic: SQL >ALL and >ANY Comparisons (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL >ALL and >ANY Comparisons",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL >ALL and >ANY Comparisons.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2017 Set 2 questions."
+    ],
+    "question_type": "NAT",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2017 Set 2",
+    "figure_url": "/pyq-assets/gate_sql_q17.png",
+    "source_number": 17,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q18",
+    "bank_type": "pyq",
+    "statement": "Consider the following database table named water_schemes :\nscheme_no\ndistrict_name\ncapacity\n1\nAjmer\n20\n1\nBikaner\n10\n2\nBikaner\n10\n3\nBikaner\n20\n1\nChuru\n10\n2\nChuru\n20\n1\nDungargarh\n10\nThe number of tuples returned by the following SQL query is ________ .\nwith total(name, capacity) as\nselect district_name, sum(capacity)\nfrom water_schemes\ngroup by district_name\nwith total_avg(capacity) as\nselect avg(capacity)\nfrom total\nselect name\nfrom total, total_avg\nwhere total.capacity ≥ total_avg.capacity",
+    "options": [],
+    "correct_answer": "2",
+    "explanation": "Official GATE CSE 2016 Set 2 Answer: 2.\nTopic: SQL COUNT Aggregate with Joins (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL COUNT Aggregate with Joins",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL COUNT Aggregate with Joins.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2016 Set 2 questions."
+    ],
+    "question_type": "NAT",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2016 Set 2",
+    "figure_url": "/pyq-assets/gate_sql_q18.png",
+    "source_number": 18,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q19",
+    "bank_type": "pyq",
+    "statement": "Consider the following relations:\nStudent\nRoll_No\nStudent_Name\n1\nRaj\n2\nRohit\n3\nRaj\nPerformance\nRoll_No\nCourse\nMarks\n1\nMath\n80\n1\nEnglish\n70\n2\nMath\n75\n3\nEnglish\n80\n2\nPhysics\n65\n3\nMath\n80\nConsider the following SQL query.\nSELECT S.Student_Name, sum(P.Marks)\nFROM Student S, Performance P\nWHERE S.Roll_No = P.Roll_No\nGROUP BY S.Student_Name\nThe number of rows that will be returned by the SQL query is __________.\nGoogle Play\nGET IT ON\nSolutions: questions.examside.com · Page 11 / 24\n--- PAGE 12 ---\nP Y Q P D F",
+    "options": [],
+    "correct_answer": "2",
+    "explanation": "Official GATE CSE 2015 Set 1 Answer: 2.\nTopic: SQL Outer Joins & Aggregation (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Outer Joins & Aggregation",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Outer Joins & Aggregation.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2015 Set 1 questions."
+    ],
+    "question_type": "NAT",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2015 Set 1",
+    "figure_url": "/pyq-assets/gate_sql_q19.png",
+    "source_number": 19,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q20",
+    "bank_type": "pyq",
+    "statement": "Given the following schema:\nemployees(emp-id, first-name, last-name, hire-date,\ndept-id, salary)\ndepartments(dept-id, dept-name, manager-id, location-id)\nYou want to display the last names and hire dates of all latest hires in their respective departments in the location ID 1700. You issue the\nfollowing query:\nSQL>SELECT last-name, hire-date\nFROM employees\nWHERE (dept-id, hire-date) IN\n(SELECT dept-id, MAX(hire-date)\nFROM employees JOIN departments USING(dept-id)\nWHERE location-id = 1700\nGROUP BY dept-id);\nWhat is the outcome?",
+    "options": [
+      "A) It executes but does not give the correct result.",
+      "B) It executes and gives the correct result.",
+      "C) It generates an error because of pairwise comparison.",
+      "D) It generates an error because the GROUP BY clause cannot be used with table joins in a sub-query."
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 2014 Set 1 Answer: B.\nTopic: SQL Tuple Count Evaluation (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Tuple Count Evaluation",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Tuple Count Evaluation.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2014 Set 1 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2014 Set 1",
+    "figure_url": "/pyq-assets/gate_sql_q20.png",
+    "source_number": 20,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q21",
+    "bank_type": "pyq",
+    "statement": "SQL allows duplicate tuples in relations, and correspondingly defines the multiplicity of tuples in the result of joins. Which one of the\nfollowing queries always gives the same answer as the nested query shown below:\nSelect * from R where a in (select S.a from S)",
+    "options": [
+      "A) Select R.* from R, S where R.a = S.a",
+      "B) Select distinct R.* from R, S where R.a = S.a",
+      "C) Select R.* from R, (select distinct a from S) as S1 where R.a = S1.a",
+      "D) Select R.* from R, S where R.a = S.a and is unique R"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2014 Set 2 Answer: C.\nTopic: SQL Query Equivalence (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Query Equivalence",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Query Equivalence.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2014 Set 2 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2014 Set 2",
+    "figure_url": "/pyq-assets/gate_sql_q21.png",
+    "source_number": 21,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q22",
+    "bank_type": "pyq",
+    "statement": "Consider the following relational schema:\nemployee(empId,empName,empDept)\ncustomer(custId,custName,salesRepId,rating)\nsalesRepId is a foreign key referring to empId of the employee relation. Assume that each employee makes a sale to at least one\ncustomer. What does the following query return?\nSELECT empName\nFROM employee E\nWHERE NOT EXISTS (SELECT custId\nFROM customer C\nWHERE C.salesRepId = E.empId\nAND C.rating <> 'GOOD');",
+    "options": [
+      "A) Names of all the employees with at least one of their customers having a 'GOOD' rating.",
+      "B) Names of all the employees with at most one of their customers having a 'GOOD' rating.",
+      "C) Names of all the employees with none of their customers having a 'GOOD' rating.",
+      "D) Names of all the employees with all their customers having a 'GOOD' rating. Google Play GET IT ON Solutions: questions.examside.com · Page 12 / 24 --- PAGE 13 --- P Y Q P D F"
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 2014 Set 3 Answer: D.\nTopic: SQL Cartesian Product & Conditions (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Cartesian Product & Conditions",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Cartesian Product & Conditions.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2014 Set 3 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2014 Set 3",
+    "figure_url": "/pyq-assets/gate_sql_q22.png",
+    "source_number": 22,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q23",
+    "bank_type": "pyq",
+    "statement": "Consider the following relational schema.\nStudents(rollno: integer, sname: string)\nCourses(courseno: integer, cname: string)\nRegistration(rollno: integer, courseno: integer, percent: real)\nWhich of the following queries are equivalent to this query in English?\n\"Find the distinct names of all students who score more than 90% in the course numbered 107\"\n(I)\nSELECT DISTINCT S.sname\nFROM Students as S, Registration as R\nWHERE R.rollno=S.rollno AND R.courseno=107 AND R.percent >90\n(II)\n(III)\n(IV)",
+    "options": [
+      "A) I, II, III and IV",
+      "B) I, II and III only",
+      "C) I, II and IV only",
+      "D) II, III and IV only"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2013 Answer: A.\nTopic: SQL NOT IN and EXCEPT Equivalence (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL NOT IN and EXCEPT Equivalence",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL NOT IN and EXCEPT Equivalence.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2013 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2013",
+    "figure_url": "/pyq-assets/gate_sql_q23.png",
+    "source_number": 23,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q24",
+    "bank_type": "pyq",
+    "statement": "Consider the following relations A, B and C:\nA\nId\nName\nAge\n12\nArun\n60\n15\nShreya\n24\n99\nRohit\n11\nB\nId\nName\nAge\n15\nShreya\n24\n25\nHari\n40\n98\nRohit\n20\n99\nRohit\n11\nC\nId\nPhone\nArea\n10\n2200\n02\n99\n2100\n01\nHow many tuples does the result of the following SQL query contain?\nSELECT A.Id\nFROM A\nWHERE A.Age > ALL (SELECT B.Age\nFROM B\nWHERE B.Name = 'Arun')",
+    "options": [
+      "A) 4",
+      "B) 3",
+      "C) 0",
+      "D) 1 Google Play GET IT ON Solutions: questions.examside.com · Page 13 / 24 --- PAGE 14 --- P Y Q P D F"
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 2012 Answer: B.\nTopic: SQL ON DELETE CASCADE Behavior (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL ON DELETE CASCADE Behavior",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL ON DELETE CASCADE Behavior.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2012 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2012",
+    "figure_url": "/pyq-assets/gate_sql_q24.png",
+    "source_number": 24,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q25",
+    "bank_type": "pyq",
+    "statement": "Database table by name Loan_Records is given below.\nBorrower\nBank_Manager\nLoan_Amount\nRamesh\nSunderajan\n10000.00\nSuresh\nRamgopal\n5000.00\nMahesh\nSunderajan\n7000.00\nWhat is the output of the following SQL query?\nSELECT count(*)\nFROM (\n(SELECT Borrower, Bank_Manager FROM Loan_Records) AS S\nNATURAL JOIN\n(SELECT Bank_Manager, Loan_Amount FROM Loan_Records) AS T\n);",
+    "options": [
+      "A) 3",
+      "B) 9",
+      "C) 5",
+      "D) 6"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2011 Answer: C.\nTopic: SQL GROUP BY & HAVING Filter (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL GROUP BY & HAVING Filter",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL GROUP BY & HAVING Filter.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2011 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2011",
+    "figure_url": "/pyq-assets/gate_sql_q25.png",
+    "source_number": 25,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q26",
+    "bank_type": "pyq",
+    "statement": "Consider a database table T containing two columns X and Y each of type integer. After the creation of the table, one record (X = 1, Y =\n1) is inserted in the table.\nLet MX and MY denote the respective maximum values of X and Y among all records in the table at any point in time. Using MX and MY,\nnew records are inserted in the table 128 times with X and Y values being MX + 1, 2*MY + 1 respectively. It may be noted that each time\nafter the insertion, values of MX and MY change.\nWhat will be the output of the following SQL query after the steps mentioned above are carried out?\nSELECT Y FROM T WHERE X=7;",
+    "options": [
+      "A) 127",
+      "B) 255",
+      "C) 129",
+      "D) 257"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2011 Answer: A.\nTopic: SQL Insertions & Maximum Value Query (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Insertions & Maximum Value Query",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Insertions & Maximum Value Query.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2011 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2011",
+    "figure_url": "/pyq-assets/gate_sql_q26.png",
+    "source_number": 26,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q27",
+    "bank_type": "pyq",
+    "statement": "Consider the following relational schema:\nSuppliers(sid: integer, sname: string, city: string, street: string)\nParts(pid: integer, pname: string, color: string)\nCatalog(sid: integer, pid: integer, cost: real)\nConsider the following relational query on the above database:\nSELECT S.sname\nFROM   Suppliers S\nWHERE  S.sid NOT IN ( SELECT C.sid\nFROM   Catalog C\nWHERE  C.pid NOT IN ( SELECT P.pid\nFROM   Parts P\nWHERE  P.color <> 'blue'))\nAssume that relations corresponding to the above schema are not empty. Which one of the following is the correct interpretation of the\nabove query?",
+    "options": [
+      "A) Find the names of all suppliers who have supplied a non-blue part.",
+      "B) Find the names of all suppliers who have not supplied a non-blue part.",
+      "C) Find the names of all suppliers who have supplied only blue parts.",
+      "D) Find the names of all suppliers who have not supplied only blue parts. Google Play GET IT ON Solutions: questions.examside.com · Page 14 / 24 --- PAGE 15 --- P Y Q P D F"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2009 Answer: A.\nTopic: SQL Relational Division with Subqueries (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Relational Division with Subqueries",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Relational Division with Subqueries.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2009 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2009",
+    "figure_url": "/pyq-assets/gate_sql_q27.png",
+    "source_number": 27,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q28",
+    "bank_type": "pyq",
+    "statement": "Consider the table employee(empId, name, department, salary) and the two queries Q1, Q2 below. Assuming that department 5 has\nmore than one employee, and we want to find the employees who get higher salary than anyone in the department 5, which one of the\nstatements is TRUE for any arbitrary employee table?\nQ1:\nSelect e.empId\nFrom employee e\nWhere not exists\n(Select * From employee s Where s.department = \"5\" and s.salary >= e.salary)\nQ2:\nSelect e.empId\nFrom employee e\nWhere e.salary > Any\n(Select distinct salary From employee s Where s.department = \"5\")",
+    "options": [
+      "A) Q1 is the correct query.",
+      "B) Q2 is the correct query.",
+      "C) Both Q1 and Q2 produce the same answer.",
+      "D) Neither Q1 nor Q2 is the correct query."
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2007 Answer: A.\nTopic: SQL NOT EXISTS vs Correlated Subqueries (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL NOT EXISTS vs Correlated Subqueries",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL NOT EXISTS vs Correlated Subqueries.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2007 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2007",
+    "figure_url": "/pyq-assets/gate_sql_q28.png",
+    "source_number": 28,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q29",
+    "bank_type": "pyq",
+    "statement": "Consider the relation account (customer, balance) where customer is a primary key and there are no null values. We would like to rank\ncustomers according to decreasing balance. The customer with the largest balance gets rank 1. Ties are not broke but ranks are\nskipped: if exactly two customers have the largest balance they each get rank 1 and rank 2 is not assigned.\nQuery1:\nSelect A.customer, count(B.customer)\nFrom account A, account B\nWhere A.balance <=B.balance\nGroup by A.customer\nQuery2:\nSelect A.customer, 1+count(B.customer)\nFrom account A, account B\nWhere A.balance < B.balance\nGroup by A.customer\nConsider these statements about Query1 and Query2.\n1. Query1 will produce the same row set as Query2 for some but not all databases.\n2. Both Query1 and Query2 are correct implementation of the specification\n3. Query1 is a correct implementation of the specification but Query2 is not\n4. Neither Query1 nor Query2 is a correct implementation of the specification\n5. Assigning rank with a pure relational query takes less time than scanning in decreasing balance order assigning ranks using ODBC.\nWhich two of the above statements are correct?",
+    "options": [
+      "A) 2 and 5",
+      "B) 1 and 3",
+      "C) 1 and 4",
+      "D) 3 and 5 Google Play GET IT ON Solutions: questions.examside.com · Page 15 / 24 --- PAGE 16 --- P Y Q P D F"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2006 Answer: C.\nTopic: SQL Ranking & Self Joins (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Ranking & Self Joins",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Ranking & Self Joins.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2006 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2006",
+    "figure_url": "/pyq-assets/gate_sql_q29.png",
+    "source_number": 29,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q30",
+    "bank_type": "pyq",
+    "statement": "Consider the relation \"enrolled (student, course)\" in which (student, course) is the primary key, and the relation \"paid (student, amount)\"\nwhere student is the primary key. Assume no null values and no foreign keys or integrity constraints. Given the following four queries:\nQuery 1:\nSelect student\nfrom enrolled\nwhere student in (select student from paid)\nQuery 2:\nSelect student\nfrom paid\nwhere student in (select student from enrolled)\nQuery 3:\nSelect E.student\nfrom enrolled E, paid P\nwhere E.student = P.student\nQuery 4:\nSelect student\nfrom paid\nwhere exists (Select *\nfrom enrolled\nwhere enrolled.student = paid.student)\nWhich one of the following statements is correct?",
+    "options": [
+      "A) All queries return identical row sets for any database",
+      "B) Query 2 and Query 4 return identical row sets for all databases but there exist databases for which Query 1 and Query 2 return different row sets.",
+      "C) There exist databases for which Query 3 returns strictly fewer rows than Query 2",
+      "D) There exist databases for which Query 4 will encounter an integrity violation at runtime. Google Play GET IT ON Solutions: questions.examside.com · Page 16 / 24 --- PAGE 17 --- P Y Q P D F"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2006 Answer: A.\nTopic: SQL Subqueries & IN Operator (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Subqueries & IN Operator",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Subqueries & IN Operator.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2006 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2006",
+    "figure_url": "/pyq-assets/gate_sql_q30.png",
+    "source_number": 30,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q31",
+    "bank_type": "pyq",
+    "statement": "Consider a database with three relation instances shown below. The primary keys for the Drivers and Cars relation are Did and cid\nrespectively and the records are stored in ascending order of these primary keys as given in the tables. No indexing is available in the\ndatabase.\nD: Drivers Relation\nDid\nDname\nrating\nAge\n22\nKarthikeyan\n7\n25\n29\nSalman\n1\n33\n31\nBoris\n8\n55\n32\nAmoldt\n8\n25\n58\nSchumacher\n10\n35\n64\nSachin\n7\n35\n71\nSenna\n10\n16\n74\nSachin\n9\n35\n85\nRahul\n3\n25\n95\nRalph\n3\n53\nR: Reserves Relation\nDid\ncid\nDay\n22\n101\n10/10/06\n22\n102\n10/10/06\n22\n103\n8/10/06\n22\n104\n7/10/06\n31\n102\n10/11/06\n31\n103\n6/11/06\n31\n104\n12/11/06\n64\n101\n5/9/06\n64\n102\n8/9/06\n74\n103\n8/9/06\nC: Cars relation\ncid\nCname\nColor\n101\nRenault\nBlue\n102\nRenault\nRed\n103\nFerrari\nGreen\n104\nJaguar\nRed\nWhat is the output of the following SQL query?\nSelect D.dname\nFrom Drivers D\nWhere D.did in (SELECT R.did\nFrom Cars C,Reserves R\nWHERE R.cid = C.cid and C.color = 'red'\nINTERSECT\nSELECT R.did\nFrom Cars C,Reserves R\nWHERE R.cid = C.cid and C.color = 'green')",
+    "options": [
+      "A) Karthikeyan, Boris",
+      "B) Sachin, Salman",
+      "C) Karthikeyan, Boris, Sachin",
+      "D) Schumacher, Senna Google Play GET IT ON Solutions: questions.examside.com · Page 17 / 24 --- PAGE 18 --- P Y Q P D F"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2006 Answer: A.\nTopic: SQL Cost Evaluation & Disk I/O (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Cost Evaluation & Disk I/O",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Cost Evaluation & Disk I/O.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2006 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2006",
+    "figure_url": "/pyq-assets/gate_sql_q31.png",
+    "source_number": 31,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q32",
+    "bank_type": "pyq",
+    "statement": "Consider a database with three relation instances shown below. The primary keys for the Drivers and Cars relation are Did and cid\nrespectively and the records are stored in ascending order of these primary keys as given in the tables. No indexing is available in the\ndatabase.\nD: Drivers Relation\nDid\nDname\nrating\nAge\n22\nKarthikeyan\n7\n25\n29\nSalman\n1\n33\n31\nBoris\n8\n55\n32\nAmoldt\n8\n25\n58\nSchumacher\n10\n35\n64\nSachin\n7\n35\n71\nSenna\n10\n16\n74\nSachin\n9\n35\n85\nRahul\n3\n25\n95\nRalph\n3\n53\nR: Reserves Relation\nDid\ncid\nDay\n22\n101\n10/10/06\n22\n102\n10/10/06\n22\n103\n8/10/06\n22\n104\n7/10/06\n31\n102\n10/11/06\n31\n103\n6/11/06\n31\n104\n12/11/06\n64\n101\n5/9/06\n64\n102\n8/9/06\n74\n103\n8/9/06\nC: Cars relation\ncid\nCname\nColor\n101\nRenault\nBlue\n102\nRenault\nRed\n103\nFerrari\nGreen\n104\nJaguar\nRed\nSelect D.dname\nFrom Drivers D\nWhere D.did in (SELECT R.did\nFrom Cars C,Reserves R\nWHERE R.cid = C.cid and C.color = 'red'\nINTERSECT\nSELECT R.did\nFrom Cars C,Reserves R\nWHERE R.cid = C.cid and C.color = 'green')\nLet n be the number of comparisons performed when the above SQL query is optimally executed. If linear search is used to locate a\ntuple in a relation using primary key, then n lies in the range",
+    "options": [
+      "A) 36 - 40",
+      "B) 44 - 48",
+      "C) 60 - 64",
+      "D) 100 - 104 Google Play GET IT ON Solutions: questions.examside.com · Page 18 / 24 --- PAGE 19 --- P Y Q P D F"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2006 Answer: A.\nTopic: SQL Joins & Index Selection (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Joins & Index Selection",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Joins & Index Selection.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2006 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2006",
+    "figure_url": "/pyq-assets/gate_sql_q32.png",
+    "source_number": 32,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q33",
+    "bank_type": "pyq",
+    "statement": "The relation book (title, price) contains the titles and prices of different books. Assuming that no two books have the same price, what\ndoes the following SQL query list?\nSelect title\nFrom book as B\nWhere (select count(*)\nFrom book as T\nWhere T.price > B.price) < 5;",
+    "options": [
+      "A) Titles of the four most expensive books",
+      "B) Title of the fifth most inexpensive book",
+      "C) Title of the fifth most expensive book",
+      "D) Titles of the five most expensive books"
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 2005 Answer: D.\nTopic: SQL Subquery Counting & Top N (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Subquery Counting & Top N",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Subquery Counting & Top N.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2005 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2005",
+    "figure_url": "/pyq-assets/gate_sql_q33.png",
+    "source_number": 33,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q34",
+    "bank_type": "pyq",
+    "statement": "A company maintains records of sales made by its salespersons and pays them commission based on each individual’s total sales\nmade in a year. This data is maintained in a table with following schema:\nsalesinfo = (salespersonid, totalsales, commission)\nIn a certain year, due to better business results, the company decides to further reward its salespersons by enhancing the commission\npaid to them as per the following formula:\nIf commission < = 50000, enhance it by 2%\nIf 50000 < commission < = 100000, enhance it by 4%\nIf commission > 100000, enhance it by 6%\nThe IT staff has written three different SQL scripts to calculate enhancement for each slab, each of these scripts is to run as a separate\ntransaction as follows:\nT1: Update salesinfo\nSet commission = commission * 1.02\nWhere commission < = 50000;\nT2: Update salesinfo\nSet commission = commission * 1.04\nWhere commission > 50000 and commission is < = 100000;\nT3: Update salesinfo\nSet commission = commission * 1.06\nWhere commission > 100000;\nWhich of the following options of running these transactions will update the commission of all salespersons correctly?",
+    "options": [
+      "A) Execute T1 followed by T2 followed by T3",
+      "B) Execute T2, followed by T3; T1 running concurrently throughout",
+      "C) Execute T3 followed by T2; T1 running concurrently throughout",
+      "D) Execute T3 followed by T2 followed by T1 Google Play GET IT ON Solutions: questions.examside.com · Page 19 / 24 --- PAGE 20 --- P Y Q P D F"
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 2005 Answer: D.\nTopic: SQL UPDATE Statements with Conditions (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL UPDATE Statements with Conditions",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL UPDATE Statements with Conditions.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2005 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2005",
+    "figure_url": "/pyq-assets/gate_sql_q34.png",
+    "source_number": 34,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q35",
+    "bank_type": "pyq",
+    "statement": "In an inventory management system implemented at a trading corporation, there are several tables designed to hold all the information.\nAmongst these, the following two tables hold information on which items are supplied by which suppliers, and which warehouse keeps\nwhich items along with the stock-level of these items.\nSupply = (supplierid, itemcode)\nInventory = (itemcode, warehouse, stocklevel)\nFor a specific information required by the management, following SQL query has been written\nSelect distinct STMP.supplierid\nFrom Supply as STMP\nWhere not unique (Select ITMP.supplierid\nFrom Inventory, Supply as ITMP\nWhere STMP.supplierid = ITMP.supplierid\nAnd ITMP.itemcode = Inventory.itemcode\nAnd Inventory.warehouse = 'Nagpur');\nFor the warehouse at Nagpur, this query will find all suppliers who",
+    "options": [
+      "A) do not supply any item",
+      "B) supply exactly one item",
+      "C) supply one or more items",
+      "D) supply two or more items"
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 2005 Answer: D.\nTopic: SQL Relational Division Query (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Relational Division Query",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Relational Division Query.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2005 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2005",
+    "figure_url": "/pyq-assets/gate_sql_q35.png",
+    "source_number": 35,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q36",
+    "bank_type": "pyq",
+    "statement": "The employee information in a company is stored in the relation\nEmployee (name, sex, salary, deptName)\nConsider the following SQL query\nSelect deptName\nFrom Employee\nWhere sex = ‘M’\nGroup by deptName\nHaving avg(salary) >\n(Select avg (salary) From Employee);\nIt returns the names of the department in which",
+    "options": [
+      "A) the average salary is more than the average salary in the company",
+      "B) the average salary of male employees is more than the average salary of all male employees in the company",
+      "C) the average salary of male employees is more than the average salary of employees in the same department.",
+      "D) the average salary of male employees is more than the average salary in the company"
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 2004 Answer: D.\nTopic: SQL GROUP BY, HAVING, and Subqueries (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL GROUP BY, HAVING, and Subqueries",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL GROUP BY, HAVING, and Subqueries.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2004 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2004",
+    "figure_url": "/pyq-assets/gate_sql_q36.png",
+    "source_number": 36,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q37",
+    "bank_type": "pyq",
+    "statement": "A relational database contains two tables student and department in which student table has columns roll_no, name and dept_id and\ndepartment table has columns dept_id and dept_name. The following insert statements were executed successfully to populate the\nempty tables:\nInsert into department values (1, ‘Mathematics’)\nInsert into department values (2, ‘Physics’)\nInsert into student values (1, ‘Navin’,1)\nInsert into student values (2, ‘Mukesh’,2)\nInsert into student values (3, ‘Gita’,1)\nHow many rows and columns will be retrieved by the following SQL statement?\nSelect * from student, department;",
+    "options": [
+      "A) 0 row and 4 columns",
+      "B) 3 rows and 4 columns",
+      "C) 3 rows and 5 columns",
+      "D) 6 rows and 5 columns Google Play GET IT ON Solutions: questions.examside.com · Page 20 / 24 --- PAGE 21 --- P Y Q P D F"
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 2004 Answer: B.\nTopic: SQL Foreign Key & Integrity Violations (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Foreign Key & Integrity Violations",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Foreign Key & Integrity Violations.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2004 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2004",
+    "figure_url": "/pyq-assets/gate_sql_q37.png",
+    "source_number": 37,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q38",
+    "bank_type": "pyq",
+    "statement": "Consider two tables in a relational database with columns and rows as follows:\nTable: Student\nRoll_no\nName\nDept_id\n1\nABC\n1\n2\nDEF\n1\n3\nGHI\n2\n4\nJKL\n3\nTable: Department\nDept_id\nDept_name\n1\nA\n2\nB\n3\nC\nRoll_no is the primary key of the Student table, Dept_id is the primary key of the Department table and Studetn.Dept_id is a foreign key\nfrom\nDepartment. Dept_id.\nWhat will happen if we try to execute the following two SQL statements?\n(i) update Student set Dept_id = Null where Roll_no =1\n(ii) update Department set Dept_id = Null where Dept_id =1",
+    "options": [
+      "A) Both (i) and (ii) will fail",
+      "B) (i) will fail but (ii) will succeed",
+      "C) (i) will succeed but (ii) will fail",
+      "D) Both (i) and (ii) will succeed"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2004 Answer: C.\nTopic: SQL Joins & Foreign Key Constraints (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Joins & Foreign Key Constraints",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Joins & Foreign Key Constraints.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2004 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2004",
+    "figure_url": "/pyq-assets/gate_sql_q38.png",
+    "source_number": 38,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q39",
+    "bank_type": "pyq",
+    "statement": "Consider the set of relations shown below and the SQL query that follows.\nStudents: (Roll_number, Name, Date_of_birth)\nCourses: (Course number, Course_name, Instructor)\nGrades: (Roll_number, Course_number, Grade)\nSelect distinct Name\nFrom Students, Courses, Grades\nWhere Students.Roll_number = Grades.Roll_number\nand Courses.Instructor = 'Korth'\nand Courses.Course_number = Grades.Course_number\nand Grades.grade = 'A';\nWhich of the following sets is computed by the above query?",
+    "options": [
+      "A) Names of students who have got an A grade in all courses taught by Korth",
+      "B) Names of students who have got an A grade in all courses",
+      "C) Names of students who have got an A grade in at least one of the courses taught by Korth",
+      "D) None of the above"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2003 Answer: C.\nTopic: SQL Multi-Table Joins & Distinct (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Multi-Table Joins & Distinct",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Multi-Table Joins & Distinct.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2003 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2003",
+    "figure_url": "/pyq-assets/gate_sql_q39.png",
+    "source_number": 39,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q40",
+    "bank_type": "pyq",
+    "statement": "In SQL, relations can contain null values, and comparisons with null values are treated as unknown. Suppose all comparisons with a null\nvalue are treated as false. Which of the following pairs is not equivalent?",
+    "options": [
+      "A) x = 5 not (not (x = 5)",
+      "B) x = 5 x > 4 and x < 6, where x is an integer",
+      "C) x ≠ 5 not (x = 5)",
+      "D) None of the above Google Play GET IT ON Solutions: questions.examside.com · Page 21 / 24 --- PAGE 22 --- P Y Q P D F"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2000 Answer: C.\nTopic: SQL Three-Valued Logic with NULL (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Three-Valued Logic with NULL",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Three-Valued Logic with NULL.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2000 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2000",
+    "figure_url": "/pyq-assets/gate_sql_q40.png",
+    "source_number": 40,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q41",
+    "bank_type": "pyq",
+    "statement": "Given relations r( w, x ) and s( y, z ), the result of\nselect distinct w,x\nfrom r, s;\nis guaranteed to be same as r, provided",
+    "options": [
+      "A) r has no duplicates and s is non-empty",
+      "B) r and s have no duplicates",
+      "C) s has no duplicates and r is non-empty",
+      "D) r and s have the same number of tuples"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2000 Answer: A.\nTopic: SQL Cross Product & Distinct Guarantees (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Cross Product & Distinct Guarantees",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Cross Product & Distinct Guarantees.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2000 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2000",
+    "figure_url": "/pyq-assets/gate_sql_q41.png",
+    "source_number": 41,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q42",
+    "bank_type": "pyq",
+    "statement": "Which of the following is/are correct?",
+    "options": [
+      "A) An SQL query automatically eliminates duplicates.",
+      "B) An SQL query will not work if there are no indexes on the relations.",
+      "C) SQL permits attribute names to be repeated in the same relation.",
+      "D) None of the above."
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 1999 Answer: D.\nTopic: SQL Standards & Features (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "SQL Standards & Features",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of SQL Standards & Features.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 1999 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "1999",
+    "figure_url": "/pyq-assets/gate_sql_q42.png",
+    "source_number": 42,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-sql-q43",
+    "bank_type": "pyq",
+    "statement": "Consider the set of relations\nEMP (Employee-no, Dept-no, Employee-name, Salary)\nDEPT (Dept-no, Dept-name, Location)\nWrite an SQL query to:\n(a) Find all employee names who work in departments located at \"Calcutta\" and whose salary is greater than Rs.50,000.\n(b) Calculate, for each department number, the number of employees with a salary greater than Rs.1,00,000.",
+    "options": [],
+    "correct_answer": "(a) (b)",
+    "explanation": "Official GATE CSE 1999 Answer: (a) (b).\nTopic: Subjective SQL Query Writing (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "Subjective SQL Query Writing",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Subjective SQL Query Writing.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 1999 questions."
+    ],
+    "question_type": "Descriptive",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "1999",
+    "figure_url": "/pyq-assets/gate_sql_q43.png",
+    "source_number": 43,
+    "status": "incomplete",
+    "incomplete_reason": "Historical subjective SQL query-writing question from GATE 1999."
+  },
+  {
+    "id": "gate-sql-q44",
+    "bank_type": "pyq",
+    "statement": "Suppose we have a database consisting of the following three relations.\nFREQUENTS (student, parlor) giving the parlors each student visits.\nSERVES (parlor, ice-cream) indicating what kind of ice-creams each parlor serves.\nLIKES (student, ice-cream) indicating what ice-creams each student likes.\n(Assume that each student likes at least one ice-cream and frequents at least one parlor)\nExpress the following in SQL:\nPrint the students that frequent at least one parlor that serves some ice-cream that they like.\nGoogle Play\nGET IT ON\nSolutions: questions.examside.com · Page 22 / 24\n--- PAGE 23 ---\nP Y Q P D F\nAnswer Key\n1. A\n2. D\n3. 0\n4. 2.6\n5. A\n6. D\n7. D\n8. C\n9. C\n10. A\n11. A, C, D\n12. 26\n13. 2\n14. 2\n15. C\n16. 5\n17. 7\n18. 2\n19. 2\n20. B\n21. C\n22. D\n23. A\n24. B\n25. C\n26. A\n27. A\n28. A\n29. C\n30. A\n31. A\n32. A\n33. D\n34. D\n35. D\n36. D\n37. B\n38. C\n39. C\n40. C\n41. A\n42. D\n43. (a)\nSELECT Employee-name\nFROM EMP, DEPT\nWHERE EMP.Dept-no = DEPT.Dept-no\nand EMP.Salary > 50,000 and\nDEPT.Location=\"Calcutta\";\n(b)\nSELECT count(Employee-no)\nFROM EMP\nGROUP BY Dept-no\nHAVING Salary > 1,00,000;\n44. SELECT student\nFROM FREQUENT\nWHERE parlor in ( SELECT parlor\nFROM SERVES\nWHERE ice-cream in ( SELECT ice-cream\nFROM LIKES\nWHERE\nLIKE.student = FR\nFor numerical answers given as a range, any value within the range is correct. Full solutions: scan the QR code next to each question, or visit questions.examside.com.\nGoogle Play\nGET IT ON\nSolutions: questions.examside.com · Page 23 / 24",
+    "options": [],
+    "correct_answer": "SELECT student...",
+    "explanation": "Official GATE CSE 1998 Answer: SELECT student....\nTopic: Subjective SQL Query Writing (2 Marks).\nKey reasoning: This question from GATE CSE tests core Structured Query Language (SQL) principles. Refer to standard relational DBMS definitions.",
+    "topic": "Structured Query Language (SQL)",
+    "subtopic": "Subjective SQL Query Writing",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Subjective SQL Query Writing.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 1998 questions."
+    ],
+    "question_type": "Descriptive",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "1998",
+    "figure_url": "/pyq-assets/gate_sql_q44.png",
+    "source_number": 44,
+    "status": "incomplete",
+    "incomplete_reason": "Historical subjective SQL query-writing question from GATE 1998."
+  },
+  {
+    "id": "gate-er-q01",
+    "bank_type": "pyq",
+    "statement": "In the context of owner and weak entity sets in the ER (Entity-Relationship) data model, which one of\nthe following statements is TRUE?",
+    "options": [
+      "A) The weak entity set MUST have total participation in the identifying relationship",
+      "B) The owner entity set MUST have total participation in the identifying relationship",
+      "C) Both weak and owner entity sets MUST have total participation in the identifying relationship",
+      "D) Neither weak entity set nor owner entity set MUST have total participation in the identifying relationship"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2024 Set 2 Answer: A.\nTopic: Weak Entity Sets & Identifying Relationships (1 Mark).\nKey reasoning: This question from GATE CSE tests core ER Diagrams principles. Refer to standard relational DBMS definitions.",
+    "topic": "ER Diagrams",
+    "subtopic": "Weak Entity Sets & Identifying Relationships",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Weak Entity Sets & Identifying Relationships.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2024 Set 2 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2024 Set 2",
+    "figure_url": "/pyq-assets/gate_er_q01.png",
+    "source_number": 1,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-er-q02",
+    "bank_type": "pyq",
+    "statement": "Let S be the specification : \"Instructors teach courses. Students register for courses. Courses are allocated classrooms. Instructors guide students.\" Which one of the following ER diagrams CORRECTLY represents S?",
+    "options": [
+      "A) (i)",
+      "B) (ii)",
+      "C) (iii)",
+      "D) (iv)"
+    ],
+    "correct_answer": "D",
+    "explanation": "Official GATE CSE 2024 Set 1 Answer: D.\nTopic: ER Diagram Requirements Representation (1 Mark).\nKey reasoning: This question from GATE CSE tests core ER Diagrams principles. Refer to standard relational DBMS definitions.",
+    "topic": "ER Diagrams",
+    "subtopic": "ER Diagram Requirements Representation",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of ER Diagram Requirements Representation.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2024 Set 1 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2024 Set 1",
+    "figure_url": "/pyq-assets/gate_er_q02.png",
+    "source_number": 2,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-er-q03",
+    "bank_type": "pyq",
+    "statement": "Which one of the options given below refers to the degree (or arity) of a relation in relational\ndatabase systems?",
+    "options": [
+      "A) Number of attributes of its relation schema.",
+      "B) Number of tuples stored in the relation.",
+      "C) Number of entries in the relation.",
+      "D) Number of distinct domains of its relation schema."
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2023 Answer: A.\nTopic: Relation Degree & Arity (1 Mark).\nKey reasoning: This question from GATE CSE tests core ER Diagrams principles. Refer to standard relational DBMS definitions.",
+    "topic": "ER Diagrams",
+    "subtopic": "Relation Degree & Arity",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Relation Degree & Arity.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2023 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2023",
+    "figure_url": "/pyq-assets/gate_er_q03.png",
+    "source_number": 3,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-er-q04",
+    "bank_type": "pyq",
+    "statement": "Which one of the following is used to represent the supporting many-one relationships of a weak\nentity set in an entity-relationship diagram?",
+    "options": [
+      "A) Rectangles with double/bold border",
+      "B) Diamonds with double/bold border",
+      "C) Ovals that contain underlined identifiers",
+      "D) Ovals with double/bold border"
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 2020 Answer: B.\nTopic: ER Notations & Identifying Relationships (1 Mark).\nKey reasoning: This question from GATE CSE tests core ER Diagrams principles. Refer to standard relational DBMS definitions.",
+    "topic": "ER Diagrams",
+    "subtopic": "ER Notations & Identifying Relationships",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of ER Notations & Identifying Relationships.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2020 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2020",
+    "figure_url": "/pyq-assets/gate_er_q04.png",
+    "source_number": 4,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-er-q05",
+    "bank_type": "pyq",
+    "statement": "In an Entity-Relationship\nmodel, suppose  is a many-to-one relationship from entity set\nto\nentity set\nAssume that\nand\nparticipate totally in  and that the cardinality of\nis\ngreater than the cardinality of\nWhich one of the following is true about ?",
+    "options": [
+      "A) Every entity in is associated with exactly one entity in",
+      "B) Some entity in is associated with more than one entity in",
+      "C) Every entity in is associated with exactly one entity in",
+      "D) Every entity in is associated with at most one entity in"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2018 Answer: A.\nTopic: Many-to-One Relationships & Total Participation (1 Mark).\nKey reasoning: This question from GATE CSE tests core ER Diagrams principles. Refer to standard relational DBMS definitions.",
+    "topic": "ER Diagrams",
+    "subtopic": "Many-to-One Relationships & Total Participation",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Many-to-One Relationships & Total Participation.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2018 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2018",
+    "figure_url": "/pyq-assets/gate_er_q05.png",
+    "source_number": 5,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-er-q06",
+    "bank_type": "pyq",
+    "statement": "An ER model of a database consists of entity types A and B. These are connected by a relationship\nR which does not have its own attribute. Under which one of the following conditions, can the\nrelational table for R be merged with that of A?",
+    "options": [
+      "A) Relationship R is one-to-many and the participation of A in R is total.",
+      "B) Relationship R is one-to-many and the participation of A in R is partial.",
+      "C) Relationship R is many-to-one and the participation of A in R is total.",
+      "D) Relationship R is many-to-one and the participation of A in R is partial. Google Play GET IT ON Solutions: questions.examside.com · Page 3 / 8 --- PAGE 4 --- P Y Q P D F"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2017 Set 2 Answer: C.\nTopic: Relational Table Merging in ER Models (1 Mark).\nKey reasoning: This question from GATE CSE tests core ER Diagrams principles. Refer to standard relational DBMS definitions.",
+    "topic": "ER Diagrams",
+    "subtopic": "Relational Table Merging in ER Models",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Relational Table Merging in ER Models.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2017 Set 2 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2017 Set 2",
+    "figure_url": "/pyq-assets/gate_er_q06.png",
+    "source_number": 6,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-er-q07",
+    "bank_type": "pyq",
+    "statement": "Which of the following is NOT a superkey in a relational schema with attributes V, W, X, Y, Z and primary key VY?",
+    "options": [
+      "A) VXYZ",
+      "B) VWXZ",
+      "C) VWXY",
+      "D) VWXYZ"
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 2016 Set 1 Answer: B.\nTopic: Candidate Keys & Superkeys (1 Mark).\nKey reasoning: This question from GATE CSE tests core ER Diagrams principles. Refer to standard relational DBMS definitions.",
+    "topic": "ER Diagrams",
+    "subtopic": "Candidate Keys & Superkeys",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Candidate Keys & Superkeys.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2016 Set 1 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2016 Set 1",
+    "figure_url": "/pyq-assets/gate_er_q07.png",
+    "source_number": 7,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-er-q08",
+    "bank_type": "pyq",
+    "statement": "Given the basic\nand relational models, which of the following is INCORRECT?",
+    "options": [
+      "A) An attribute of an entity can have more than one value",
+      "B) An attribute of an entity can be composite",
+      "C) In a row of a relational table, an attribute can have more than one value",
+      "D) In a row of a relational table, an attribute can have exactly one value or a NULL value"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2012 Answer: C.\nTopic: ER vs Relational Model Properties (1 Mark).\nKey reasoning: This question from GATE CSE tests core ER Diagrams principles. Refer to standard relational DBMS definitions.",
+    "topic": "ER Diagrams",
+    "subtopic": "ER vs Relational Model Properties",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of ER vs Relational Model Properties.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2012 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2012",
+    "figure_url": "/pyq-assets/gate_er_q08.png",
+    "source_number": 8,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-er-q09",
+    "bank_type": "pyq",
+    "statement": "Consider the entities 'hotel room', and 'person' with a many to many relationship 'lodging' as shown\nbelow\nHotel\nRoom\nLodging\nPerson\nIf we wish to store information about the rent payment to be made by person(s) occupying different\nhotel rooms, then this information should appear as an attribute of",
+    "options": [
+      "A) Person",
+      "B) Hotel Room",
+      "C) Lodging",
+      "D) None of these 6 questions"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2005 Answer: C.\nTopic: Relationship Attributes in Many-to-Many Mappings (1 Mark).\nKey reasoning: This question from GATE CSE tests core ER Diagrams principles. Refer to standard relational DBMS definitions.",
+    "topic": "ER Diagrams",
+    "subtopic": "Relationship Attributes in Many-to-Many Mappings",
+    "difficulty": "Easy",
+    "hints": [
+      "Review the fundamental rules of Relationship Attributes in Many-to-Many Mappings.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2005 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 1,
+    "exam": "GATE CSE",
+    "year": "2005",
+    "figure_url": "/pyq-assets/gate_er_q09.png",
+    "source_number": 9,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-er-q10",
+    "bank_type": "pyq",
+    "statement": "Consider an Entity-Relationship (ER) model in which entity sets E1 and E2 are connected by an m : n\nrelationship R12. E1 and E3 are connected by a 1 : n (1 on the side of E1 and n on the side of E3)\nrelationship R13.\nE1 has two single-valued attributes a11 and a12 of which a11 is the key attribute. E2 has two single-\nvalued attributes a21 and a22 of which a21 is the key attribute. E3 has two single-valued attributes\na31 and a32 of which a31 is the key attribute. The relationships do not have any attributes.\nIf a relational model is derived from the above ER model, then the minimum number of relations that\nwould be generated if all the relations are in 3NF is _______.\nGoogle Play\nGET IT ON\nSolutions: questions.examside.com · Page 4 / 8\n--- PAGE 5 ---\nP Y Q P D F",
+    "options": [],
+    "correct_answer": "4",
+    "explanation": "Official GATE CSE 2015 Set 1 Answer: 4.\nTopic: Minimum Number of 3NF Tables from ER Diagram (2 Marks).\nKey reasoning: This question from GATE CSE tests core ER Diagrams principles. Refer to standard relational DBMS definitions.",
+    "topic": "ER Diagrams",
+    "subtopic": "Minimum Number of 3NF Tables from ER Diagram",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Minimum Number of 3NF Tables from ER Diagram.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2015 Set 1 questions."
+    ],
+    "question_type": "NAT",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2015 Set 1",
+    "figure_url": "/pyq-assets/gate_er_q10.png",
+    "source_number": 10,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-er-q11",
+    "bank_type": "pyq",
+    "statement": "Consider the ER diagram shown in the figure with entities M, P, N and relationships R1, R2. The minimum number of tables needed to represent M, N, P, R1, R2 is:",
+    "options": [
+      "A) 2",
+      "B) 3",
+      "C) 4",
+      "D) 5"
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 2008 Answer: B.\nTopic: Minimum Number of Relational Tables from ER Diagram (2 Marks).\nKey reasoning: This question from GATE CSE tests core ER Diagrams principles. Refer to standard relational DBMS definitions.",
+    "topic": "ER Diagrams",
+    "subtopic": "Minimum Number of Relational Tables from ER Diagram",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Minimum Number of Relational Tables from ER Diagram.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2008 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2008",
+    "figure_url": "/pyq-assets/gate_er_q11.png",
+    "source_number": 11,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-er-q12",
+    "bank_type": "pyq",
+    "statement": "Consider the ER diagram shown in the figure for the previous question. Which of the following is a correct attribute set for one of the tables for the correct answer?",
+    "options": [
+      "A) {M1, M2, M3, P1}",
+      "B) {M1, P1, N1, N2}",
+      "C) {M1, P1, N1}",
+      "D) {M1, P1}"
+    ],
+    "correct_answer": "A",
+    "explanation": "Official GATE CSE 2008 Answer: A.\nTopic: Attribute Set for Relational Tables from ER Diagram (2 Marks).\nKey reasoning: This question from GATE CSE tests core ER Diagrams principles. Refer to standard relational DBMS definitions.",
+    "topic": "ER Diagrams",
+    "subtopic": "Attribute Set for Relational Tables from ER Diagram",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Attribute Set for Relational Tables from ER Diagram.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2008 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2008",
+    "figure_url": "/pyq-assets/gate_er_q12.png",
+    "source_number": 12,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-er-q13",
+    "bank_type": "pyq",
+    "statement": "Let E1 and E2 be two entities in an E-R diagram with simple single-valued attributes. R1 and R2 are two relationships between E1 and E2, where R1 is one-to-many and R2 is many-to-many. R1 and R2 do not have any attributes of their own. What is the minimum number of tables required to represent this situation in the relational model?",
+    "options": [
+      "A) 2",
+      "B) 3",
+      "C) 4",
+      "D) 5"
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 2005 Answer: B.\nTopic: Minimum Tables for Multiple Relationships (2 Marks).\nKey reasoning: This question from GATE CSE tests core ER Diagrams principles. Refer to standard relational DBMS definitions.",
+    "topic": "ER Diagrams",
+    "subtopic": "Minimum Tables for Multiple Relationships",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Minimum Tables for Multiple Relationships.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2005 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2005",
+    "figure_url": "/pyq-assets/gate_er_q13.png",
+    "source_number": 13,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-er-q14",
+    "bank_type": "pyq",
+    "statement": "The following table has two attributes A and C where A is the primary key and C is the foreign key referencing A with on-delete cascade.\nThe set of all tuples that must be additionally deleted to preserve referential integrity when the tuple (2, 4) is deleted is:",
+    "options": [
+      "A) (3, 4) and (6, 4)",
+      "B) (5, 2) and (7, 2)",
+      "C) (5, 2), (7, 2) and (9, 5)",
+      "D) (3, 4), (4, 3) and (6, 4)"
+    ],
+    "correct_answer": "C",
+    "explanation": "Official GATE CSE 2005 Answer: C.\nTopic: Foreign Key ON DELETE CASCADE Cascading Tracing (2 Marks).\nKey reasoning: This question from GATE CSE tests core ER Diagrams principles. Refer to standard relational DBMS definitions.",
+    "topic": "ER Diagrams",
+    "subtopic": "Foreign Key ON DELETE CASCADE Cascading Tracing",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Foreign Key ON DELETE CASCADE Cascading Tracing.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2005 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2005",
+    "figure_url": "/pyq-assets/gate_er_q14.png",
+    "source_number": 14,
+    "status": "playable",
+    "incomplete_reason": null
+  },
+  {
+    "id": "gate-er-q15",
+    "bank_type": "pyq",
+    "statement": "Consider the following entity relationship diagram (ERD), where two entities E1 and E2 have a relation R of cardinality 1 : m. The attributes of E1 are A11, A12 and A13 where A11 is the key attribute. The attributes of E2 are A21, A22 and A23 where A21 is the key attribute and A23 is a multi-valued attribute. Relation R does not have any attribute. A relational database containing minimum number of tables with each table satisfying the requirements of 3NF is designed from the above ERD. The minimum number of tables in the database is:",
+    "options": [
+      "A) 2",
+      "B) 3",
+      "C) 4",
+      "D) 5"
+    ],
+    "correct_answer": "B",
+    "explanation": "Official GATE CSE 2004 Answer: B.\nTopic: Multi-Valued Attributes & 3NF Table Decomposition (2 Marks).\nKey reasoning: This question from GATE CSE tests core ER Diagrams principles. Refer to standard relational DBMS definitions.",
+    "topic": "ER Diagrams",
+    "subtopic": "Multi-Valued Attributes & 3NF Table Decomposition",
+    "difficulty": "Medium",
+    "hints": [
+      "Review the fundamental rules of Multi-Valued Attributes & 3NF Table Decomposition.",
+      "Recall how candidate keys and schema constraints apply in GATE CSE 2004 questions."
+    ],
+    "question_type": "MCQ",
+    "marks": 2,
+    "exam": "GATE CSE",
+    "year": "2004",
+    "figure_url": "/pyq-assets/gate_er_q15.png",
+    "source_number": 15,
+    "status": "playable",
+    "incomplete_reason": null
+  }
+]

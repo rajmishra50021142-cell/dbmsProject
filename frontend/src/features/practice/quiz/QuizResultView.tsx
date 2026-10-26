@@ -253,40 +253,59 @@ export const QuizResultView: React.FC<QuizResultViewProps> = ({
                   <div className="p-4 bg-slate-50/60 dark:bg-slate-850 border-t border-slate-100 dark:border-slate-800 text-xs space-y-3">
                     <div className="space-y-1.5">
                       <span className="font-semibold text-slate-700 dark:text-slate-300 block text-[11px] uppercase tracking-wider">
-                        Options:
+                        {rev.options && rev.options.length > 0 ? 'Options & Keys:' : 'Numerical Answer Key:'}
                       </span>
-                      <div className="space-y-1">
-                        {rev.options.map((opt, optIdx) => {
-                          const letter = String.fromCharCode(65 + optIdx);
-                          const isCorrectOpt = letter === rev.correct_answer;
-                          const isSelectedOpt = letter === rev.selected_option;
+                      {rev.options && rev.options.length > 0 ? (
+                        <div className="space-y-1">
+                          {rev.options.map((opt, optIdx) => {
+                            const letter = String.fromCharCode(65 + optIdx);
+                            const correctList = rev.correct_answer ? rev.correct_answer.split(',').map((s) => s.trim()) : [];
+                            const isCorrectOpt = correctList.includes(letter);
+                            const selectedList = rev.selected_option ? rev.selected_option.split(',').map((s) => s.trim()) : [];
+                            const isSelectedOpt = selectedList.includes(letter);
 
-                          return (
-                            <div
-                              key={optIdx}
-                              className={`p-2 rounded text-xs flex items-center justify-between ${
-                                isCorrectOpt
-                                  ? 'bg-emerald-100/70 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 font-medium'
-                                  : isSelectedOpt
-                                  ? 'bg-rose-100/70 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-800 text-rose-900 dark:text-rose-200'
-                                  : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300'
-                              }`}
-                            >
-                              <span>{opt}</span>
-                              {isCorrectOpt && (
-                                <Badge variant="success" size="sm">
-                                  Correct Key
-                                </Badge>
-                              )}
-                              {isSelectedOpt && !isCorrectOpt && (
-                                <Badge variant="warning" size="sm">
-                                  Selected
-                                </Badge>
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
+                            return (
+                              <div
+                                key={optIdx}
+                                className={`p-2 rounded text-xs flex items-center justify-between ${
+                                  isCorrectOpt
+                                    ? 'bg-emerald-100/70 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 font-medium'
+                                    : isSelectedOpt
+                                    ? 'bg-rose-100/70 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-800 text-rose-900 dark:text-rose-200'
+                                    : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300'
+                                }`}
+                              >
+                                <span>{opt}</span>
+                                {isCorrectOpt && (
+                                  <Badge variant="success" size="sm">
+                                    Correct Key
+                                  </Badge>
+                                )}
+                                {isSelectedOpt && !isCorrectOpt && (
+                                  <Badge variant="warning" size="sm">
+                                    Selected
+                                  </Badge>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <div className="p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
+                          <div>
+                            <span className="text-slate-500 font-medium mr-2">Your Numerical Response:</span>
+                            <span className={`font-mono font-bold text-sm ${rev.is_correct ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
+                              {rev.selected_option || 'Unanswered'}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="text-slate-500 font-medium mr-2">Verified Numerical Key:</span>
+                            <span className="font-mono font-bold text-sm text-emerald-600 dark:text-emerald-400">
+                              {rev.correct_answer}
+                            </span>
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     {/* Step-by-Step Proof */}
