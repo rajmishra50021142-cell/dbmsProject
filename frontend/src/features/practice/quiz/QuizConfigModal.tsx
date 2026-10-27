@@ -105,7 +105,7 @@ export const QuizConfigModal: React.FC<QuizConfigModalProps> = ({
                   </Badge>
                 </div>
                 <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                  Gentle 3-attempt retries with progressive hints on attempts 1–2, and full step-by-step proofs on attempt 3.
+                  Self-paced study with free question navigation. Submit when finished to receive marks and complete step-by-step proofs.
                 </p>
               </div>
 

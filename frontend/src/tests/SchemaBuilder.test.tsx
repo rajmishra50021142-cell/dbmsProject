@@ -76,7 +76,8 @@ describe('Analyzer Components & Raw Notation UI', () => {
       // Verify Raw Mode badge and tabs
       expect(screen.getByText('Raw Mode')).toBeInTheDocument();
       expect(screen.getByRole('tab', { name: /Raw Notation/i })).toBeInTheDocument();
-      expect(screen.getByRole('tab', { name: /Sample Data/i })).toBeInTheDocument();
+      expect(screen.getByRole('tab', { name: /Excel Spreadsheet/i })).toBeInTheDocument();
+      expect(screen.queryByRole('tab', { name: /Sample Data/i })).not.toBeInTheDocument();
 
       // Verify that Structured Builder tab does not exist
       expect(screen.queryByRole('tab', { name: /Structured Builder/i })).not.toBeInTheDocument();

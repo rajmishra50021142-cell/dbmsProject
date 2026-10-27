@@ -4,18 +4,15 @@ import {
   Flag,
   ArrowLeft,
   ArrowRight,
-  CheckCircle2,
   Send,
   Check,
 } from 'lucide-react';
 import { Button } from '../../../components/ui/Button';
 import { Badge } from '../../../components/ui/Badge';
-import { GentleFeedbackCard } from './GentleFeedbackCard';
 import { practiceService } from '../../../services/practiceService';
 import type {
   QuizQuestion,
   QuizConfig,
-  GentleFeedbackResponse,
   QuizSubmissionResponse,
 } from '../../../types/practice';
 
@@ -36,13 +33,10 @@ export const QuizPlayer: React.FC<QuizPlayerProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [attempts, setAttempts] = useState<Record<string, number>>({});
-  const [feedbacks, setFeedbacks] = useState<Record<string, GentleFeedbackResponse>>({});
   const [flagged, setFlagged] = useState<Record<string, boolean>>({});
 
   // Active selection for the current question
   const [selectedOption, setSelectedOption] = useState<string>('');
-  const [isVerifying, setIsVerifying] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
 
@@ -54,15 +48,13 @@ export const QuizPlayer: React.FC<QuizPlayerProps> = ({
 
   const currentQ = questions[currentIndex] || questions[0];
   const currentQId = currentQ?.id;
-  const currentFeedback = currentQId ? feedbacks[currentQId] : undefined;
-  const currentAttempt = currentQId ? attempts[currentQId] || 1 : 1;
 
   // Sync selectedOption when moving between questions
   useEffect(() => {
     if (currentQId) {
       setSelectedOption(answers[currentQId] || '');
     }
-  }, [currentIndex, currentQId]);
+  }, [currentIndex, currentQId, answers]);
 
   // Timer countdown
   useEffect(() => {
@@ -87,13 +79,10 @@ export const QuizPlayer: React.FC<QuizPlayerProps> = ({
   };
 
   const handleOptionSelect = (optionLetter: string) => {
-    // If practice mode and question already solved or attempt 3 reached, lock
-    if (config.mode === 'practice' && currentFeedback && (currentFeedback.is_correct || currentFeedback.attempt_number >= 3)) {
-      return;
-    }
-
     if (currentQ?.question_type === 'MSQ') {
-      const currentList = selectedOption ? selectedOption.split(',').map((s) => s.trim()).filter(Boolean) : [];
+      const currentList = selectedOption
+        ? selectedOption.split(',').map((s) => s.trim()).filter(Boolean)
+        : [];
       let updatedList: string[];
       if (currentList.includes(optionLetter)) {
         updatedList = currentList.filter((l) => l !== optionLetter);
@@ -104,17 +93,20 @@ export const QuizPlayer: React.FC<QuizPlayerProps> = ({
       const updatedStr = updatedList.join(', ');
       setSelectedOption(updatedStr);
 
-      if (config.mode === 'exam_simulation' && currentQId) {
-        setAnswers((prev) => ({
-          ...prev,
-          [currentQId]: updatedStr,
-        }));
+      if (currentQId) {
+        setAnswers((prev) => {
+          const next = { ...prev };
+          if (updatedStr) {
+            next[currentQId] = updatedStr;
+          } else {
+            delete next[currentQId];
+          }
+          return next;
+        });
       }
     } else {
       setSelectedOption(optionLetter);
-
-      // In exam simulation, save answer immediately
-      if (config.mode === 'exam_simulation' && currentQId) {
+      if (currentQId) {
         setAnswers((prev) => ({
           ...prev,
           [currentQId]: optionLetter,
@@ -124,64 +116,18 @@ export const QuizPlayer: React.FC<QuizPlayerProps> = ({
   };
 
   const handleNumericChange = (val: string) => {
-    if (config.mode === 'practice' && currentFeedback && (currentFeedback.is_correct || currentFeedback.attempt_number >= 3)) {
-      return;
-    }
     setSelectedOption(val);
-    if (config.mode === 'exam_simulation' && currentQId) {
-      setAnswers((prev) => ({
-        ...prev,
-        [currentQId]: val,
-      }));
-    }
-  };
-
-  // Practice Mode: Check Answer with gentle retry
-  const handleCheckAnswer = async () => {
-    if (!currentQId || !selectedOption) return;
-
-    setIsVerifying(true);
-    try {
-      const fb = await practiceService.verifyAttempt({
-        question_id: currentQId,
-        bank_type: bankType,
-        selected_option: selectedOption,
-        attempt_number: currentAttempt,
+    if (currentQId) {
+      setAnswers((prev) => {
+        const next = { ...prev };
+        if (val.trim() !== '') {
+          next[currentQId] = val;
+        } else {
+          delete next[currentQId];
+        }
+        return next;
       });
-
-      setFeedbacks((prev) => ({
-        ...prev,
-        [currentQId]: fb,
-      }));
-
-      // If correct or final attempt, save into final answers map
-      if (fb.is_correct || fb.attempt_number >= 3) {
-        setAnswers((prev) => ({
-          ...prev,
-          [currentQId]: selectedOption,
-        }));
-      }
-    } catch (err) {
-      console.error('Failed to verify attempt', err);
-    } finally {
-      setIsVerifying(false);
     }
-  };
-
-  // Retry for attempts 2 and 3
-  const handleRetryCurrent = () => {
-    if (!currentQId) return;
-    setAttempts((prev) => ({
-      ...prev,
-      [currentQId]: (prev[currentQId] || 1) + 1,
-    }));
-    // Clear feedback and allow student to select another option
-    setFeedbacks((prev) => {
-      const copy = { ...prev };
-      delete copy[currentQId];
-      return copy;
-    });
-    setSelectedOption('');
   };
 
   const handleNext = () => {
@@ -329,11 +275,6 @@ export const QuizPlayer: React.FC<QuizPlayerProps> = ({
                     {currentQ.marks} {currentQ.marks === 1 ? 'Mark' : 'Marks'}
                   </Badge>
                 )}
-                {currentQ.difficulty && (
-                  <Badge variant="neutral" size="sm">
-                    {currentQ.difficulty}
-                  </Badge>
-                )}
                 {currentQ.exam && (
                   <Badge variant="success" size="sm">
                     {currentQ.exam} {currentQ.year ? `'${currentQ.year}` : ''}
@@ -413,7 +354,6 @@ export const QuizPlayer: React.FC<QuizPlayerProps> = ({
                       step="any"
                       value={selectedOption}
                       onChange={(e) => handleNumericChange(e.target.value)}
-                      disabled={config.mode === 'practice' && currentFeedback && (currentFeedback.is_correct || currentFeedback.attempt_number >= 3)}
                       placeholder="Enter numeric value (e.g. 4 or 2.5)"
                       className="w-full max-w-sm px-4 py-2.5 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-mono text-base focus:outline-hidden focus:border-indigo-600 transition-colors"
                       id="nat-answer-input"
@@ -472,33 +412,6 @@ export const QuizPlayer: React.FC<QuizPlayerProps> = ({
                   );
                 })}
               </div>
-            )}
-
-            {/* Practice Mode: Check Answer Button (if not yet checked or feedback cleared) */}
-            {config.mode === 'practice' && !currentFeedback && (
-              <div className="pt-2 flex justify-end">
-                <Button
-                  size="sm"
-                  variant="primary"
-                  onClick={handleCheckAnswer}
-                  disabled={!selectedOption || isVerifying}
-                  isLoading={isVerifying}
-                  leftIcon={<CheckCircle2 className="w-4 h-4" />}
-                  id="check-answer-btn"
-                >
-                  Verify Answer
-                </Button>
-              </div>
-            )}
-
-            {/* Practice Mode: Gentle Feedback Card */}
-            {config.mode === 'practice' && currentFeedback && (
-              <GentleFeedbackCard
-                feedback={currentFeedback}
-                onRetry={handleRetryCurrent}
-                onNext={handleNext}
-                hasNext={currentIndex < questions.length - 1}
-              />
             )}
           </div>
 

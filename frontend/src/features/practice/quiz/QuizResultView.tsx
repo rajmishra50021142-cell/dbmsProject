@@ -72,16 +72,25 @@ export const QuizResultView: React.FC<QuizResultViewProps> = ({
           </div>
 
           {/* Score Badge Circle */}
-          <div className="flex flex-col items-center justify-center w-28 h-28 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-lg shrink-0">
+          <div className="flex flex-col items-center justify-center w-32 h-32 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-lg shrink-0 text-center p-2">
             <span className="text-3xl font-black">{Math.round(result.score_percentage)}%</span>
-            <span className="text-[11px] font-medium tracking-wide uppercase text-indigo-100">
-              {result.correct_count} / {result.total_questions} Correct
+            <span className="text-xs font-bold tracking-wide uppercase text-indigo-100 mt-0.5">
+              {result.earned_marks ?? result.correct_count} / {result.total_marks ?? result.total_questions} Marks
+            </span>
+            <span className="text-[10px] text-indigo-200">
+              ({result.correct_count}/{result.total_questions} Correct)
             </span>
           </div>
         </div>
 
-        {/* 4 Quick Stat Badges */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+        {/* Quick Stat Badges */}
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 text-center">
+          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800/60 col-span-2 sm:col-span-1">
+            <span className="text-[11px] text-slate-400 font-medium block">Total Marks</span>
+            <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400 font-mono">
+              {result.earned_marks ?? result.correct_count} / {result.total_marks ?? result.total_questions}
+            </span>
+          </div>
           <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800/60">
             <span className="text-[11px] text-slate-400 font-medium block">Correct</span>
             <span className="text-lg font-bold text-emerald-600 dark:text-emerald-400">
@@ -220,12 +229,20 @@ export const QuizResultView: React.FC<QuizResultViewProps> = ({
                         <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
                           Question {idx + 1}
                         </span>
+                        <Badge
+                          variant={rev.is_correct ? 'success' : 'neutral'}
+                          size="sm"
+                        >
+                          {rev.is_correct
+                            ? `+${rev.marks || 1} ${rev.marks === 1 ? 'Mark' : 'Marks'}`
+                            : `0 / ${rev.marks || 1} ${rev.marks === 1 ? 'Mark' : 'Marks'}`}
+                        </Badge>
                         <Badge variant="accent" size="sm">
                           {rev.topic}
                         </Badge>
                         {rev.exam && (
                           <Badge variant="neutral" size="sm">
-                            {rev.exam}
+                            {rev.exam} {rev.year ? `'${rev.year}` : ''}
                           </Badge>
                         )}
                         {rev.source_number && (

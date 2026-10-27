@@ -7,7 +7,6 @@ import { Tabs } from '../components/ui/Tabs';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import {
   Database,
-  Table,
   RotateCcw,
   CheckCircle2,
   BookOpen,
@@ -18,7 +17,6 @@ import {
   HelpCircle,
   Key,
 } from 'lucide-react';
-import { SampleDataEditor } from '../features/analyzer/SampleDataEditor';
 import { RawInputEditor } from '../features/analyzer/RawInputEditor';
 import { ExcelWorkbookManager } from '../features/analyzer/ExcelWorkbookManager';
 import { SchemaPreview } from '../features/analyzer/SchemaPreview';
@@ -36,7 +34,7 @@ const DRAFT_STORAGE_KEY = 'normalization_lab_draft_v1';
 const DEFAULT_INITIAL_SCHEMA: RelationSchema = EXAMPLE_SCHEMAS[1].schema; // ENROLLMENT (Classic 2NF)
 
 export const AnalyzerPage: React.FC = () => {
-  const [inputTab, setInputTab] = useState<'raw' | 'excel' | 'sample'>('raw');
+  const [inputTab, setInputTab] = useState<'raw' | 'excel'>('raw');
   const [selectedStage, setSelectedStage] = useState<'1NF' | '2NF' | '3NF' | '4NF'>('1NF');
 
   // Core canonical schema state
@@ -167,7 +165,6 @@ export const AnalyzerPage: React.FC = () => {
   const inputTabs = [
     { id: 'raw', label: 'Raw Notation', icon: <Database className="w-3.5 h-3.5" /> },
     { id: 'excel', label: 'Excel Spreadsheet', icon: <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-500" /> },
-    { id: 'sample', label: 'Sample Data', icon: <Table className="w-3.5 h-3.5" /> },
   ];
 
   return (
@@ -253,10 +250,10 @@ export const AnalyzerPage: React.FC = () => {
                   Schema & Dependency Input
                 </CardTitle>
                 <Badge
-                  variant={inputTab === 'raw' ? 'accent' : inputTab === 'excel' ? 'success' : 'neutral'}
+                  variant={inputTab === 'raw' ? 'accent' : 'success'}
                   size="sm"
                 >
-                  {inputTab === 'raw' ? 'Raw Mode' : inputTab === 'excel' ? 'Excel Mode' : 'Data Mode'}
+                  {inputTab === 'raw' ? 'Raw Mode' : 'Excel Mode'}
                 </Badge>
               </div>
               <CardDescription>
@@ -267,7 +264,7 @@ export const AnalyzerPage: React.FC = () => {
               <Tabs
                 tabs={inputTabs}
                 activeTab={inputTab}
-                onChange={(tabId) => setInputTab(tabId as 'raw' | 'excel' | 'sample')}
+                onChange={(tabId) => setInputTab(tabId as 'raw' | 'excel')}
               />
 
               {/* TAB 1: RAW DBMS NOTATION */}
@@ -283,15 +280,6 @@ export const AnalyzerPage: React.FC = () => {
                 <ExcelWorkbookManager
                   currentSchema={schema}
                   onApplySchema={(discoveredSchema) => updateSchema(discoveredSchema)}
-                />
-              )}
-
-              {/* TAB 3: SAMPLE DATA TABLE */}
-              {inputTab === 'sample' && (
-                <SampleDataEditor
-                  attributes={schema.attributes}
-                  sampleData={schema.sample_data || []}
-                  onChange={(data) => updateSchema({ ...schema, sample_data: data })}
                 />
               )}
             </CardContent>

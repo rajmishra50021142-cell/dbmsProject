@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
-  GraduationCap,
   Sparkles,
   Award,
   BookOpen,
   Play,
-  Compass,
   Loader2,
 } from 'lucide-react';
 import { SectionHeading } from '../components/ui/SectionHeading';
@@ -15,7 +13,6 @@ import { QuizConfigModal } from '../features/practice/quiz/QuizConfigModal';
 import { QuizPlayer } from '../features/practice/quiz/QuizPlayer';
 import { QuizResultView } from '../features/practice/quiz/QuizResultView';
 import { QuestionLibraryView } from '../features/practice/QuestionLibraryView';
-import { PracticeMode as LegacyPracticeMode } from '../features/practice/PracticeMode';
 import { practiceService } from '../services/practiceService';
 import fallbackPracticeData from '../data/fallbackPracticeData.json';
 import type {
@@ -27,7 +24,7 @@ import type {
 
 export const PracticePage: React.FC = () => {
   // Navigation / Tab state
-  const [activeTab, setActiveTab] = useState<'ai' | 'pyq' | 'library' | 'legacy'>('ai');
+  const [activeTab, setActiveTab] = useState<'ai' | 'pyq' | 'library'>('ai');
 
   // Summary stats (initialized with verified fallback data so modal never stalls)
   const [summary, setSummary] = useState<PracticeSummary>(
@@ -221,14 +218,9 @@ export const PracticePage: React.FC = () => {
         title="DBMS Practice & Competitive Exam Lab"
         subtitle="Master candidate keys, attribute closures, functional dependencies, and 1NF–4NF decomposition with AI Practice and Competitive Exam PYQs."
         badge={
-          <div className="flex items-center gap-2">
-            <Badge variant="accent" size="sm">
-              Practice & PYQ Lab
-            </Badge>
-            <span className="text-[11px] text-slate-400 font-mono">
-              3-Attempt Gentle Retry Engine
-            </span>
-          </div>
+          <Badge variant="accent" size="sm">
+            Practice & PYQ Lab
+          </Badge>
         }
       />
 
@@ -249,8 +241,7 @@ export const PracticePage: React.FC = () => {
               AI Practice Bank
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-              Curated syllabus problems covering candidate keys, closures, and 1NF–4NF violations.
-              Features progressive hints and deterministic offline verification.
+              Curated syllabus problems covering candidate keys, closures, and 1NF–4NF violations with verified step-by-step proofs.
             </p>
           </div>
           <Button
@@ -293,22 +284,22 @@ export const PracticePage: React.FC = () => {
           </Button>
         </div>
 
-        {/* Card 3: Gentle Retry Engine */}
+        {/* Card 3: PYQ Library Archive */}
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-xs flex flex-col justify-between space-y-4">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-                <Compass className="w-5 h-5" />
+                <BookOpen className="w-5 h-5" />
               </div>
               <Badge variant="success" size="sm">
-                Pedagogical Support
+                Archival Vault
               </Badge>
             </div>
             <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
-              Gentle Retry Feedback
+              PYQ Library Archive
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-              No shaming or punitive red alerts. Attempt 1 offers warm guidance + Hint 1; Attempt 2 offers Hint 2; Attempt 3 provides full mathematical proof.
+              Browse all 115 authentic GATE questions across Normalization, SQL, and ER Diagrams. Inspect verified solutions, answers, and PDF archival figures.
             </p>
           </div>
           <Button
@@ -362,19 +353,6 @@ export const PracticePage: React.FC = () => {
           <BookOpen className="w-4 h-4 text-emerald-500" />
           PYQ Library Archive (All 115)
         </button>
-
-        <button
-          onClick={() => setActiveTab('legacy')}
-          className={`pb-3 px-4 border-b-2 flex items-center gap-2 transition-colors ${
-            activeTab === 'legacy'
-              ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400'
-              : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
-          }`}
-          id="tab-academic-exercises"
-        >
-          <GraduationCap className="w-4 h-4 text-slate-500" />
-          Academic Normalization Exercises (Phase 9)
-        </button>
       </div>
 
       {/* TAB CONTENT */}
@@ -422,7 +400,7 @@ export const PracticePage: React.FC = () => {
                   🚀 Quick 5-Question Sprint
                 </span>
                 <p className="text-[11px] text-slate-500 leading-normal">
-                  Rapid warmup with gentle feedback and instant hints.
+                  Rapid warmup covering candidate keys and normal forms.
                 </p>
               </button>
 
@@ -648,16 +626,6 @@ export const PracticePage: React.FC = () => {
             });
           }}
         />
-      )}
-
-      {/* 4. Legacy Academic Exercises */}
-      {activeTab === 'legacy' && (
-        <div className="space-y-4">
-          <div className="p-3 bg-slate-50 dark:bg-slate-800/40 rounded-lg border border-slate-200/80 dark:border-slate-700/80 text-xs text-slate-500">
-            Phase 9 Relational Exercises: Step-by-step mathematical verification using the core normalization engines.
-          </div>
-          <LegacyPracticeMode />
-        </div>
       )}
 
       {/* Loading Overlay when starting quiz session */}

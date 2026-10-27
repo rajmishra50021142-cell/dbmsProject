@@ -593,6 +593,8 @@ class PracticeService:
         correct_count = 0
         incorrect_count = 0
         unanswered_count = 0
+        total_marks = 0
+        earned_marks = 0
 
         topic_stats: Dict[str, Dict[str, int]] = {}
         reviews: List[QuizQuestionReview] = []
@@ -601,6 +603,9 @@ class PracticeService:
             q = q_map.get(q_id)
             if not q:
                 continue
+
+            q_weight = q.marks if (q.marks is not None and q.marks > 0) else 1
+            total_marks += q_weight
 
             user_ans = req.answers.get(q_id)
             has_answered = bool(user_ans and user_ans.strip())
@@ -615,6 +620,7 @@ class PracticeService:
             if has_answered:
                 if is_corr:
                     correct_count += 1
+                    earned_marks += q_weight
                 else:
                     incorrect_count += 1
 
@@ -639,10 +645,11 @@ class PracticeService:
                     exam=q.exam,
                     year=q.year,
                     note=q.note,
+                    marks=q_weight,
                 )
             )
 
-        score_pct = round((correct_count / total_questions * 100), 1) if total_questions > 0 else 0.0
+        score_pct = round((earned_marks / total_marks * 100), 1) if total_marks > 0 else 0.0
 
         if score_pct >= 85:
             summary_msg = "Outstanding mastery! You have demonstrated exceptional command of GATE CSE Database Management System problem solving."
@@ -661,6 +668,8 @@ class PracticeService:
             unanswered_count=unanswered_count,
             score_percentage=score_pct,
             time_spent_seconds=req.time_spent_seconds,
+            total_marks=total_marks,
+            earned_marks=earned_marks,
             topic_breakdown=topic_stats,
             question_reviews=reviews,
             supportive_summary=summary_msg,

@@ -194,6 +194,8 @@ export const practiceService = {
       const total = targetIds.length || 1;
       let correct = 0;
       let answered = 0;
+      let totalMarks = 0;
+      let earnedMarks = 0;
       const topicStats: Record<string, { total: number; correct: number }> = {};
       const reviews = [];
 
@@ -201,13 +203,24 @@ export const practiceService = {
         const q = qMap.get(qId);
         if (!q) continue;
 
+        const weight = q.marks || 1;
+        totalMarks += weight;
+
         const ans = payload.answers[qId];
         const hasAnswered = !!(ans && ans.trim());
-        const userLetter = hasAnswered ? ans.trim().toUpperCase()[0] : null;
-        const isCorrect = userLetter === (q.correct_answer || '').trim().toUpperCase();
+        const userLetter = hasAnswered ? ans.trim() : null;
+        let isCorrect = false;
+        if (hasAnswered && userLetter) {
+          const normUser = userLetter.replace(/\s+/g, '').toUpperCase();
+          const normKey = (q.correct_answer || '').replace(/\s+/g, '').toUpperCase();
+          isCorrect = normUser === normKey;
+        }
 
         if (hasAnswered) answered++;
-        if (isCorrect) correct++;
+        if (isCorrect) {
+          correct++;
+          earnedMarks += weight;
+        }
 
         if (!topicStats[q.topic]) {
           topicStats[q.topic] = { total: 0, correct: 0 };
@@ -228,10 +241,11 @@ export const practiceService = {
           exam: q.exam || null,
           year: q.year || null,
           note: q.note || null,
+          marks: weight,
         });
       }
 
-      const scorePct = Math.round((correct / total) * 100);
+      const scorePct = totalMarks > 0 ? Math.round((earnedMarks / totalMarks) * 100) : 0;
       return {
         total_questions: total,
         answered_count: answered,
@@ -240,9 +254,11 @@ export const practiceService = {
         unanswered_count: total - answered,
         score_percentage: scorePct,
         time_spent_seconds: payload.time_spent_seconds,
+        total_marks: totalMarks,
+        earned_marks: earnedMarks,
         topic_breakdown: topicStats,
         question_reviews: reviews,
-        supportive_summary: `You scored ${scorePct}%. Great job completing this practice session!`,
+        supportive_summary: `You scored ${earnedMarks} / ${totalMarks} Marks (${scorePct}%). Great job completing this practice session!`,
       };
     }
   },

@@ -44,13 +44,17 @@ describe('PracticePage Component', () => {
     vi.spyOn(practiceService, 'getAiQuestions').mockResolvedValue(mockAiQuestions);
   });
 
-  it('renders hero banner and question bank badges', async () => {
+  it('renders hero banner and question bank badges without gentle retry engine', async () => {
     render(<PracticePage />);
 
     expect(screen.getByText('DBMS Practice & Competitive Exam Lab')).toBeInTheDocument();
     expect(screen.getByText('AI Practice Bank')).toBeInTheDocument();
     expect(screen.getAllByText('Competitive Exam PYQs').length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText('Gentle Retry Feedback')).toBeInTheDocument();
+    expect(screen.getAllByText('PYQ Library Archive').length).toBeGreaterThanOrEqual(1);
+
+    // Verify Gentle Retry is NOT present
+    expect(screen.queryByText('Gentle Retry Feedback')).not.toBeInTheDocument();
+    expect(screen.queryByText(/3-Attempt Gentle Retry Engine/i)).not.toBeInTheDocument();
 
     await waitFor(() => {
       expect(screen.getByText('30 Questions')).toBeInTheDocument();
@@ -58,7 +62,7 @@ describe('PracticePage Component', () => {
     });
   });
 
-  it('switches tabs between AI Practice, PYQs, Library, and Academic Exercises', async () => {
+  it('switches tabs between AI Practice, PYQs, and Library and does not contain legacy exercises tab', async () => {
     render(<PracticePage />);
 
     // Click PYQs Tab
@@ -75,17 +79,15 @@ describe('PracticePage Component', () => {
       expect(screen.getByText(/110 Scored \/ Playable • 5 Historical Subjective/i)).toBeInTheDocument();
     });
 
-    // Click Academic Exercises Tab
-    const legacyTab = document.getElementById('tab-academic-exercises')!;
-    fireEvent.click(legacyTab);
-
-    expect(screen.getByText(/Phase 9 Relational Exercises/i)).toBeInTheDocument();
+    // Verify Academic Exercises Tab is removed
+    expect(document.getElementById('tab-academic-exercises')).toBeNull();
+    expect(screen.queryByText(/Academic Normalization Exercises/i)).not.toBeInTheDocument();
   });
 
   it('opens config modal and launches a practice session', async () => {
     render(<PracticePage />);
 
-    const startBtn = screen.getByText('Start Practice Session');
+    const startBtn = screen.getByText('Start AI Practice');
     fireEvent.click(startBtn);
 
     await waitFor(() => {

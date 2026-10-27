@@ -39,7 +39,7 @@ export const ContextSensitiveStageVisualizer: React.FC<ContextSensitiveStageVisu
             No Sample Tuples Supplied
           </h3>
           <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
-            1NF requires atomic values in every cell. Because no sample rows were provided, cell-level atomicity cannot be empirically tested. You can add sample rows in the Sample Data tab.
+            1NF requires atomic values in every cell. Because no sample rows were provided, cell-level atomicity cannot be empirically tested. You can upload an Excel spreadsheet with data rows to evaluate cell-level atomicity.
           </p>
         </div>
       );

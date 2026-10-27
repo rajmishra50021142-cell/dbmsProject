@@ -68,6 +68,7 @@ export interface QuizQuestionReview {
   exam?: string | null;
   year?: string | null;
   note?: string | null;
+  marks?: number | null;
 }
 
 export interface QuizSubmissionResponse {
@@ -78,6 +79,8 @@ export interface QuizSubmissionResponse {
   unanswered_count: number;
   score_percentage: number;
   time_spent_seconds: number;
+  total_marks?: number | null;
+  earned_marks?: number | null;
   topic_breakdown: Record<string, { total: number; correct: number }>;
   question_reviews: QuizQuestionReview[];
   supportive_summary: string;

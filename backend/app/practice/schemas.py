@@ -148,6 +148,7 @@ class QuizQuestionReview(BaseModel):
     exam: Optional[str] = None
     year: Optional[str] = None
     note: Optional[str] = None
+    marks: Optional[int] = Field(default=None, description="Marks assigned to question (1 or 2)")
 
 
 class QuizSubmissionResponse(BaseModel):
@@ -161,6 +162,8 @@ class QuizSubmissionResponse(BaseModel):
     unanswered_count: int
     score_percentage: float
     time_spent_seconds: int
+    total_marks: Optional[int] = Field(default=None, description="Total marks possible in this quiz")
+    earned_marks: Optional[int] = Field(default=None, description="Total marks earned from correct answers")
     topic_breakdown: Dict[str, Dict[str, int]] = Field(
         default_factory=dict, description="Topic -> {'total': int, 'correct': int}"
     )
